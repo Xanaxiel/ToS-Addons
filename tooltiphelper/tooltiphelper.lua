@@ -179,15 +179,19 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
   table.insert(stringBuffer,headText);
   
   --Tooltip
-  text = COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config);
-  if text ~= "" then
-    table.insert(stringBuffer,text)
+  if config.showCollectionCustomTooltips then
+      text = COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config);
+      if text ~= "" then
+        table.insert(stringBuffer,text)
+      end
   end
-  
+    
   --Recipe
-  text = RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config)
-  if text ~= "" then
-    table.insert(stringBuffer,text)    
+  if config.showRecipeCustomTooltips then 
+      text = RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config)
+      if text ~= "" then
+        table.insert(stringBuffer,text)    
+      end
   end
   
   if #stringBuffer == 1 then
