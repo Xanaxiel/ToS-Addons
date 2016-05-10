@@ -1,9 +1,9 @@
 # ToS-Addons
 <p>Compatible with the following addons:
-<li>  
-<ul><a href="https://github.com/Excrulon/Tree-of-Savior-Lua-Mods">Excrulon's Addons</a></ul>
-<ul><a href="https://github.com/fiote/treeofsavior-addons">fiote's cwAPI</a></ul>
-</li>
+  
+* <a href="https://github.com/Excrulon/Tree-of-Savior-Lua-Mods">Excrulon's Addons</a>
+* <a href="https://github.com/fiote/treeofsavior-addons">fiote's cwAPI</a>>
+
 </p>
 
 # Tooltip Helper
@@ -16,7 +16,7 @@ A simple tooltip helper to indicate which items are:
 
 <h1>Installation</h1>
 <p>
-Depending on which release you downloaded, navigate to their installation section. 
+Depending on which release you downloaded, navigate to their installation section. Paste this folder inside the `../path/to/TreeOfSavior/addons` folder afterwards.
 </p>
 
 
