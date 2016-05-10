@@ -1,10 +1,9 @@
 # ToS-Addons
-<p>Compatible with the following addons:
-  
-* <a href="https://github.com/Excrulon/Tree-of-Savior-Lua-Mods">Excrulon's Addons</a>
-* <a href="https://github.com/fiote/treeofsavior-addons">fiote's cwAPI</a>>
+Compatible with the following addons:
+* [Excrulon's Addons](https://github.com/Excrulon/Tree-of-Savior-Lua-Mods)
+* [fiote's cwAPI](https://github.com/fiote/treeofsavior-addons)
 
-</p>
+
 
 # Tooltip Helper
 
