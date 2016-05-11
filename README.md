@@ -17,9 +17,9 @@ A simple tooltip helper to indicate which items are:
 
 ```javascript
 local config = {
-  showCollectionCustomTooltips = true, //Show collection on item tooltips
-  showCompletedCollections = true, //Show completed collections on item tooltips
-  showRecipeCustomTooltips = true //Show recipes on item tooltips
+    showCollectionCustomTooltips = true, //Show collection on item tooltips
+    showCompletedCollections = true, //Show completed collections on item tooltips
+    showRecipeCustomTooltips = true //Show recipes on item tooltips
 }
 ```
 
