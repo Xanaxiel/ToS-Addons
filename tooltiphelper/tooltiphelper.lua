@@ -106,7 +106,7 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config)
                 if isCompleted then
                     if config.showCompletedCollections then
                         text = text .. "{@st66}" .. collName
-                        text = APPLY_ELLIPSIS(text) .. " {ol}Completed!{/}{nl}";
+                        text = APPLY_ELLIPSIS(text) .. " {ol}{#FF0000}Completed!{/}{/}{nl}";
                     end
                 else
                     text = text .. "{@st66}" .. collName .. "{/}{nl}"
@@ -144,7 +144,17 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config)
                 foundMatch = true;
                 local resultItem = GetClass("Item", cls.TargetItem);
                 if resultItem.ItemType ~= "UNUSED" then
+                    local grade = resultItem.ItemGrade;
                     local result = dictionary.ReplaceDicIDInCompStr(resultItem.Name);
+                    if grade == 1 then
+                        result = "{ol}{#E1E1E1}" .. result .. "{/}"
+                    elseif grade == 2 then
+                        result = "{ol}{#108CFF}" .. result .. "{/}"
+                    elseif grade == 3 then
+                        result = "{ol}{#9F30FF}" .. result .. "{/}"
+                    elseif grade == 4 then
+                        result = "{ol}{#FF4F00}" .. result .. "{/}"
+                    end
                     text = text .. "{@st66}Recipe: " .. result .. "{/}{nl}"
   
                     if not CONTAINS(partOfRecipe, text) then
