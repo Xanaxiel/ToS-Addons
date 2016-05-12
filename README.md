@@ -11,7 +11,7 @@ A simple tooltip helper to indicate which items are:
 * Part of a collection
 * Components for a recipe
 
-![image](https://cloud.githubusercontent.com/assets/19189593/15157524/9f211206-171e-11e6-88fb-f17a9962b06f.png)
+![image](https://cloud.githubusercontent.com/assets/19189593/15227060/1439633c-18b8-11e6-9b43-e67d77f7a0e8.png)
 
 # Configuration
 
