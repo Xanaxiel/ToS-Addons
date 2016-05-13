@@ -25,13 +25,14 @@ local config = {
 
 # Installation
 
-Depending on which release you downloaded, navigate to their installation section. Paste this folder inside the `/path/to/TreeOfSavior/addons` folder afterwards.
+Download the latest release from the releases tab or [this link](https://github.com/Xanaxiel/ToS-Addons/releases/latest) and extract the contents of the archive into your `../path/to/TreeOfSavior/addons` folder (G:\Program Files (x86)\Steam\steamapps\common\TreeOfSavior\addons).
 
-If you're using [Excrulon's addon pack](https://github.com/Excrulon/Tree-of-Savior-Lua-Mods), don't forget to add the following line after the last `dofile` line
+**Take note:** If you're using [Excrulon's addon pack](https://github.com/Excrulon/Tree-of-Savior-Lua-Mods), don't forget to add the following line after the last `dofile` line
 ```javascript
 dofile("../addons/tooltiphelper/tooltiphelper.lua");
 ```
 
+For those using fiote's addon loader, no additional steps needed.
 
 
 
