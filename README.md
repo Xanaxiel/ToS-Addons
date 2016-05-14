@@ -40,7 +40,7 @@ Required dependencies:
 
 ```javascript
 dofile("../addons/tooltiphelper/tooltiphelper.lua");
-dofile("../addons/tooltiphelper/showpetstamina.lua");
+dofile("../addons/showpetstamina/showpetstamina.lua");
 ```
 
 For those using fiote's addon loader, **no additional steps needed**.
