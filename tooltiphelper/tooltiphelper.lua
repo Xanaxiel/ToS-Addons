@@ -1,6 +1,6 @@
 local config = {
     showCollectionCustomTooltips = true,
-    showCompletedCollections = false,
+    showCompletedCollections = true,
     showRecipeCustomTooltips = true
 }
 

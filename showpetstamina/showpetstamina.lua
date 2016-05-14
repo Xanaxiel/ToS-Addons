@@ -27,7 +27,6 @@ end
 function UPDATE_COMPANION_TITLE_HOOKED(frame, handle)
     _G["UPDATE_COMPANION_TITLE_OLD"](frame, handle);
     showMountedStamina();
-    frame:Invalidate();
 end
 
 function ON_RIDING_VEHICLE_HOOKED(onoff)
