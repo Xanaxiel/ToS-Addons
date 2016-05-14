@@ -37,6 +37,7 @@ Download the latest release from the releases tab or [this link](https://github.
 **Take note:** If you're using [Excrulon's addon pack](https://github.com/Excrulon/Tree-of-Savior-Lua-Mods), don't forget to add the following line after the last `dofile` line
 ```javascript
 dofile("../addons/tooltiphelper/tooltiphelper.lua");
+dofile("../addons/tooltiphelper/showpetstamina.lua");
 ```
 
 For those using fiote's addon loader, no additional steps needed.
