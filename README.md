@@ -33,10 +33,11 @@ local config = {
 # Installation
 
 Required dependencies:
-* Download latest release from **either** [Excrulon's Addons](https://github.com/Excrulon/Tree-of-Savior-Lua-Mods) or [fiote's cwAPI](https://github.com/fiote/treeofsavior-addons). Both use a different loading method
-* Download the latest release from the [releases tab](https://github.com/Xanaxiel/ToS-Addons/releases/latest) and extract the contents of the archive into your `../path/to/TreeOfSavior/addons` folder (G:\Program Files (x86)\Steam\steamapps\common\TreeOfSavior\addons).
+* Download latest release from **either** [Excrulon's Addons](https://github.com/Excrulon/Tree-of-Savior-Lua-Mods) or [fiote's cwAPI](https://github.com/fiote/treeofsavior-addons)
+* Download the latest release from the [releases tab](https://github.com/Xanaxiel/ToS-Addons/releases/latest) and extract the contents of the archive into your `../path/to/TreeOfSavior/addons` folder (G:\Program Files (x86)\Steam\steamapps\common\TreeOfSavior\addons)
 
-**Take note:** If you're using **ONLY** Excrulon's addons, don't forget to add the following line after the last `dofile` line
+**Take note:** If you're using **ONLY** Excrulon's addons, don't forget to add the following lines after the last `dofile` line
+
 ```javascript
 dofile("../addons/tooltiphelper/tooltiphelper.lua");
 dofile("../addons/tooltiphelper/showpetstamina.lua");
