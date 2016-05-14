@@ -25,8 +25,9 @@ local function showMountedStamina()
 end
 
 function UPDATE_COMPANION_TITLE_HOOKED(frame, handle)
-    showMountedStamina();
     _G["UPDATE_COMPANION_TITLE_OLD"](frame, handle);
+    showMountedStamina();
+    frame:Invalidate();
 end
 
 function ON_RIDING_VEHICLE_HOOKED(onoff)
@@ -34,7 +35,21 @@ function ON_RIDING_VEHICLE_HOOKED(onoff)
     showMountedStamina();
 end
 
-SETUP_HOOK(UPDATE_COMPANION_TITLE_HOOKED, "UPDATE_COMPANION_TITLE")
-SETUP_HOOK(ON_RIDING_VEHICLE_HOOKED, "ON_RIDING_VEHICLE")
+-- Adapter for addonloaders
 
-ui.SysMsg("Showing pet stamina when mounted!");
+if cwAPI then
+    _G['UPDATE_COMPANION_TITLE_OLD'] = _G['UPDATE_COMPANION_TITLE'];
+    _G['ON_RIDING_VEHICLE_OLD'] = _G['ON_RIDING_VEHICLE'];
+    
+    _G['ADDON_LOADER']['showpetstamina'] = function()
+        cwAPI.events.on('UPDATE_COMPANION_TITLE',UPDATE_COMPANION_TITLE_HOOKED,1);
+        cwAPI.events.on('ON_RIDING_VEHICLE',ON_RIDING_VEHICLE_HOOKED,1);
+        
+        return true;
+    end
+else
+    SETUP_HOOK(UPDATE_COMPANION_TITLE_HOOKED, "UPDATE_COMPANION_TITLE")
+    SETUP_HOOK(ON_RIDING_VEHICLE_HOOKED, "ON_RIDING_VEHICLE")
+end
+
+ui.SysMsg("Showing pet stamina when mounted!")
