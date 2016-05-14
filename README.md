@@ -13,6 +13,13 @@ A simple tooltip helper to indicate which items are:
 
 ![image](https://cloud.githubusercontent.com/assets/19189593/15227060/1439633c-18b8-11e6-9b43-e67d77f7a0e8.png)
 
+# Show Pet Stamina (Mounted)
+
+Shows pet stamina when mounted on your pet
+
+![image](https://cloud.githubusercontent.com/assets/19189593/15264239/cac6b1c2-19a3-11e6-925b-cbf3643842ae.png)
+![image](https://cloud.githubusercontent.com/assets/19189593/15264233/c41c43aa-19a3-11e6-8a83-a9e619339f31.png)
+
 # Configuration
 
 ```javascript
