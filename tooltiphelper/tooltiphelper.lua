@@ -4,7 +4,7 @@ local config = {
     showRecipeCustomTooltips = true
 }
 
-local function CONTAINS(table, val)
+local function contains(table, val)
     for k, v in ipairs (table) do
         if v == val then
             return true
@@ -13,9 +13,19 @@ local function CONTAINS(table, val)
     return false
 end
 
-local function APPLY_ELLIPSIS(str)
-    if string.len(str) > 40 then
-        str = string.sub(str, 1, 40) .. "..."
+local function compare(a, b)
+    if a[1] < b[1] then
+        return true
+    elseif a[1] > b[1] then
+        return false
+    else
+        return a[2] < b[2]
+    end
+end
+
+local function applyEllipsis(str)
+    if string.len(str) > 45 then
+        str = string.sub(str, 1, 45) .. "..."
     end
     
     return str
@@ -70,9 +80,25 @@ function ITEM_TOOLTIP_GEM_HOOKED(tooltipFrame, invItem, strArg)
     return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg);
 end
 
-function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config)
+local function manuallyCount(cls, invItem)
+    local count = 0;
+    for i = 1 , 9 do
+        local item = GetClass("Item", cls["ItemName_" .. i]);
+            
+        if item == "None" or item == nil then
+            break;
+        end
+                
+        if item.ClassName == invItem.ClassName then
+            count = count + 1;
+        end
+    end
+    return count;
+end
+
+function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     local pc = session.GetMySession();
-    local partOfCollection = {};
+    local partOfCollections = {};
     local myColls = pc:GetCollection();
     local etcObj = GetMyEtcObject();
     local foundMatch = false;
@@ -83,12 +109,14 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config)
         local coll = myColls:Get(cls.ClassID);
         local curCount, maxCount = -1 , 0;
         local isCompleted = false;
+        local hasRegisteredCollection = false;
         
         if coll ~= nil then
             curCount, maxCount = GET_COLLECTION_COUNT(coll.type, coll);
             if curCount >= maxCount then
                 isCompleted = true;
             end
+            hasRegisteredCollection = true
         end
         
         for j = 1 , 9 do
@@ -101,34 +129,51 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config)
             
             if item.ClassName == invItem.ClassName then
                 foundMatch = true;
+                local neededCount = 0;
+                local collCount = 0;
                 local collName = dictionary.ReplaceDicIDInCompStr(cls.Name);
                 
+                if coll ~= nil then
+                    local info = geCollectionTable.Get(cls.ClassID)
+                    collCount = coll:GetItemCountByType(item.ClassID);
+                    neededCount = info:GetNeedItemCount(item.ClassID);
+                end
+                
+                if not hasRegisteredCollection then
+                    neededCount = manuallyCount(cls, invItem);
+                end
+                
+                text = text .. "{ol}{ds}{#9D8C70}" .. collName
+                text = applyEllipsis(text);
+                text = text .. " " .. collCount .. "/" .. neededCount .. "{/}{/}{/}"
+
                 if isCompleted then
                     if config.showCompletedCollections then
-                        text = text .. "{@st66}" .. collName
-                        text = APPLY_ELLIPSIS(text) .. " {ol}{#FF0000}Completed!{/}{/}{nl}";
+                        text = text .. " {ol}{ds}{#00FF00}Completed!{nl}"
+                    else 
+                        text = ""
                     end
-                else
-                    text = text .. "{@st66}" .. collName .. "{/}{nl}"
                 end
-                if not CONTAINS(partOfCollection, text) then
-                    table.insert(partOfCollection, text);
+                
+                if not contains(partOfCollections, text) then
+                    table.insert(partOfCollections, text);
                 end                  
             end
         end
     end
     
     if not foundMatch then
-        partOfCollection = {};    
+        partOfCollections = {};    
     end
     
-    return table.concat(partOfCollection,"{nl}")
+    return table.concat(partOfCollections,"{nl}")
 end
 
-function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config)
+function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     local partOfRecipe = {};
     local foundMatch = false;
     local clsList, cnt = GetClassList("Recipe");
+    local unSortedTable = {};
     
     for i = 0 , cnt - 1 do
         local cls = GetClassByIndexFromList(clsList, i);
@@ -146,29 +191,39 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config)
                 if resultItem.ItemType ~= "UNUSED" then
                     local grade = resultItem.ItemGrade;
                     local result = dictionary.ReplaceDicIDInCompStr(resultItem.Name);
-                    if grade == 1 then
-                        result = "{ol}{#E1E1E1}" .. result .. "{/}"
-                    elseif grade == 2 then
-                        result = "{ol}{#108CFF}" .. result .. "{/}"
-                    elseif grade == 3 then
-                        result = "{ol}{#9F30FF}" .. result .. "{/}"
-                    elseif grade == 4 then
-                        result = "{ol}{#FF4F00}" .. result .. "{/}"
-                    end
-                    text = text .. "{@st66}Recipe: " .. result .. "{/}{nl}"
-  
-                    if not CONTAINS(partOfRecipe, text) then
-                        table.insert(partOfRecipe, text);
-                    end
+                    local tempObj = {grade, result}
+                    table.insert(unSortedTable, tempObj);
                 end
             end
         end
     end
     
-    if not foundMatch then
-        partOfRecipe = {};    
+    if foundMatch then
+        table.sort(unSortedTable, compare);
+        for k = 1, #unSortedTable do
+            local text = ""
+            local prefix = "{ol}{ds}{#9D8C70}Recipe: {ol}{ds}"
+            local suffix = "{/}{/}{/}{nl}"
+            
+            if unSortedTable[k][1] == 1 then
+                text = prefix .. "{#E1E1E1}" .. unSortedTable[k][2] .. suffix
+            elseif unSortedTable[k][1] == 2 then
+                text = prefix .. "{#108CFF}" .. unSortedTable[k][2] .. suffix
+            elseif unSortedTable[k][1] == 3 then
+                text = prefix .. "{#9F30FF}" .. unSortedTable[k][2] .. suffix
+            elseif unSortedTable[k][1] == 4 then
+                text = prefix .. "{#FF4F00}" .. unSortedTable[k][2] .. suffix
+            elseif unSortedTable[k][1] == 'None' then
+                text = prefix .. "{#9D8C70}" .. unSortedTable[k][2] .. suffix
+            end
+            
+            if not contains(partOfRecipe, text) then
+                table.insert(partOfRecipe, text);
+            end
+        end
+    else
+        partOfRecipe = {};
     end
-    
     return table.concat(partOfRecipe, "{nl}")
 end
 
@@ -182,14 +237,14 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     
     local stringBuffer = {};
     
-    local headText = "{@st66}Used in:{/}{nl}"
+    local headText = "{ol}{ds}{#9D8C70}Used in:{/}{/}{/}{nl}"
     local text = ""
     
     table.insert(stringBuffer,headText);
     
     --Tooltip
     if config.showCollectionCustomTooltips then
-        text = COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config);
+        text = COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem);
         if text ~= "" then
             table.insert(stringBuffer,text)
         end
@@ -197,7 +252,7 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
       
     --Recipe
     if config.showRecipeCustomTooltips then 
-        text = RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config)
+        text = RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
         if text ~= "" then
             table.insert(stringBuffer,text)    
         end
@@ -215,6 +270,8 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     local BOTTOM_MARGIN = tooltipFrame:GetUserConfig("BOTTOM_MARGIN");
     gBox:Resize(gBox:GetWidth(),gBox:GetHeight() + ctrl:GetHeight())
     
+    stringBuffer = {}
+    text = ""
     return ctrl:GetHeight() + ctrl:GetY();
 end
 
