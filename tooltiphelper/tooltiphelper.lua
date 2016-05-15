@@ -218,27 +218,19 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     return ctrl:GetHeight() + ctrl:GetY();
 end
 
--- Adapter for addonloaders
-
-if cwAPI then
-    _G['ITEM_TOOLTIP_EQUIP_OLD'] = _G['ITEM_TOOLTIP_EQUIP'];
-    _G['ITEM_TOOLTIP_ETC_OLD'] = _G['ITEM_TOOLTIP_ETC'];
-    _G['ITEM_TOOLTIP_BOSSCARD_OLD'] = _G['ITEM_TOOLTIP_BOSSCARD'];
-    _G['ITEM_TOOLTIP_GEM_OLD'] = _G['ITEM_TOOLTIP_GEM'];
-    
-    _G['ADDON_LOADER']['tooltiphelper'] = function()
-      cwAPI.events.on('ITEM_TOOLTIP_EQUIP',ITEM_TOOLTIP_EQUIP_HOOKED,1);
-      cwAPI.events.on('ITEM_TOOLTIP_ETC',ITEM_TOOLTIP_ETC_HOOKED,1);
-      cwAPI.events.on('ITEM_TOOLTIP_BOSSCARD',ITEM_TOOLTIP_BOSSCARD_HOOKED,1);
-      cwAPI.events.on('ITEM_TOOLTIP_GEM',ITEM_TOOLTIP_GEM_HOOKED,1);
-      
-      return true;
+local function setupHook(newFunction, hookedFunctionStr)
+    local storeOldFunc = hookedFunctionStr .. "_OLD";
+    if _G[storeOldFunc] == nil then
+        _G[storeOldFunc] = _G[hookedFunctionStr];
+        _G[hookedFunctionStr] = newFunction;
+    else
+        _G[hookedFunctionStr] = newFunction;
     end
-else 
-    SETUP_HOOK(ITEM_TOOLTIP_EQUIP_HOOKED, "ITEM_TOOLTIP_EQUIP");
-    SETUP_HOOK(ITEM_TOOLTIP_ETC_HOOKED, "ITEM_TOOLTIP_ETC");
-    SETUP_HOOK(ITEM_TOOLTIP_BOSSCARD_HOOKED, "ITEM_TOOLTIP_BOSSCARD");
-    SETUP_HOOK(ITEM_TOOLTIP_GEM_HOOKED, "ITEM_TOOLTIP_GEM");
 end
+
+setupHook(ITEM_TOOLTIP_EQUIP_HOOKED, "ITEM_TOOLTIP_EQUIP");
+setupHook(ITEM_TOOLTIP_ETC_HOOKED, "ITEM_TOOLTIP_ETC");
+setupHook(ITEM_TOOLTIP_BOSSCARD_HOOKED, "ITEM_TOOLTIP_BOSSCARD");
+setupHook(ITEM_TOOLTIP_GEM_HOOKED, "ITEM_TOOLTIP_GEM");
 
 ui.SysMsg("Tooltip helper loaded!")

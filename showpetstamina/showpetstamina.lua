@@ -34,21 +34,17 @@ function ON_RIDING_VEHICLE_HOOKED(onoff)
     showMountedStamina();
 end
 
--- Adapter for addonloaders
-
-if cwAPI then
-    _G['UPDATE_COMPANION_TITLE_OLD'] = _G['UPDATE_COMPANION_TITLE'];
-    _G['ON_RIDING_VEHICLE_OLD'] = _G['ON_RIDING_VEHICLE'];
-    
-    _G['ADDON_LOADER']['showpetstamina'] = function()
-        cwAPI.events.on('UPDATE_COMPANION_TITLE',UPDATE_COMPANION_TITLE_HOOKED,1);
-        cwAPI.events.on('ON_RIDING_VEHICLE',ON_RIDING_VEHICLE_HOOKED,1);
-        
-        return true;
+local function setupHook(newFunction, hookedFunctionStr)
+    local storeOldFunc = hookedFunctionStr .. "_OLD";
+    if _G[storeOldFunc] == nil then
+        _G[storeOldFunc] = _G[hookedFunctionStr];
+        _G[hookedFunctionStr] = newFunction;
+    else
+        _G[hookedFunctionStr] = newFunction;
     end
-else
-    SETUP_HOOK(UPDATE_COMPANION_TITLE_HOOKED, "UPDATE_COMPANION_TITLE")
-    SETUP_HOOK(ON_RIDING_VEHICLE_HOOKED, "ON_RIDING_VEHICLE")
 end
+
+setupHook(UPDATE_COMPANION_TITLE_HOOKED, "UPDATE_COMPANION_TITLE")
+setupHook(ON_RIDING_VEHICLE_HOOKED, "ON_RIDING_VEHICLE")
 
 ui.SysMsg("Showing pet stamina when mounted!")
