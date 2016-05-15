@@ -36,11 +36,22 @@ Required dependencies:
 * Download latest release from **either** [Excrulon's Addons](https://github.com/Excrulon/Tree-of-Savior-Lua-Mods) or [fiote's cwAPI](https://github.com/fiote/treeofsavior-addons)
 * Download the latest release from the [releases tab](https://github.com/Xanaxiel/ToS-Addons/releases/latest) and extract the contents of the archive into your `../path/to/TreeOfSavior/addons` folder (G:\Program Files (x86)\Steam\steamapps\common\TreeOfSavior\addons)
 
-**Take note:** If you're using **ONLY** Excrulon's addons, don't forget to add the following lines after the last `dofile` line
+**Take note:** If you're using **ONLY** Excrulon's addons, don't forget to add the following lines after the last `dofile` line on `addonloader.lua`
 
 ```javascript
-dofile("../addons/tooltiphelper/tooltiphelper.lua");
-dofile("../addons/showpetstamina/showpetstamina.lua");
+--[[ADDONS]]
+dofile("../addons/betterquest/betterquest.lua");
+dofile("../addons/blockandreport/blockandreport.lua");
+dofile("../addons/channelsurfer/channelsurfer.lua");
+dofile("../addons/expviewer/expviewer.lua");
+dofile("../addons/guildmates/guildmates.lua");
+dofile("../addons/hidemaxedattributes/hidemaxedattributes.lua");
+dofile("../addons/mapfogviewer/mapfogviewer.lua");
+dofile("../addons/monsterframes/monsterframes.lua");
+dofile("../addons/monstertracker/monstertracker.lua");
+dofile("../addons/showinvestedstatpoints/showinvestedstatpoints.lua");
+dofile("../addons/tooltiphelper/tooltiphelper.lua") --add this
+dofile("../addons/showpetstamina/showpetstamina.lua") --add this
 ```
 
 For those using fiote's addon loader, **no additional steps needed**.
