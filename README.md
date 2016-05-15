@@ -11,7 +11,7 @@ A simple tooltip helper to indicate which items are:
 * Part of a collection
 * Components for a recipe
 
-![image](https://cloud.githubusercontent.com/assets/19189593/15227060/1439633c-18b8-11e6-9b43-e67d77f7a0e8.png)
+![image](https://cloud.githubusercontent.com/assets/19189593/15276126/6aa56a58-1b11-11e6-8bc7-9a9839024c0d.png)
 
 # Show Pet Stamina (Mounted)
 
