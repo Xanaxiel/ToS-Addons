@@ -100,7 +100,6 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     local pc = session.GetMySession();
     local partOfCollections = {};
     local myColls = pc:GetCollection();
-    local etcObj = GetMyEtcObject();
     local foundMatch = false;
     
     local clsList, cnt = GetClassList("Collection");
@@ -133,14 +132,12 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
                 local collCount = 0;
                 local collName = dictionary.ReplaceDicIDInCompStr(cls.Name);
                 
-                if coll ~= nil then
+                if hasRegisteredCollection then
                     local info = geCollectionTable.Get(cls.ClassID)
                     collCount = coll:GetItemCountByType(item.ClassID);
                     neededCount = info:GetNeedItemCount(item.ClassID);
-                end
-                
-                if not hasRegisteredCollection then
-                    neededCount = manuallyCount(cls, invItem);
+                else
+                    neededCount = manuallyCount(cls, item);
                 end
                 
                 text = text .. "{ol}{ds}{#9D8C70}" .. collName
@@ -149,7 +146,7 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
 
                 if isCompleted then
                     if config.showCompletedCollections then
-                        text = text .. " {ol}{ds}{#00FF00}Completed!{nl}"
+                        text = text .. " {ol}{ds}{#00FF00}Completed!{/}{/}{/}"
                     else 
                         text = ""
                     end
@@ -174,7 +171,6 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     local foundMatch = false;
     local clsList, cnt = GetClassList("Recipe");
     local unSortedTable = {};
-    
     for i = 0 , cnt - 1 do
         local cls = GetClassByIndexFromList(clsList, i);
         
@@ -190,6 +186,11 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
                 local resultItem = GetClass("Item", cls.TargetItem);
                 if resultItem.ItemType ~= "UNUSED" then
                     local grade = resultItem.ItemGrade;
+                    
+                    if grade == 'None' or grade == nil then
+                        grade = 0;
+                    end
+                    
                     local result = dictionary.ReplaceDicIDInCompStr(resultItem.Name);
                     local tempObj = {grade, result}
                     table.insert(unSortedTable, tempObj);
@@ -202,8 +203,8 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
         table.sort(unSortedTable, compare);
         for k = 1, #unSortedTable do
             local text = ""
-            local prefix = "{ol}{ds}{#9D8C70}Recipe: {ol}{ds}"
-            local suffix = "{/}{/}{/}{nl}"
+            local prefix = "{ol}{ds}{#9D8C70}Recipe:{/}{/}{/} {ol}{ds}"
+            local suffix = "{/}{/}{/}"
             
             if unSortedTable[k][1] == 1 then
                 text = prefix .. "{#E1E1E1}" .. unSortedTable[k][2] .. suffix
@@ -213,7 +214,7 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
                 text = prefix .. "{#9F30FF}" .. unSortedTable[k][2] .. suffix
             elseif unSortedTable[k][1] == 4 then
                 text = prefix .. "{#FF4F00}" .. unSortedTable[k][2] .. suffix
-            elseif unSortedTable[k][1] == 'None' then
+            else
                 text = prefix .. "{#9D8C70}" .. unSortedTable[k][2] .. suffix
             end
             
