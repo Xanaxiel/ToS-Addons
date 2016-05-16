@@ -13,7 +13,8 @@ A simple tooltip helper to indicate which items are:
 
 ![image](https://cloud.githubusercontent.com/assets/19189593/15276126/6aa56a58-1b11-11e6-8bc7-9a9839024c0d.png)
 
-# Show Pet Stamina (Mounted)
+# Show Pet Stamina (Mounted) 
+**Will be included in Excrulon's next release - only added it here as it originally served as an enhancement to Excrulon's pack (along with showing mounted bonuses) but I didn't know when he'd do a release back then*
 
 Shows pet stamina when mounted on your pet
 
