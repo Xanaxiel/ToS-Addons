@@ -1,222 +1,293 @@
 local config = {
-  showCollectionCustomTooltips = true,
-  showCompletedCollections = true,
-  showRecipeCustomTooltips = true
+    showCollectionCustomTooltips = true,
+    showCompletedCollections = true,
+    showRecipeCustomTooltips = true
 }
 
-local function CONTAINS(table, val)
-  for k, v in ipairs (table) do
-      if v == val then
-          return true
-      end
-  end
-  return false
+local function contains(table, val)
+    for k, v in ipairs (table) do
+        if v == val then
+            return true
+        end
+    end
+    return false
 end
 
-local function APPLY_ELLIPSIS(str)
-  if string.len(str) > 40 then
-      str = string.sub(str, 1, 40) .. "..."
-  end
-  
-  return str
+local function compare(a, b)
+    if a[1] < b[1] then
+        return true
+    elseif a[1] > b[1] then
+        return false
+    else
+        return a[2] < b[2]
+    end
+end
+
+local function applyEllipsis(str)
+    if string.len(str) > 45 then
+        str = string.sub(str, 1, 45) .. "..."
+    end
+    
+    return str
 end
 
 function ITEM_TOOLTIP_BOSSCARD_HOOKED(tooltipFrame, invItem, strArg)
-  _G["ITEM_TOOLTIP_BOSSCARD_OLD"](tooltipFrame, invItem, strArg);
-  
-  local mainFrameName = 'bosscard'
-  
-  return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg);
+    _G["ITEM_TOOLTIP_BOSSCARD_OLD"](tooltipFrame, invItem, strArg);
+    
+    local mainFrameName = 'bosscard'
+    
+    return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg);
 end
 
 function ITEM_TOOLTIP_EQUIP_HOOKED(tooltipFrame, invItem, strArg, useSubFrame)
-  _G["ITEM_TOOLTIP_EQUIP_OLD"](tooltipFrame, invItem, strArg, useSubFrame);
-  
-  local mainFrameName = 'equip_main'
-  local addInfoFrameName = 'equip_main_addinfo'
-  local drawNowEquip = 'true'
-  
-  if useSubFrame == "usesubframe" then
-    mainFrameName = 'equip_sub'
-    addInfoFrameName = 'equip_sub_addinfo'
-  elseif useSubFrame == "usesubframe_recipe" then
-    mainFrameName = 'equip_sub'
-    addInfoFrameName = 'equip_sub_addinfo'
-    drawNowEquip = 'false'
-  end
-  
-  return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);
+    _G["ITEM_TOOLTIP_EQUIP_OLD"](tooltipFrame, invItem, strArg, useSubFrame);
+    
+    local mainFrameName = 'equip_main'
+    local addInfoFrameName = 'equip_main_addinfo'
+    local drawNowEquip = 'true'
+    
+    if useSubFrame == "usesubframe" then
+        mainFrameName = 'equip_sub'
+        addInfoFrameName = 'equip_sub_addinfo'
+    elseif useSubFrame == "usesubframe_recipe" then
+        mainFrameName = 'equip_sub'
+        addInfoFrameName = 'equip_sub_addinfo'
+        drawNowEquip = 'false'
+    end
+    
+    return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);
 end
 
 function ITEM_TOOLTIP_ETC_HOOKED(tooltipFrame, invItem, strArg, useSubFrame)
-  _G["ITEM_TOOLTIP_ETC_OLD"](tooltipFrame, invItem, strArg, useSubFrame);
-  
-  local mainFrameName = 'etc'
-  
-  if useSubFrame == "usesubframe" then
-    mainFrameName = "etc_sub"
-  elseif useSubFrame == "usesubframe_recipe" then
-    mainFrameName = "etc_sub"
-  end
-  
-  return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);  
+    _G["ITEM_TOOLTIP_ETC_OLD"](tooltipFrame, invItem, strArg, useSubFrame);
+    
+    local mainFrameName = 'etc'
+    
+    if useSubFrame == "usesubframe" then
+      mainFrameName = "etc_sub"
+    elseif useSubFrame == "usesubframe_recipe" then
+      mainFrameName = "etc_sub"
+    end
+    
+    return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);  
 end
 
 function ITEM_TOOLTIP_GEM_HOOKED(tooltipFrame, invItem, strArg)
-  _G["ITEM_TOOLTIP_GEM_OLD"](tooltipFrame, invItem, strArg);
-  
-  local mainFrameName = 'gem'
-  
-  return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg);
+    _G["ITEM_TOOLTIP_GEM_OLD"](tooltipFrame, invItem, strArg);
+    
+    local mainFrameName = 'gem'
+    
+    return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg);
 end
 
-function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config)
-  local pc = session.GetMySession();
-  local partOfCollection = {};
-  local myColls = pc:GetCollection();
-  local etcObj = GetMyEtcObject();
-  local foundMatch = false;
-  
-  local clsList, cnt = GetClassList("Collection");
-  for i = 0 , cnt - 1 do
-      local cls = GetClassByIndexFromList(clsList, i);
-      local coll = myColls:Get(cls.ClassID);
-      local curCount, maxCount = -1 , 0;
-      local isCompleted = false;
-      
-      if coll ~= nil then
-          curCount, maxCount = GET_COLLECTION_COUNT(coll.type, coll);
-          if curCount >= maxCount then
-              isCompleted = true;
-          end
-      end
-      
-      for j = 1 , 9 do
-          local item = GetClass("Item", cls["ItemName_" .. j]);
-          local text = "";
-          
-          if item == "None" or item == nil then
-              break;
-          end
-          
-          if item.ClassName == invItem.ClassName then
-              foundMatch = true;
-              local collName = dictionary.ReplaceDicIDInCompStr(cls.Name);
-              
-              if isCompleted then
-                  if config.showCompletedCollections then
-                      text = text .. "{@st66}" .. collName
-                      text = APPLY_ELLIPSIS(text) .. " {ol}Completed!{/}{nl}";
-                  end
-              else
-                  text = text .. "{@st66}" .. collName .. "{/}{nl}"
-              end
-              if not CONTAINS(partOfCollection, text) then
-                  table.insert(partOfCollection, text);
-              end                  
-          end
-      end
-  end
-  
-  if not foundMatch then
-      partOfCollection = {};    
-  end
-  
-  return table.concat(partOfCollection,"{nl}")
+local function manuallyCount(cls, invItem)
+    local count = 0;
+    for i = 1 , 9 do
+        local item = GetClass("Item", cls["ItemName_" .. i]);
+            
+        if item == "None" or item == nil then
+            break;
+        end
+                
+        if item.ClassName == invItem.ClassName then
+            count = count + 1;
+        end
+    end
+    return count;
 end
 
-function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config)
-  local partOfRecipe = {};
-  local foundMatch = false;
-  local clsList, cnt = GetClassList("Recipe");
-  
-  for i = 0 , cnt - 1 do
-      local cls = GetClassByIndexFromList(clsList, i);
-      local text = ""
-      
-      for j = 1 , 5 do
-          local item = GetClass("Item", cls["Item_" .. j .. "_1"]);
-          if item == "None" or item == nil then
-              break;
-          end
-          
-          if item.ClassName == invItem.ClassName then
-              foundMatch = true;
-              local resultItem = GetClass("Item", cls.TargetItem);
-              
-              if resultItem.ItemType ~= "UNUSED" then
-                  local result = dictionary.ReplaceDicIDInCompStr(resultItem.Name);
-                  text = text .. "{@st66}Recipe: " .. result .. "{/}{nl}"
+function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
+    local pc = session.GetMySession();
+    local partOfCollections = {};
+    local myColls = pc:GetCollection();
+    local etcObj = GetMyEtcObject();
+    local foundMatch = false;
+    
+    local clsList, cnt = GetClassList("Collection");
+    for i = 0 , cnt - 1 do
+        local cls = GetClassByIndexFromList(clsList, i);
+        local coll = myColls:Get(cls.ClassID);
+        local curCount, maxCount = -1 , 0;
+        local isCompleted = false;
+        local hasRegisteredCollection = false;
+        
+        if coll ~= nil then
+            curCount, maxCount = GET_COLLECTION_COUNT(coll.type, coll);
+            if curCount >= maxCount then
+                isCompleted = true;
+            end
+            hasRegisteredCollection = true
+        end
+        
+        for j = 1 , 9 do
+            local item = GetClass("Item", cls["ItemName_" .. j]);
+            local text = "";
+            
+            if item == "None" or item == nil then
+                break;
+            end
+            
+            if item.ClassName == invItem.ClassName then
+                foundMatch = true;
+                local neededCount = 0;
+                local collCount = 0;
+                local collName = dictionary.ReplaceDicIDInCompStr(cls.Name);
+                
+                if coll ~= nil then
+                    local info = geCollectionTable.Get(cls.ClassID)
+                    collCount = coll:GetItemCountByType(item.ClassID);
+                    neededCount = info:GetNeedItemCount(item.ClassID);
+                end
+                
+                if not hasRegisteredCollection then
+                    neededCount = manuallyCount(cls, invItem);
+                end
+                
+                text = text .. "{ol}{ds}{#9D8C70}" .. collName
+                text = applyEllipsis(text);
+                text = text .. " " .. collCount .. "/" .. neededCount .. "{/}{/}{/}"
 
-                  if not CONTAINS(partOfRecipe, text) then
-                      table.insert(partOfRecipe, text);
-                  end
-              end
-          end
-      end
-  end
-  
-  if not foundMatch then
-      partOfRecipe = {};    
-  end
-  
-  return table.concat(partOfRecipe, "{nl}")
+                if isCompleted then
+                    if config.showCompletedCollections then
+                        text = text .. " {ol}{ds}{#00FF00}Completed!{nl}"
+                    else 
+                        text = ""
+                    end
+                end
+                
+                if not contains(partOfCollections, text) then
+                    table.insert(partOfCollections, text);
+                end                  
+            end
+        end
+    end
+    
+    if not foundMatch then
+        partOfCollections = {};    
+    end
+    
+    return table.concat(partOfCollections,"{nl}")
+end
+
+function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
+    local partOfRecipe = {};
+    local foundMatch = false;
+    local clsList, cnt = GetClassList("Recipe");
+    local unSortedTable = {};
+    
+    for i = 0 , cnt - 1 do
+        local cls = GetClassByIndexFromList(clsList, i);
+        
+        for j = 1 , 5 do
+            local item = GetClass("Item", cls["Item_" .. j .. "_1"]);
+            local text = ""
+            if item == "None" or item == nil then
+                break;
+            end
+            
+            if item.ClassName == invItem.ClassName then
+                foundMatch = true;
+                local resultItem = GetClass("Item", cls.TargetItem);
+                if resultItem.ItemType ~= "UNUSED" then
+                    local grade = resultItem.ItemGrade;
+                    local result = dictionary.ReplaceDicIDInCompStr(resultItem.Name);
+                    local tempObj = {grade, result}
+                    table.insert(unSortedTable, tempObj);
+                end
+            end
+        end
+    end
+    
+    if foundMatch then
+        table.sort(unSortedTable, compare);
+        for k = 1, #unSortedTable do
+            local text = ""
+            local prefix = "{ol}{ds}{#9D8C70}Recipe: {ol}{ds}"
+            local suffix = "{/}{/}{/}{nl}"
+            
+            if unSortedTable[k][1] == 1 then
+                text = prefix .. "{#E1E1E1}" .. unSortedTable[k][2] .. suffix
+            elseif unSortedTable[k][1] == 2 then
+                text = prefix .. "{#108CFF}" .. unSortedTable[k][2] .. suffix
+            elseif unSortedTable[k][1] == 3 then
+                text = prefix .. "{#9F30FF}" .. unSortedTable[k][2] .. suffix
+            elseif unSortedTable[k][1] == 4 then
+                text = prefix .. "{#FF4F00}" .. unSortedTable[k][2] .. suffix
+            elseif unSortedTable[k][1] == 'None' then
+                text = prefix .. "{#9D8C70}" .. unSortedTable[k][2] .. suffix
+            end
+            
+            if not contains(partOfRecipe, text) then
+                table.insert(partOfRecipe, text);
+            end
+        end
+    else
+        partOfRecipe = {};
+    end
+    return table.concat(partOfRecipe, "{nl}")
 end
 
 function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame)
-  local gBox = GET_CHILD(tooltipFrame, mainFrameName,'ui::CGroupBox');
-  
-  local yPos = gBox:GetY() + gBox:GetHeight();
-  
-  local ctrl = gBox:CreateOrGetControl("richtext", 'text', 0, yPos, 410, 30);
-  tolua.cast(ctrl, "ui::CRichText");
-  
-  local stringBuffer = {};
-  
-  local headText = "{@st66}Used in:{/}{nl}"
-  local text = ""
-  
-  table.insert(stringBuffer,headText);
-  
-  --Tooltip
-  if config.showCollectionCustomTooltips then
-      text = COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config);
-      if text ~= "" then
-        table.insert(stringBuffer,text)
-      end
-  end
+    local gBox = GET_CHILD(tooltipFrame, mainFrameName,'ui::CGroupBox');
     
-  --Recipe
-  if config.showRecipeCustomTooltips then 
-      text = RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem, config)
-      if text ~= "" then
-        table.insert(stringBuffer,text)    
-      end
-  end
-  
-  if #stringBuffer == 1 then
-      text = ""
-  else
-      text = table.concat(stringBuffer,"{nl}")
-  end
-  
-  ctrl:SetText(text);
-  ctrl:SetMargin(20,gBox:GetHeight() - 10,0,0)
-  
-  local BOTTOM_MARGIN = tooltipFrame:GetUserConfig("BOTTOM_MARGIN");
-  gBox:Resize(gBox:GetWidth(),gBox:GetHeight() + ctrl:GetHeight())
-  
-  return ctrl:GetHeight() + ctrl:GetY();
+    local yPos = gBox:GetY() + gBox:GetHeight();
+    
+    local ctrl = gBox:CreateOrGetControl("richtext", 'text', 0, yPos, 410, 30);
+    tolua.cast(ctrl, "ui::CRichText");
+    
+    local stringBuffer = {};
+    
+    local headText = "{ol}{ds}{#9D8C70}Used in:{/}{/}{/}{nl}"
+    local text = ""
+    
+    table.insert(stringBuffer,headText);
+    
+    --Tooltip
+    if config.showCollectionCustomTooltips then
+        text = COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem);
+        if text ~= "" then
+            table.insert(stringBuffer,text)
+        end
+    end
+      
+    --Recipe
+    if config.showRecipeCustomTooltips then 
+        text = RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
+        if text ~= "" then
+            table.insert(stringBuffer,text)    
+        end
+    end
+    
+    if #stringBuffer == 1 then
+        text = ""
+    else
+        text = table.concat(stringBuffer,"{nl}")
+    end
+    
+    ctrl:SetText(text);
+    ctrl:SetMargin(20,gBox:GetHeight() - 10,0,0)
+    
+    local BOTTOM_MARGIN = tooltipFrame:GetUserConfig("BOTTOM_MARGIN");
+    gBox:Resize(gBox:GetWidth(),gBox:GetHeight() + ctrl:GetHeight())
+    
+    stringBuffer = {}
+    text = ""
+    return ctrl:GetHeight() + ctrl:GetY();
 end
 
-function COLLECTION_ON_INIT_HOOKED(addon, frame)
-  USE_COLLECTION_SHOW_ALL = 1;
-  _G["COLLECTION_ON_INIT"](addon, frame);
+local function setupHook(newFunction, hookedFunctionStr)
+    local storeOldFunc = hookedFunctionStr .. "_OLD";
+    if _G[storeOldFunc] == nil then
+        _G[storeOldFunc] = _G[hookedFunctionStr];
+        _G[hookedFunctionStr] = newFunction;
+    else
+        _G[hookedFunctionStr] = newFunction;
+    end
 end
 
-SETUP_HOOK(ITEM_TOOLTIP_EQUIP_HOOKED, "ITEM_TOOLTIP_EQUIP");
-SETUP_HOOK(ITEM_TOOLTIP_ETC_HOOKED, "ITEM_TOOLTIP_ETC");
-SETUP_HOOK(ITEM_TOOLTIP_BOSSCARD_HOOKED, "ITEM_TOOLTIP_BOSSCARD");
-SETUP_HOOK(ITEM_TOOLTIP_GEM_HOOKED, "ITEM_TOOLTIP_GEM");
+setupHook(ITEM_TOOLTIP_EQUIP_HOOKED, "ITEM_TOOLTIP_EQUIP");
+setupHook(ITEM_TOOLTIP_ETC_HOOKED, "ITEM_TOOLTIP_ETC");
+setupHook(ITEM_TOOLTIP_BOSSCARD_HOOKED, "ITEM_TOOLTIP_BOSSCARD");
+setupHook(ITEM_TOOLTIP_GEM_HOOKED, "ITEM_TOOLTIP_GEM");
 
-ui.SysMsg("Tooltip helper loaded!");
+ui.SysMsg("Tooltip helper loaded!")
