@@ -166,6 +166,26 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     return table.concat(partOfCollections,"{nl}")
 end
 
+local function concatenateRecipeText(table, index)
+    local prefix = "{ol}{ds}{#9D8C70}Recipe:{/}{/}{/} {ol}{ds}"
+    local suffix = table[index][2] .. table[index][3] .. table[index][4] .. "{/}{/}{/}"
+    local color = ""
+    
+    if table[index][1] == 1 then
+        color = "{#E1E1E1}"
+    elseif table[index][1] == 2 then
+        color = "{#108CFF}"
+    elseif table[index][1] == 3 then
+        color = "{#9F30FF}"
+    elseif table[index][1] == 4 then
+        color = "{#FF4F00}"
+    else
+        color = "{#9D8C70}"
+    end
+    
+    return prefix .. color .. suffix
+end
+
 function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     local partOfRecipe = {};
     local foundMatch = false;
@@ -176,7 +196,8 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
         
         for j = 1 , 5 do
             local item = GetClass("Item", cls["Item_" .. j .. "_1"]);
-            local text = ""
+            local isRegistered = "";
+            local isCrafted = "";
             if item == "None" or item == nil then
                 break;
             end
@@ -184,15 +205,27 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
             if item.ClassName == invItem.ClassName then
                 foundMatch = true;
                 local resultItem = GetClass("Item", cls.TargetItem);
-                if resultItem.ItemType ~= "UNUSED" then
+                if resultItem.ItemType ~= "UNUSED" and resultItem ~= nil then
                     local grade = resultItem.ItemGrade;
+                    
+                    local recipeWiki = GetWiki(cls.ClassID);
+                    if recipeWiki ~= nil then
+                        local teachPoint = GetWikiIntProp(recipeWiki, "TeachPoint");
+                        local makeCount = GetWikiIntProp(recipeWiki, "MakeCount");
+                        if teachPoint >= 0 then
+                            isRegistered = " {/}{/}{/}{ol}{ds}{#00FF00}Registered!"
+                        end
+                        if makeCount > 0 then
+                            isCrafted = " {/}{/}{/}{ol}{ds}{#00FF00}Crafted!"
+                        end
+                    end
                     
                     if grade == 'None' or grade == nil then
                         grade = 0;
                     end
                     
                     local result = dictionary.ReplaceDicIDInCompStr(resultItem.Name);
-                    local tempObj = {grade, result}
+                    local tempObj = {grade, result, isRegistered, isCrafted}
                     table.insert(unSortedTable, tempObj);
                 end
             end
@@ -202,22 +235,7 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     if foundMatch then
         table.sort(unSortedTable, compare);
         for k = 1, #unSortedTable do
-            local text = ""
-            local prefix = "{ol}{ds}{#9D8C70}Recipe:{/}{/}{/} {ol}{ds}"
-            local suffix = "{/}{/}{/}"
-            
-            if unSortedTable[k][1] == 1 then
-                text = prefix .. "{#E1E1E1}" .. unSortedTable[k][2] .. suffix
-            elseif unSortedTable[k][1] == 2 then
-                text = prefix .. "{#108CFF}" .. unSortedTable[k][2] .. suffix
-            elseif unSortedTable[k][1] == 3 then
-                text = prefix .. "{#9F30FF}" .. unSortedTable[k][2] .. suffix
-            elseif unSortedTable[k][1] == 4 then
-                text = prefix .. "{#FF4F00}" .. unSortedTable[k][2] .. suffix
-            else
-                text = prefix .. "{#9D8C70}" .. unSortedTable[k][2] .. suffix
-            end
-            
+            local text = concatenateRecipeText(unSortedTable, k) 
             if not contains(partOfRecipe, text) then
                 table.insert(partOfRecipe, text);
             end
@@ -280,10 +298,8 @@ local function setupHook(newFunction, hookedFunctionStr)
     local storeOldFunc = hookedFunctionStr .. "_OLD";
     if _G[storeOldFunc] == nil then
         _G[storeOldFunc] = _G[hookedFunctionStr];
-        _G[hookedFunctionStr] = newFunction;
-    else
-        _G[hookedFunctionStr] = newFunction;
     end
+    _G[hookedFunctionStr] = newFunction;
 end
 
 setupHook(ITEM_TOOLTIP_EQUIP_HOOKED, "ITEM_TOOLTIP_EQUIP");
