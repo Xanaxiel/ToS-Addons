@@ -1,3 +1,6 @@
+**For those asking, yes my reddit handle is /u/lkamikazel (an old account, too lazy to make a new one)*
+*and yes I play on [SEA]Telsiai*
+
 # ToS-Addons
 Compatible with the following addons:
 * [Excrulon's Addons](https://github.com/Excrulon/Tree-of-Savior-Lua-Mods)
