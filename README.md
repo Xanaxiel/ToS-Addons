@@ -1,3 +1,7 @@
+*For those asking:* 
+ * *Yes, my reddit handle is /u/lkamikazel (an old account, too lazy to make a new one)*
+ * *Yes, I play on [SEA]Telsiai*
+
 # ToS-Addons
 Compatible with the following addons:
 * [Excrulon's Addons](https://github.com/Excrulon/Tree-of-Savior-Lua-Mods)
@@ -9,11 +13,15 @@ Compatible with the following addons:
 
 A simple tooltip helper to indicate which items are:
 * Part of a collection
-* Components for a recipe
+ * Shows which you have already completed
+* Components for a recipe 
+ * Shows which you have registered - *some recipes need to be manually registered, specially the highest grade ones*
+ * Shows which you have crafted at least once
 
-![image](https://cloud.githubusercontent.com/assets/19189593/15276126/6aa56a58-1b11-11e6-8bc7-9a9839024c0d.png)
+![image](https://cloud.githubusercontent.com/assets/19189593/15440047/dae36714-1f05-11e6-9434-f024056c4edf.png)
 
-# Show Pet Stamina (Mounted)
+# Show Pet Stamina (Mounted) 
+**Will be included in Excrulon's next release - only added it here as it originally served as an enhancement to Excrulon's pack (along with showing mounted bonuses) but I didn't know when he'd do a release back then*
 
 Shows pet stamina when mounted on your pet
 
