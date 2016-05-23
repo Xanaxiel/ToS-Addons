@@ -1,7 +1,8 @@
 local config = {
     showCollectionCustomTooltips = true,
     showCompletedCollections = true,
-    showRecipeCustomTooltips = true
+    showRecipeCustomTooltips = true,
+    showItemLevel = true
 }
 
 local function contains(table, val)
@@ -122,7 +123,7 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
             local item = GetClass("Item", cls["ItemName_" .. j]);
             local text = "";
             
-            if item == "None" or item == nil then
+            if item == "None" or item == nil or item.NotExist == 'YES' then
                 break;
             end
             
@@ -166,22 +167,40 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     return table.concat(partOfCollections,"{nl}")
 end
 
-local function concatenateRecipeText(table, index)
-    local prefix = "{ol}{ds}{#9D8C70}Recipe:{/}{/}{/} {ol}{ds}"
-    local suffix = table[index][2] .. table[index][3] .. table[index][4] .. "{/}{/}{/}"
+local function colorByItemGrade(itemGrade)
     local color = ""
     
-    if table[index][1] == 1 then
+    if itemGrade == 1 then
         color = "{#E1E1E1}"
-    elseif table[index][1] == 2 then
+    elseif itemGrade == 2 then
         color = "{#108CFF}"
-    elseif table[index][1] == 3 then
+    elseif itemGrade == 3 then
         color = "{#9F30FF}"
-    elseif table[index][1] == 4 then
+    elseif itemGrade == 4 then
         color = "{#FF4F00}"
     else
         color = "{#9D8C70}"
     end
+    
+    return color
+end
+
+local function concatenateRecipeText(table, index)
+    local prefix = "{ol}{ds}{#9D8C70}Recipe:{/}{/}{/} {ol}{ds}"
+    local suffix = table[index][2] .. table[index][3] .. table[index][4] .. "{/}{/}{/}"
+    local color = colorByItemGrade(table[index][1])
+    
+--    if table[index][1] == 1 then
+--        color = "{#E1E1E1}"
+--    elseif table[index][1] == 2 then
+--        color = "{#108CFF}"
+--    elseif table[index][1] == 3 then
+--        color = "{#9F30FF}"
+--    elseif table[index][1] == 4 then
+--        color = "{#FF4F00}"
+--    else
+--        color = "{#9D8C70}"
+--    end
     
     return prefix .. color .. suffix
 end
@@ -198,7 +217,7 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
             local item = GetClass("Item", cls["Item_" .. j .. "_1"]);
             local isRegistered = "";
             local isCrafted = "";
-            if item == "None" or item == nil then
+            if item == "None" or item == nil or item.NotExist == 'YES' then
                 break;
             end
             
@@ -246,6 +265,11 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     return table.concat(partOfRecipe, "{nl}")
 end
 
+function SOLD_BY_NPC_CUSTOM_TOOLTIP_TEXT(invItem)
+    local npcList = {}
+    
+end
+
 function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame)
     local gBox = GET_CHILD(tooltipFrame, mainFrameName,'ui::CGroupBox');
     
@@ -255,13 +279,21 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     tolua.cast(ctrl, "ui::CRichText");
     
     local stringBuffer = {};
-    
-    local headText = "{ol}{ds}{#9D8C70}Used in:{/}{/}{/}{nl}"
     local text = ""
+    local headText = "{ol}{ds}{#9D8C70}Used in:{/}{/}{/}{nl}"
+    local itemLevel = ""
+    
+    --iLvl
+    if config.showItemLevel then
+        if invItem.ItemType == "Equip" then
+            itemLevel = "{ol}{ds}{#9D8C70}Item Level:{/} " .. colorByItemGrade(invItem.ItemGrade) .. invItem.ItemLv .. "{/}{/}{/} "
+            headText = itemLevel .. headText
+        end
+    end
     
     table.insert(stringBuffer,headText);
     
-    --Tooltip
+    --Collection
     if config.showCollectionCustomTooltips then
         text = COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem);
         if text ~= "" then
@@ -277,8 +309,8 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
         end
     end
     
-    if #stringBuffer == 1 then
-        text = ""
+    if #stringBuffer == 1 and invItem.ItemType == "Equip" then
+        text = itemLevel
     else
         text = table.concat(stringBuffer,"{nl}")
     end
