@@ -190,18 +190,6 @@ local function concatenateRecipeText(table, index)
     local suffix = table[index][2] .. table[index][3] .. table[index][4] .. "{/}{/}{/}"
     local color = colorByItemGrade(table[index][1])
     
---    if table[index][1] == 1 then
---        color = "{#E1E1E1}"
---    elseif table[index][1] == 2 then
---        color = "{#108CFF}"
---    elseif table[index][1] == 3 then
---        color = "{#9F30FF}"
---    elseif table[index][1] == 4 then
---        color = "{#FF4F00}"
---    else
---        color = "{#9D8C70}"
---    end
-    
     return prefix .. color .. suffix
 end
 
@@ -313,6 +301,10 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
         text = itemLevel
     else
         text = table.concat(stringBuffer,"{nl}")
+    end
+    
+    if text == headText then
+        text = ""
     end
     
     ctrl:SetText(text);
