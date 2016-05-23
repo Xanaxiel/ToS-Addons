@@ -17,6 +17,7 @@ A simple tooltip helper to indicate which items are:
 * Components for a recipe 
  * Shows which you have registered - *some recipes need to be manually registered, specially the highest grade ones*
  * Shows which you have crafted at least once
+* Show item level for equipment - *helpful info for item awakening/feeding equipment to gems*
 
 ![image](https://cloud.githubusercontent.com/assets/19189593/15440047/dae36714-1f05-11e6-9434-f024056c4edf.png)
 
@@ -35,6 +36,7 @@ local config = {
     showCollectionCustomTooltips = true, //Show collection on item tooltips
     showCompletedCollections = true, //Show completed collections on item tooltips
     showRecipeCustomTooltips = true //Show recipes on item tooltips
+    showItemLevel = true //Show item level for equipment
 }
 ```
 
