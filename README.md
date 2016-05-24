@@ -2,13 +2,6 @@
  * *Yes, my reddit handle is /u/lkamikazel (an old account, too lazy to make a new one)*
  * *Yes, I play on [SEA]Telsiai*
 
-# ToS-Addons
-Compatible with the following addons:
-* [Excrulon's Addons](https://github.com/Excrulon/Tree-of-Savior-Lua-Mods)
-* [fiote's cwAPI](https://github.com/fiote/treeofsavior-addons)
-
-
-
 # Tooltip Helper
 
 A simple tooltip helper to indicate which items are:
