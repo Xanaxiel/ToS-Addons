@@ -37,3 +37,17 @@ local config = {
 **Don't use the source files unless you know how to use them**
 
 * Download the latest release from the [releases tab](https://github.com/Xanaxiel/ToS-Addons/releases/latest) and extract the contents of the archive into your `../path/to/TreeOfSavior` folder (G:\Program Files (x86)\Steam\steamapps\common\TreeOfSavior)
+
+# What addons do your addons conflict with?
+
+100% guaranteed compatible with the following
+
+https://github.com/Excrulon/Tree-of-Savior-Lua-Mods
+https://github.com/fiote/treeofsavior-addons
+https://github.com/Miei/TOS-lua
+https://github.com/MizukiBelhi/ExtendedUI
+https://github.com/MrJul/ToS-EnhancedCollection
+https://github.com/TehSeph/tos-addons
+https://github.com/WillTheDoggy/Doggy-ToS-Addons
+
+If you still have questions or concerns, join our [ToS Addon Discord server](https://discord.gg/0yyOKTr8o3OdJTxa)
