@@ -255,11 +255,6 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     return table.concat(partOfRecipe, "{nl}")
 end
 
-function SOLD_BY_NPC_CUSTOM_TOOLTIP_TEXT(invItem)
-    local npcList = {}
-    
-end
-
 function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame)
     local gBox = GET_CHILD(tooltipFrame, mainFrameName,'ui::CGroupBox');
     
