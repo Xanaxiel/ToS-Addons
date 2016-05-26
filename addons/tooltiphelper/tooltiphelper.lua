@@ -2,7 +2,9 @@ local config = {
     showCollectionCustomTooltips = true,
     showCompletedCollections = true,
     showRecipeCustomTooltips = true,
-    showItemLevel = true
+    showItemLevel = true,
+    showRepairRecommendation = true,
+    squireRepairPerKit = 300 -- 160 is the minimum for the Squire to break even
 }
 
 local function contains(table, val)
@@ -270,6 +272,26 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     local text = ""
     local headText = "{ol}{ds}{#9D8C70}Used in:{/}{/}{/}{nl}"
     local itemLevel = ""
+    local repairRecommendation = ""
+     
+    --Repair Recommendation
+    if config.showRepairRecommendation then
+        if invItem.ItemType == "Equip" then
+            local _, squireResult = ITEMBUFF_NEEDITEM_Squire_Repair(nil, invItem)
+            
+            repairRecommendation = "{ol}{ds}{#9D8C70}Repair at: "
+            
+            if squireResult * config.squireRepairPerKit < GET_REPAIR_PRICE(invItem,0) then
+                repairRecommendation = repairRecommendation .. "{#40FF40}Squire"
+            else
+                repairRecommendation = repairRecommendation .. "{#FF4040}NPC"
+            end
+            
+            repairRecommendation = repairRecommendation .. "{/}{/}{/} "
+            
+            headText = repairRecommendation .. headText
+        end
+    end
     
     --iLvl
     if config.showItemLevel then
@@ -298,7 +320,7 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     end
     
     if #stringBuffer == 1 and invItem.ItemType == "Equip" then
-        text = itemLevel
+        text = itemLevel .. repairRecommendation
     else
         text = table.concat(stringBuffer,"{nl}")
     end
