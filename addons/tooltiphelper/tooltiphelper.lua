@@ -276,7 +276,8 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
      
     --Repair Recommendation
     if config.showRepairRecommendation then
-        if invItem.ItemType == "Equip" then
+        if invItem.ItemType == "Equip" and not (invItem.DefaultEqpSlot == "HAIR" or invItem.DefaultEqpSlot == "HAT" or invItem.DefaultEqpSlot == "HAT_L" or invItem.DefaultEqpSlot == "HAT_T" or invItem.DefaultEqpSlot == "ARMBAND" or invItem.DefaultEqpSlot == "OUTER") then
+        
             local _, squireResult = ITEMBUFF_NEEDITEM_Squire_Repair(nil, invItem)
             
             repairRecommendation = "{ol}{ds}{#9D8C70}Repair at: "
