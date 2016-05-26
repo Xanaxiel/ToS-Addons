@@ -4,7 +4,7 @@ local config = {
     showRecipeCustomTooltips = true,
     showItemLevel = true,
     showRepairRecommendation = true,
-    squireRepairPerKit = 300 -- 160 is the minimum for the Squire to break even
+    squireRepairPerKit = 200 -- 160 is the minimum for the Squire to break even
 }
 
 local function contains(table, val)
