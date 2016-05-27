@@ -27,11 +27,24 @@ local function compare(a, b)
 end
 
 local function applyEllipsis(str)
-    if string.len(str) > 45 then
-        str = string.sub(str, 1, 45) .. "..."
+    if string.len(str) > 28 then
+        str = string.sub(str, 12)
     end
     
     return str
+end
+
+local labelColor = "{#9D8C70}"
+local completeColor = "{#00FF00}"
+local commonColor = "{#E1E1E1}"
+local uncommonColor = "{#108CFF}"
+local rareColor = "{#9F30FF}"
+local legendaryColor = "{#FF4F00}"
+local npcColor = "{#FF4040}"
+local squireColor = "{#40FF40}"
+
+local function toIMCTemplate(text, color)
+    return "{ol}{ds}" .. color .. text .. "{/}{/}{/}"    
 end
 
 function ITEM_TOOLTIP_BOSSCARD_HOOKED(tooltipFrame, invItem, strArg)
@@ -46,16 +59,9 @@ function ITEM_TOOLTIP_EQUIP_HOOKED(tooltipFrame, invItem, strArg, useSubFrame)
     _G["ITEM_TOOLTIP_EQUIP_OLD"](tooltipFrame, invItem, strArg, useSubFrame);
     
     local mainFrameName = 'equip_main'
-    local addInfoFrameName = 'equip_main_addinfo'
-    local drawNowEquip = 'true'
     
-    if useSubFrame == "usesubframe" then
+    if useSubFrame == "usesubframe" or useSubFrame == "usesubframe_recipe" then 
         mainFrameName = 'equip_sub'
-        addInfoFrameName = 'equip_sub_addinfo'
-    elseif useSubFrame == "usesubframe_recipe" then
-        mainFrameName = 'equip_sub'
-        addInfoFrameName = 'equip_sub_addinfo'
-        drawNowEquip = 'false'
     end
     
     return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);
@@ -66,10 +72,8 @@ function ITEM_TOOLTIP_ETC_HOOKED(tooltipFrame, invItem, strArg, useSubFrame)
     
     local mainFrameName = 'etc'
     
-    if useSubFrame == "usesubframe" then
-      mainFrameName = "etc_sub"
-    elseif useSubFrame == "usesubframe_recipe" then
-      mainFrameName = "etc_sub"
+    if useSubFrame == "usesubframe" or useSubFrame == "usesubframe_recipe" then
+        mainFrameName = "etc_sub"
     end
     
     return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);  
@@ -143,13 +147,11 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
                     neededCount = manuallyCount(cls, item);
                 end
                 
-                text = text .. "{ol}{ds}{#9D8C70}" .. collName
-                text = applyEllipsis(text);
-                text = text .. " " .. collCount .. "/" .. neededCount .. "{/}{/}{/}"
+                text = toIMCTemplate(applyEllipsis(collName) .. " " .. collCount .. "/" .. neededCount .. " ", labelColor)
 
                 if isCompleted then
                     if config.showCompletedCollections then
-                        text = text .. " {ol}{ds}{#00FF00}Completed!{/}{/}{/}"
+                        text = text .. toIMCTemplate("Completed!", completeColor)
                     else 
                         text = ""
                     end
@@ -170,36 +172,24 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
 end
 
 local function colorByItemGrade(itemGrade)
-    local color = ""
-    
-    if itemGrade == 1 then
-        color = "{#E1E1E1}"
-    elseif itemGrade == 2 then
-        color = "{#108CFF}"
-    elseif itemGrade == 3 then
-        color = "{#9F30FF}"
-    elseif itemGrade == 4 then
-        color = "{#FF4F00}"
-    else
-        color = "{#9D8C70}"
-    end
-    
-    return color
+    if itemGrade == 1 then return commonColor
+    elseif itemGrade == 2 then return uncommonColor
+    elseif itemGrade == 3 then return rareColor
+    elseif itemGrade == 4 then return legendaryColor
+    else return labelColor end
 end
 
 local function concatenateRecipeText(table, index)
-    local prefix = "{ol}{ds}{#9D8C70}Recipe:{/}{/}{/} {ol}{ds}"
-    local suffix = table[index][2] .. table[index][3] .. table[index][4] .. "{/}{/}{/}"
-    local color = colorByItemGrade(table[index][1])
-    
-    return prefix .. color .. suffix
+    local recipeLabelText = toIMCTemplate("Recipe: ", labelColor)
+    local recipeDetails = toIMCTemplate(table[index][2] .. " ", colorByItemGrade(table[index][1]))
+    return recipeLabelText .. recipeDetails
 end
 
 function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     local partOfRecipe = {};
     local foundMatch = false;
-    local clsList, cnt = GetClassList("Recipe");
     local unSortedTable = {};
+    local clsList, cnt = GetClassList("Recipe");
     for i = 0 , cnt - 1 do
         local cls = GetClassByIndexFromList(clsList, i);
         
@@ -216,26 +206,24 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
                 local resultItem = GetClass("Item", cls.TargetItem);
                 if resultItem.ItemType ~= "UNUSED" and resultItem ~= nil then
                     local grade = resultItem.ItemGrade;
+                    if grade == 'None' or grade == nil then
+                        grade = 0;
+                    end
                     
+                    local result = dictionary.ReplaceDicIDInCompStr(resultItem.Name) .. " "
                     local recipeWiki = GetWiki(cls.ClassID);
                     if recipeWiki ~= nil then
                         local teachPoint = GetWikiIntProp(recipeWiki, "TeachPoint");
                         local makeCount = GetWikiIntProp(recipeWiki, "MakeCount");
                         if teachPoint >= 0 then
-                            isRegistered = " {/}{/}{/}{ol}{ds}{#00FF00}Registered!"
+                            result = result .. toIMCTemplate("Registered! ", completeColor)
                         end
                         if makeCount > 0 then
-                            isCrafted = " {/}{/}{/}{ol}{ds}{#00FF00}Crafted!"
+                            result = result .. toIMCTemplate("Crafted!", completeColor)
                         end
                     end
                     
-                    if grade == 'None' or grade == nil then
-                        grade = 0;
-                    end
-                    
-                    local result = dictionary.ReplaceDicIDInCompStr(resultItem.Name);
-                    local tempObj = {grade, result, isRegistered, isCrafted}
-                    table.insert(unSortedTable, tempObj);
+                    table.insert(unSortedTable, {grade, result});
                 end
             end
         end
@@ -265,37 +253,33 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     
     local stringBuffer = {};
     local text = ""
-    local headText = "{ol}{ds}{#9D8C70}Used in:{/}{/}{/}{nl}"
-    local itemLevel = ""
-    local repairRecommendation = ""
      
-    --Repair Recommendation
-    if config.showRepairRecommendation then
-        if invItem.ItemType == "Equip" then
-            local _, squireResult = ITEMBUFF_NEEDITEM_Squire_Repair(nil, invItem)
-            
-            repairRecommendation = "{ol}{ds}{#9D8C70}Repair at: "
-            
-            if squireResult * config.squireRepairPerKit < GET_REPAIR_PRICE(invItem,0) then
-                repairRecommendation = repairRecommendation .. "{#40FF40}Squire"
-            else
-                repairRecommendation = repairRecommendation .. "{#FF4040}NPC"
-            end
-            
-            repairRecommendation = repairRecommendation .. "{/}{/}{/} "
-            
-            headText = repairRecommendation .. headText
-        end
-    end
-    
     --iLvl
+    local itemLevelLabel = ""
     if config.showItemLevel then
         if invItem.ItemType == "Equip" then
-            itemLevel = "{ol}{ds}{#9D8C70}Item Level:{/} " .. colorByItemGrade(invItem.ItemGrade) .. invItem.ItemLv .. "{/}{/}{/} "
-            headText = itemLevel .. headText
+            itemLevelLabel = toIMCTemplate("Item Level: ", labelColor) .. toIMCTemplate(invItem.ItemLv .. " ", colorByItemGrade(invItem.ItemGrade))
         end
     end
     
+    --Repair Recommendation
+    local repairRecommendationLabel = ""
+    if config.showRepairRecommendation then
+        if invItem.ItemType == "Equip" and invItem.Reinforce_Type == 'Moru' then
+            local _, squireResult = ITEMBUFF_NEEDITEM_Squire_Repair(nil, invItem)
+            if invItem.Dur < invItem.MaxDur then
+                repairRecommendationLabel = toIMCTemplate("Repair at: ", labelColor)
+                if squireResult * config.squireRepairPerKit < GET_REPAIR_PRICE(invItem, 0) then
+                    repairRecommendationLabel = repairRecommendationLabel .. toIMCTemplate("Squire ", squireColor)
+                else
+                    repairRecommendationLabel = repairRecommendationLabel .. toIMCTemplate("NPC ", npcColor)
+                end
+            end
+        end
+    end
+    
+    local usedInLabel =  toIMCTemplate("Used in:", labelColor)
+    local headText = itemLevelLabel .. repairRecommendationLabel .. usedInLabel
     table.insert(stringBuffer,headText);
     
     --Collection
@@ -315,19 +299,18 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     end
     
     if #stringBuffer == 1 and invItem.ItemType == "Equip" then
-        text = itemLevel .. repairRecommendation
+        text = itemLevelLabel .. repairRecommendationLabel
     else
         text = table.concat(stringBuffer,"{nl}")
     end
     
-    if text == headText then
+    if text == usedInLabel then
         text = ""
     end
     
     ctrl:SetText(text);
     ctrl:SetMargin(20,gBox:GetHeight() - 10,0,0)
     
-    local BOTTOM_MARGIN = tooltipFrame:GetUserConfig("BOTTOM_MARGIN");
     gBox:Resize(gBox:GetWidth(),gBox:GetHeight() + ctrl:GetHeight())
     
     stringBuffer = {}
