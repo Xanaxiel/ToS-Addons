@@ -5,12 +5,14 @@
 # Tooltip Helper
 
 A simple tooltip helper to indicate which items are:
-* Part of a collection
+* Collection Items
  * Shows which you have already completed
-* Components for a recipe 
- * Shows registered status - since some recipes need to be manually registered before being able to craft, as well as others which should automatically be registered when you obtain them, when in fact they aren't)
- * Shows crafted status - at least once
-* Show item level for equipment - *helpful info for item awakening/feeding equipment to gems*
+* Recipes
+ * Shows registered status - some recipes need to be manually registered before being able to craft, as well as others which should     automatically be registered when you obtain them, when in fact they aren't
+ * Shows crafted status - crafted the item at least once
+* Equipment
+ * Shows item level - helpful info for item awakening/feeding equipment to gems
+ * Recommends where to get repairs - whether it's more cost-effective to repair via Squire to take advantage of bonus durability which scales   on Squire's Repair skill level (as well as how they price their repair kits, by default it is set to a minimal profit threshold),    but much more expensive the more durability is lost; or via NPC wherein the price is constant regardless of how much durability is   lost
 
 ![image](https://cloud.githubusercontent.com/assets/19189593/15440047/dae36714-1f05-11e6-9434-f024056c4edf.png)
 
@@ -28,13 +30,15 @@ Shows pet stamina when mounted on your pet
 local config = {
     showCollectionCustomTooltips=true, //Show collection on item tooltips
     showCompletedCollections=true, //Show completed collections on item tooltips
-    showRecipeCustomTooltips=true //Show recipes on item tooltips
-    showItemLevel=true //Show item level for equipment
+    showRecipeCustomTooltips=true, //Show recipes on item tooltips
+    showItemLevel=true, //Show item level for equipment
+    showRepairRecommendation = true, //Show repair recommendation
+    squireRepairPerKit = 200 //Set price threshold for repair kits -- 160 is the minimum for the Squire to break even
 }
 ```
 
 # Installation
-**Don't use the source files unless you know how to use them**
+__\*Don't use the source files unless you know how to use them\*__
 
 * Download the latest release from the [releases tab](https://github.com/Xanaxiel/ToS-Addons/releases/latest) and extract the contents of the archive into your `../path/to/TreeOfSavior` folder (G:\Program Files (x86)\Steam\steamapps\common\TreeOfSavior)
 

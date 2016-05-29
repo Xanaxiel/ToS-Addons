@@ -1,14 +1,24 @@
+local function getPropVal(keyString)
+	local file = io.open("../addons/tooltiphelper/tooltiphelper.properties", "r")
+	for line in file:lines() do
+    	local key, value = string.match(line,"(%w+)=(%w+)")
+		if key == keyString then
+			return value;
+		end
+    end
+end
+
 local config = {
-    showCollectionCustomTooltips = true,
-    showCompletedCollections = true,
-    showRecipeCustomTooltips = true,
-    showItemLevel = true,
-    showRepairRecommendation = true,
-    squireRepairPerKit = 200 -- 160 is the minimum for the Squire to break even
+    showCollectionCustomTooltips = assert(loadstring("return " .. getPropVal("showCollectionCustomTooltips")))(),
+    showCompletedCollections	 = assert(loadstring("return " .. getPropVal("showCompletedCollections")))(),
+    showRecipeCustomTooltips	 = assert(loadstring("return " .. getPropVal("showRecipeCustomTooltips")))(),
+    showItemLevel				 = assert(loadstring("return " .. getPropVal("showItemLevel")))(),
+    showRepairRecommendation	 = assert(loadstring("return " .. getPropVal("showRepairRecommendation")))(),
+	squireRepairPerKit			 = assert(loadstring("return " .. getPropVal("squireRepairPerKit")))() -- 160 is the minimum for the Squire to break even
 }
 
 local function contains(table, val)
-    for k, v in ipairs (table) do
+    for k, v in ipairs(table) do
         if v == val then
             return true
         end
