@@ -1,0 +1,35 @@
+[
+    {
+        "name" : "Tooltip Helper",
+        "file" : "tooltiphelper",
+        "extension" : "ipf",
+        "fileVersion" : "v1.6.0",
+        "releaseTag" : "v1.6.0",
+        "unicode" : "☃",
+        "description" : "Helper that displays additional information on tooltips for inventory items",
+        "tags" : [
+            "tooltip",
+            "ui",
+			"inventory",
+			"info",
+			"collection",
+			"recipe",
+			"journal"
+        ]
+    },
+    {
+        "name" : "Show Mounted Pet Stamina",
+        "file" : "showpetstamina",
+        "extension" : "ipf",
+        "fileVersion" : "v1.6.0",
+        "releaseTag" : "v1.6.0",
+        "unicode" : "☃",
+        "description" : "Show pet stamina when mounted",
+        "tags" : [
+            "pet",
+			"stamina",
+			"mounted",
+			"mount"
+        ]
+    }
+]
