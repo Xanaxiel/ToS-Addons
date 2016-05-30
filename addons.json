@@ -5,16 +5,16 @@
         "extension" : "ipf",
         "fileVersion" : "v1.6.0",
         "releaseTag" : "v1.6.0",
-        "unicode" : "☃",
+        "unicode" : "う",
         "description" : "Helper that displays additional information on tooltips for inventory items",
         "tags" : [
             "tooltip",
             "ui",
-			"inventory",
-			"info",
-			"collection",
-			"recipe",
-			"journal"
+            "inventory",
+            "info",
+            "collection",
+            "recipe",
+            "journal"
         ]
     },
     {
@@ -23,13 +23,13 @@
         "extension" : "ipf",
         "fileVersion" : "v1.6.0",
         "releaseTag" : "v1.6.0",
-        "unicode" : "☃",
+        "unicode" : "う",
         "description" : "Show pet stamina when mounted",
         "tags" : [
             "pet",
-			"stamina",
-			"mounted",
-			"mount"
+            "stamina",
+            "mounted",
+            "mount"
         ]
     }
 ]
