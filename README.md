@@ -14,6 +14,10 @@ A simple tooltip helper to indicate which items are:
  * Shows item level - helpful info for item awakening/feeding equipment to gems
  * Recommends where to get repairs - whether it's more cost-effective to repair via Squire to take advantage of bonus durability which scales   on Squire's Repair skill level (as well as how they price their repair kits, by default it is set to a minimal profit threshold),    but much more expensive the more durability is lost; or via NPC wherein the price is constant regardless of how much durability is   lost
 
+*Soon*
+ * Add number of trades left if premium user when trade window is visible
+ * Add tooltip section for quest-related items
+
 ![image](https://cloud.githubusercontent.com/assets/19189593/15440047/dae36714-1f05-11e6-9434-f024056c4edf.png)
 
 # Show Pet Stamina (Mounted) 
@@ -40,7 +44,8 @@ local config = {
 # Installation
 __\*Don't use the source files unless you know how to use them\*__
 
-* Download the latest release from the [releases tab](https://github.com/Xanaxiel/ToS-Addons/releases/latest) and extract the contents of the archive into your `../path/to/TreeOfSavior` folder (G:\Program Files (x86)\Steam\steamapps\common\TreeOfSavior)
+* Download the latest release from the [releases tab](https://github.com/Xanaxiel/ToS-Addons/releases/latest) and extract the contents of the archive into your `../path/to/TreeOfSavior` folder (G:\Program Files (x86)\Steam\steamapps\common\TreeOfSavior) or just pick whichever ipf
+* Tooltip helper requires `tooltiphelper.properties` inside `steamapps\common\TreeOfSavior\addons\tooltiphelper`
 
 # What addons do your addons conflict with?
 
