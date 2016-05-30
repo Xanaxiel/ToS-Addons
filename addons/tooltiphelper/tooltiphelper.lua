@@ -263,6 +263,15 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     
     local stringBuffer = {};
     local text = ""
+    
+    --Show trade count when trade window is visible 
+    if ui.GetFrame('exchange'):IsVisible() == 1 then
+		local tradeCount = GetMyAccountObj().TradeCount
+	    if tradeCount > 0 then
+	    	text = toIMCTemplate(tradeCount .. " trades left!", completeColor)
+	    	table.insert(stringBuffer, text)
+	    end
+    end
      
     --iLvl
     local itemLevelLabel = ""
