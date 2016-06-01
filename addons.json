@@ -3,8 +3,8 @@
         "name" : "Tooltip Helper",
         "file" : "tooltiphelper",
         "extension" : "ipf",
-        "fileVersion" : "v1.7.0",
-        "releaseTag" : "v1.7-rc.1",
+        "fileVersion" : "v1.6.0",
+        "releaseTag" : "v1.6.0",
         "unicode" : "う",
         "description" : "Helper that displays additional information on tooltips for inventory items",
         "tags" : [
@@ -22,7 +22,7 @@
         "file" : "showpetstamina",
         "extension" : "ipf",
         "fileVersion" : "v1.6.0",
-        "releaseTag" : "v1.7-rc.1",
+        "releaseTag" : "v1.6.0",
         "unicode" : "う",
         "description" : "Show pet stamina when mounted",
         "tags" : [
