@@ -1,21 +1,36 @@
-local function getPropVal(keyString)
-	local file = io.open("../addons/tooltiphelper/tooltiphelper.properties", "r")
-	for line in file:lines() do
-    	local key, value = string.match(line,"(%w+)=(%w+)")
-		if key == keyString then
-			return value;
-		end
-    end
-end
+local acutil = require('acutil');
 
-local config = {
-    showCollectionCustomTooltips = assert(loadstring("return " .. getPropVal("showCollectionCustomTooltips")))(),
-    showCompletedCollections	 = assert(loadstring("return " .. getPropVal("showCompletedCollections")))(),
-    showRecipeCustomTooltips	 = assert(loadstring("return " .. getPropVal("showRecipeCustomTooltips")))(),
-    showItemLevel				 = assert(loadstring("return " .. getPropVal("showItemLevel")))(),
-    showRepairRecommendation	 = assert(loadstring("return " .. getPropVal("showRepairRecommendation")))(),
-	squireRepairPerKit			 = assert(loadstring("return " .. getPropVal("squireRepairPerKit")))() -- 160 is the minimum for the Squire to break even
+_G['ADDONS'] = _G['ADDONS'] or {};
+TooltipHelper = _G["ADDONS"]["TOOLTIPHELPER"] or {};
+
+TooltipHelper.configFile = '../addons/tooltiphelper/tooltiphelper.json'
+
+TooltipHelper.config = {
+    showCollectionCustomTooltips = true,
+    showCompletedCollections	 = true,
+    showRecipeCustomTooltips	 = true,
+    showItemLevel				 = true,
+    showRepairRecommendation	 = true,
+	squireRepairPerKit			 = 200 -- 160 is the minimum for the Squire to break even
 }
+
+TooltipHelper.config = (
+	function ()
+		local file, err = acutil.loadJSON(TooltipHelper.configFile, TooltipHelper.config);
+		if err then 
+		    acutil.saveJSON(TooltipHelper.configFile, TooltipHelper.config);
+		else 
+		    TooltipHelper.config = file; 
+		end
+		return TooltipHelper.config
+	end
+)()
+
+function TOOLTIPHELPER_ON_INIT(addon)
+    TooltipHelper.addon = addon;
+	
+	TOOLTIPHELPER_INIT();
+end
 
 local function contains(table, val)
     for k, v in ipairs(table) do
@@ -27,34 +42,31 @@ local function contains(table, val)
 end
 
 local function compare(a, b)
-    if a[1] < b[1] then
+    if a.grade < b.grade then
         return true
-    elseif a[1] > b[1] then
+    elseif a.grade > b.grade then
         return false
     else
-        return a[2] < b[2]
+        return a.resultItemName < b.resultItemName
     end
 end
 
-local function applyEllipsis(str)
-    if string.len(str) > 28 then
-        str = string.sub(str, 12)
-    end
-    
-    return str
+local labelColor = "9D8C70"
+local completeColor = "00FF00"
+local commonColor = "FFFFFF"
+local npcColor = "FF4040"
+local squireColor = "40FF40"
+local unregisteredColor = "7B7B7B"
+local collectionIcon = "icon_item_box"
+local recipeIcon = "icon_item_Scroll1"
+local craftedIcon = "icon_item_anvil"
+
+local function toIMCTemplate(text, colorHex)
+    return "{ol}{ds}{#" .. colorHex .. "}".. text .. "{/}{/}{/}"    
 end
 
-local labelColor = "{#9D8C70}"
-local completeColor = "{#00FF00}"
-local commonColor = "{#E1E1E1}"
-local uncommonColor = "{#108CFF}"
-local rareColor = "{#9F30FF}"
-local legendaryColor = "{#FF4F00}"
-local npcColor = "{#FF4040}"
-local squireColor = "{#40FF40}"
-
-local function toIMCTemplate(text, color)
-    return "{ol}{ds}" .. color .. text .. "{/}{/}{/}"    
+local function addIcon(text, iconName)
+	return "{img " .. iconName .. " 24 24}" .. text .. "{/}"
 end
 
 function ITEM_TOOLTIP_BOSSCARD_HOOKED(tooltipFrame, invItem, strArg)
@@ -145,26 +157,28 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
             
             if item.ClassName == invItem.ClassName then
                 foundMatch = true;
-                local neededCount = 0;
+                local neededCount = manuallyCount(cls, item);
                 local collCount = 0;
-                local collName = dictionary.ReplaceDicIDInCompStr(cls.Name);
-                
+                local collName = string.gsub(dictionary.ReplaceDicIDInCompStr(cls.Name), "Collection: ", "")
+				
                 if hasRegisteredCollection then
                     local info = geCollectionTable.Get(cls.ClassID)
                     collCount = coll:GetItemCountByType(item.ClassID);
                     neededCount = info:GetNeedItemCount(item.ClassID);
-                else
-                    neededCount = manuallyCount(cls, item);
                 end
                 
-                text = toIMCTemplate(applyEllipsis(collName) .. " " .. collCount .. "/" .. neededCount .. " ", labelColor)
-
+                text = addIcon(collName .. " " .. collCount .. "/" .. neededCount .. " ", collectionIcon)
+                
                 if isCompleted then
-                    if config.showCompletedCollections then
-                        text = text .. toIMCTemplate("Completed!", completeColor)
+                    if TooltipHelper.config.showCompletedCollections then
+                        text = toIMCTemplate(text, completeColor)
                     else 
                         text = ""
                     end
+                elseif hasRegisteredCollection then
+                	text = toIMCTemplate(text, commonColor)
+               	else
+               		text = toIMCTemplate(text, unregisteredColor)
                 end
                 
                 if not contains(partOfCollections, text) then
@@ -181,20 +195,6 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     return table.concat(partOfCollections,"{nl}")
 end
 
-local function colorByItemGrade(itemGrade)
-    if itemGrade == 1 then return commonColor
-    elseif itemGrade == 2 then return uncommonColor
-    elseif itemGrade == 3 then return rareColor
-    elseif itemGrade == 4 then return legendaryColor
-    else return labelColor end
-end
-
-local function concatenateRecipeText(table, index)
-    local recipeLabelText = toIMCTemplate("Recipe: ", labelColor)
-    local recipeDetails = toIMCTemplate(table[index][2] .. " ", colorByItemGrade(table[index][1]))
-    return recipeLabelText .. recipeDetails
-end
-
 function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     local partOfRecipe = {};
     local foundMatch = false;
@@ -205,35 +205,37 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
         
         for j = 1 , 5 do
             local item = GetClass("Item", cls["Item_" .. j .. "_1"]);
-            local isRegistered = "";
-            local isCrafted = "";
+            local obj = {}
             if item == "None" or item == nil or item.NotExist == 'YES' then
                 break;
             end
             
             if item.ClassName == invItem.ClassName then
                 foundMatch = true;
-                local resultItem = GetClass("Item", cls.TargetItem);
-                if resultItem.ItemType ~= "UNUSED" and resultItem ~= nil then
-                    local grade = resultItem.ItemGrade;
-                    if grade == 'None' or grade == nil then
-                        grade = 0;
+                obj.resultItemObj = GetClass("Item", cls.TargetItem);
+                if obj.resultItemObj.ItemType ~= "UNUSED" and obj.resultItemObj ~= nil then
+                    obj.grade = obj.resultItemObj.ItemGrade;
+                    obj.isRegistered = false;
+                    obj.isCrafted = false;
+                    
+                    if obj.grade == 'None' or obj.grade == nil then
+                        obj.grade = 0;
                     end
                     
-                    local result = dictionary.ReplaceDicIDInCompStr(resultItem.Name) .. " "
+                    obj.resultItemName = dictionary.ReplaceDicIDInCompStr(obj.resultItemObj.Name)
                     local recipeWiki = GetWiki(cls.ClassID);
                     if recipeWiki ~= nil then
                         local teachPoint = GetWikiIntProp(recipeWiki, "TeachPoint");
                         local makeCount = GetWikiIntProp(recipeWiki, "MakeCount");
                         if teachPoint >= 0 then
-                            result = result .. toIMCTemplate("Registered! ", completeColor)
+							obj.isRegistered = true;
                         end
                         if makeCount > 0 then
-                            result = result .. toIMCTemplate("Crafted!", completeColor)
+                        	obj.isCrafted = true;
                         end
                     end
                     
-                    table.insert(unSortedTable, {grade, result});
+                    table.insert(unSortedTable, obj);
                 end
             end
         end
@@ -242,7 +244,25 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     if foundMatch then
         table.sort(unSortedTable, compare);
         for k = 1, #unSortedTable do
-            local text = concatenateRecipeText(unSortedTable, k) 
+        	local obj = unSortedTable[k];
+        	local itemName = obj.resultItemName
+        	local resultItem = obj.resultItemObj
+        	local isRegistered = obj.isRegistered
+        	local isCrafted = obj.isCrafted
+        	local text = ""
+        	
+        	itemName = addIcon(itemName, resultItem.Icon)
+        	
+        	if isRegistered then
+            	text = toIMCTemplate(itemName .. " ", acutil.getItemRarityColor(resultItem))
+    		else
+    			text = toIMCTemplate(itemName .. " ", unregisteredColor)
+        	end
+        	
+        	if isCrafted then
+        		text = text .. addIcon(" ", craftedIcon)
+        	end
+        	
             if not contains(partOfRecipe, text) then
                 table.insert(partOfRecipe, text);
             end
@@ -275,24 +295,23 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
      
     --iLvl
     local itemLevelLabel = ""
-    if config.showItemLevel then
+    if TooltipHelper.config.showItemLevel then
         if invItem.ItemType == "Equip" then
-            itemLevelLabel = toIMCTemplate("Item Level: ", labelColor) .. toIMCTemplate(invItem.ItemLv .. " ", colorByItemGrade(invItem.ItemGrade))
+            itemLevelLabel = toIMCTemplate("Item Level: ", labelColor) .. toIMCTemplate(invItem.ItemLv .. " ", acutil.getItemRarityColor(invItem))
         end
     end
     
     --Repair Recommendation
     local repairRecommendationLabel = ""
-    if config.showRepairRecommendation then
+    if TooltipHelper.config.showRepairRecommendation then
         if invItem.ItemType == "Equip" and invItem.Reinforce_Type == 'Moru' then
             local _, squireResult = ITEMBUFF_NEEDITEM_Squire_Repair(nil, invItem)
             if invItem.Dur < invItem.MaxDur then
-                repairRecommendationLabel = toIMCTemplate("Repair at: ", labelColor)
-                if squireResult * config.squireRepairPerKit < GET_REPAIR_PRICE(invItem, 0) then
-                    repairRecommendationLabel = repairRecommendationLabel .. toIMCTemplate("Squire ", squireColor)
-                else
-                    repairRecommendationLabel = repairRecommendationLabel .. toIMCTemplate("NPC ", npcColor)
+                local repairRecommendation = toIMCTemplate("NPC ", npcColor)
+                if squireResult * tonumber(TooltipHelper.config.squireRepairPerKit) < GET_REPAIR_PRICE(invItem, 0) then
+                    repairRecommendation = toIMCTemplate("Squire ", squireColor)
                 end
+                repairRecommendationLabel = toIMCTemplate("Repair at: ", labelColor) .. repairRecommendation
             end
         end
     end
@@ -302,7 +321,7 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     table.insert(stringBuffer,headText);
     
     --Collection
-    if config.showCollectionCustomTooltips then
+    if TooltipHelper.config.showCollectionCustomTooltips then
         text = COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem);
         if text ~= "" then
             table.insert(stringBuffer,text)
@@ -310,7 +329,7 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     end
       
     --Recipe
-    if config.showRecipeCustomTooltips then 
+    if TooltipHelper.config.showRecipeCustomTooltips then 
         text = RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
         if text ~= "" then
             table.insert(stringBuffer,text)    
@@ -337,17 +356,17 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     return ctrl:GetHeight() + ctrl:GetY();
 end
 
-local function setupHook(newFunction, hookedFunctionStr)
-    local storeOldFunc = hookedFunctionStr .. "_OLD";
-    if _G[storeOldFunc] == nil then
-        _G[storeOldFunc] = _G[hookedFunctionStr];
-    end
-    _G[hookedFunctionStr] = newFunction;
+
+
+function TOOLTIPHELPER_INIT()
+	if not TooltipHelper.isLoaded then
+		acutil.setupHook(ITEM_TOOLTIP_EQUIP_HOOKED, "ITEM_TOOLTIP_EQUIP");
+		acutil.setupHook(ITEM_TOOLTIP_ETC_HOOKED, "ITEM_TOOLTIP_ETC");
+		acutil.setupHook(ITEM_TOOLTIP_BOSSCARD_HOOKED, "ITEM_TOOLTIP_BOSSCARD");
+		acutil.setupHook(ITEM_TOOLTIP_GEM_HOOKED, "ITEM_TOOLTIP_GEM");
+		
+		TooltipHelper.isLoaded = true
+		
+		ui.SysMsg("Tooltip helper loaded!")
+	end
 end
-
-setupHook(ITEM_TOOLTIP_EQUIP_HOOKED, "ITEM_TOOLTIP_EQUIP");
-setupHook(ITEM_TOOLTIP_ETC_HOOKED, "ITEM_TOOLTIP_ETC");
-setupHook(ITEM_TOOLTIP_BOSSCARD_HOOKED, "ITEM_TOOLTIP_BOSSCARD");
-setupHook(ITEM_TOOLTIP_GEM_HOOKED, "ITEM_TOOLTIP_GEM");
-
-ui.SysMsg("Tooltip helper loaded!")
