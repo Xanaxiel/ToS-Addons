@@ -26,8 +26,9 @@ TooltipHelper.config = (
 	end
 )()
 
-function TOOLTIPHELPER_ON_INIT(addon)
+function TOOLTIPHELPER_ON_INIT(addon, frame)
     TooltipHelper.addon = addon;
+	TooltipHelper.frame = frame;
 	
 	TOOLTIPHELPER_INIT();
 end
