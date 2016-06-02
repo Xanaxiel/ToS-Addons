@@ -1,4 +1,16 @@
-local function showMountedStamina()
+local acutil = require('acutil');
+
+_G['ADDONS'] = _G['ADDONS'] or {};
+ShowPetStamina = _G["ADDONS"]["SHOWPETSTAMINA"] or {};
+
+function SHOWPETSTAMINA_ON_INIT(addon, frame)
+    ShowPetStamina.addon = addon;
+	ShowPetStamina.frame = frame;
+	
+	SHOWPETSTAMINA_INIT();
+end
+
+function SHOW_MOUNTED_STAMINA()
     local pc = GetMyPCObject();
     local ridingAttributeCheck = GetAbility(pc, "CompanionRide");
     local petInfo = session.pet.GetSummonedPet();
@@ -24,27 +36,9 @@ local function showMountedStamina()
     end
 end
 
-function UPDATE_COMPANION_TITLE_HOOKED(frame, handle)
-    _G["UPDATE_COMPANION_TITLE_OLD"](frame, handle);
-    showMountedStamina();
+function SHOWPETSTAMINA_INIT()
+	acutil.setupEvent(ShowPetStamina.addon, "ON_RIDING_VEHICLE", "SHOW_MOUNTED_STAMINA")
+	acutil.setupEvent(ShowPetStamina.addon, "UPDATE_COMPANION_TITLE", "SHOW_MOUNTED_STAMINA")
 end
-
-function ON_RIDING_VEHICLE_HOOKED(onoff)
-    _G["ON_RIDING_VEHICLE_OLD"](onoff)
-    showMountedStamina();
-end
-
-local function setupHook(newFunction, hookedFunctionStr)
-    local storeOldFunc = hookedFunctionStr .. "_OLD";
-    if _G[storeOldFunc] == nil then
-        _G[storeOldFunc] = _G[hookedFunctionStr];
-        _G[hookedFunctionStr] = newFunction;
-    else
-        _G[hookedFunctionStr] = newFunction;
-    end
-end
-
-setupHook(UPDATE_COMPANION_TITLE_HOOKED, "UPDATE_COMPANION_TITLE")
-setupHook(ON_RIDING_VEHICLE_HOOKED, "ON_RIDING_VEHICLE")
 
 ui.SysMsg("Showing pet stamina when mounted!")
