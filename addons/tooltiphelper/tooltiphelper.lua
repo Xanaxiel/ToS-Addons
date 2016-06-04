@@ -10,6 +10,7 @@ TooltipHelper.config = {
     showCompletedCollections	 = true,
     showRecipeCustomTooltips	 = true,
     showItemLevel				 = true,
+    showJournalStats			 = true,
     showRepairRecommendation	 = true,
 	squireRepairPerKit			 = 200 -- 160 is the minimum for the Squire to break even
 }
@@ -124,6 +125,44 @@ local function manuallyCount(cls, invItem)
         end
     end
     return count;
+end
+
+function JOURNAL_STATS_CUSTOM_TOOLTIP_TEXT(invItem)
+	local text = ""
+	local type = "Item"
+	if invItem.ItemType == "Recipe" then type = "Recipe" end
+	
+	local clsList = GetClassList(type);        
+	local wikiList = GetClassList("Wiki");
+    local list = GetWikiListByCategory(type);
+    if list ~= nil then
+    	for i = 1 , #list do
+			local wiki = list[i];
+			local wikiType = GetWikiType(wiki);
+			local cls = GetClassByTypeFromList(wikiList, wikiType);
+			local itemCls = GetClassByNameFromList(clsList, cls.ClassName);
+			if itemCls.ClassName == invItem.ClassName then
+				local cls = GetClass("Item", itemCls.ClassName);
+				local score = GET_ITEM_WIKI_PTS(cls, wiki);
+		        local totalCount = GetWikiIntProp(wiki, "Total");
+		        local maxPts = GET_ITEM_MAX_WIKI_PTS(cls, wiki);
+        
+		        if score ~= nil and maxPts ~= nil then
+		        	text = "Journal Points Acquired: (" .. math.floor(score) .. "/" .. maxPts .. "){nl}"
+		        	if score == maxPts then 
+						text = "Journal Points Acquired: " .. maxPts .. "{nl}"			        		
+		        	end
+		        end
+		        
+		        --Journal doesn't log recipe count
+		        if totalCount ~= nil and type ~= "Recipe" then
+		        	text = text .. "Total Obtained: " .. totalCount .. "{nl}"
+		        end
+				break;
+			end
+		end
+    end
+    return toIMCTemplate(text, labelColor)
 end
 
 function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
@@ -293,7 +332,13 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
 	    	table.insert(stringBuffer, text)
 	    end
     end
-     
+    
+    --Journal stats
+    local journalStatsLabel = ""
+    if TooltipHelper.config.showJournalStats then
+		journalStatsLabel = JOURNAL_STATS_CUSTOM_TOOLTIP_TEXT(invItem)
+    end
+    
     --iLvl
     local itemLevelLabel = ""
     if TooltipHelper.config.showItemLevel then
@@ -318,7 +363,7 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     end
     
     local usedInLabel =  toIMCTemplate("Used in:", labelColor)
-    local headText = itemLevelLabel .. repairRecommendationLabel .. usedInLabel
+    local headText = journalStatsLabel .. itemLevelLabel .. repairRecommendationLabel .. usedInLabel
     table.insert(stringBuffer,headText);
     
     --Collection
@@ -338,7 +383,7 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     end
     
     if #stringBuffer == 1 and invItem.ItemType == "Equip" then
-        text = itemLevelLabel .. repairRecommendationLabel
+        text = journalStatsLabel .. itemLevelLabel .. repairRecommendationLabel
     else
         text = table.concat(stringBuffer,"{nl}")
     end
