@@ -362,8 +362,7 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
         end
     end
     
-    local usedInLabel =  toIMCTemplate("Used in:", labelColor)
-    local headText = journalStatsLabel .. itemLevelLabel .. repairRecommendationLabel .. usedInLabel
+    local headText = journalStatsLabel .. itemLevelLabel .. repairRecommendationLabel
     table.insert(stringBuffer,headText);
     
     --Collection
@@ -388,9 +387,6 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
         text = table.concat(stringBuffer,"{nl}")
     end
     
-    if text == usedInLabel then
-        text = ""
-    end
     
     ctrl:SetText(text);
     ctrl:SetMargin(20,gBox:GetHeight() - 10,0,0)
