@@ -5,7 +5,7 @@
 
 # Tooltip Helper
 
-![image](https://cloud.githubusercontent.com/assets/19189593/15796947/651c39ca-2a3b-11e6-8ca4-eeef88ecc879.png)
+![image](https://cloud.githubusercontent.com/assets/19189593/15808840/eee97b66-2bb4-11e6-9bf8-da6d570547e0.png)
 
 **A simple tooltip helper showing the following information:**
 
@@ -17,15 +17,15 @@
  * ![image](https://cloud.githubusercontent.com/assets/19189593/15760053/183b2a6e-2944-11e6-8011-c95745d01955.png) - **Collection completed** 
  *  ![image](https://cloud.githubusercontent.com/assets/19189593/15760013/f7f82248-2943-11e6-925e-889138259f76.png) - **Collection in progress**
  *  ![image](https://cloud.githubusercontent.com/assets/19189593/15759886/5e2b72be-2943-11e6-91e4-2d2740473981.png) - **Collection is not yet registered**
-* **Recipe components** - __The prefixed icons represent the__ **CRAFTED ITEM** 
- * ![image](https://cloud.githubusercontent.com/assets/19189593/15760787/6e370bc4-2947-11e6-924e-87be27b5116d.png) - **Anvil icon shown - You have OBTAINED and CRAFTED the item at least once**
- * **Text will be colored according to it's item grade when you OBTAIN them (same coloring as [Colored Item Names](https://github.com/TehSeph/tos-addons#colored-item-names---v100))**
-     * ![image](https://cloud.githubusercontent.com/assets/19189593/15760291/173994ec-2945-11e6-85be-b013915c6bee.png) - **Common grade**
-     * ![image](https://cloud.githubusercontent.com/assets/19189593/15760299/202d6f38-2945-11e6-8681-6b449b30ead5.png) - **Uncommon grade**
-     * ![image](https://cloud.githubusercontent.com/assets/19189593/15760310/2cbc2bfe-2945-11e6-95eb-2dd5220725be.png) - **Rare grade**
-     * ![image](https://cloud.githubusercontent.com/assets/19189593/15760372/80c8d864-2945-11e6-85a8-62d959ecb345.png) - **Set Item**
-     * ![image](https://cloud.githubusercontent.com/assets/19189593/15760387/8e45fe40-2945-11e6-9433-0c9ef007a3b0.png) - **Legendary grade**
- * ![image](https://cloud.githubusercontent.com/assets/19189593/15760875/e02f5fb0-2947-11e6-8cb7-8db8e82ba22a.png) - **Greyed out text if you haven't obtained the RECIPE of the item**
+* ![image](https://cloud.githubusercontent.com/assets/19189593/15808821/6b2e1dc2-2bb4-11e6-8e76-ce4c64943089.png) **Recipe components**
+  * **Colored text according to item grade when you OBTAIN the recipe (same coloring as [Colored Item Names](https://github.com/TehSeph/tos-addons#colored-item-names---v100))**
+     * ![image](https://cloud.githubusercontent.com/assets/19189593/15808826/7f4bb38c-2bb4-11e6-8b1d-1b7a43ab2dc0.png) - **Common grade**
+     * ![image](https://cloud.githubusercontent.com/assets/19189593/15808827/856ab150-2bb4-11e6-95d4-b9a26fdd8004.png) - **Uncommon grade**
+     * ![image](https://cloud.githubusercontent.com/assets/19189593/15808828/8ae50ebe-2bb4-11e6-8c03-23998852ddbd.png) - **Rare grade**
+     * ![image](https://cloud.githubusercontent.com/assets/19189593/15808830/916afd66-2bb4-11e6-87c9-24084af72c8d.png) - **Set Item**
+     * ![image](https://cloud.githubusercontent.com/assets/19189593/15808831/96bce3d8-2bb4-11e6-94f4-e0ef5ca2104d.png) - **Legendary grade**
+     * ![image](https://cloud.githubusercontent.com/assets/19189593/15808832/a327631e-2bb4-11e6-9b54-182bca9e0d95.png) - **Recipe not yet obtained**
+  * ![image](https://cloud.githubusercontent.com/assets/19189593/15808834/c5d3ffc6-2bb4-11e6-96b3-4a7910b4aa18.png) - **Item icon visible - you have CRAFTED the recipe at least once**
 * **Equipment**
  * ![image](https://cloud.githubusercontent.com/assets/19189593/15760899/01886d50-2948-11e6-8646-4ea471211541.png) - **Shows item level - helpful info for item awakening/feeding equipment to gems**
  *  ![image](https://cloud.githubusercontent.com/assets/19189593/15760906/0af1262a-2948-11e6-9bd3-325af3d2c1c2.png) ![image](https://cloud.githubusercontent.com/assets/19189593/15761025/9e9ebf40-2948-11e6-9b15-f5b5b0634ae8.png) - **Recommends where to get repairs - Squire vs NPC**

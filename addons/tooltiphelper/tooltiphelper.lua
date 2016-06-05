@@ -257,6 +257,7 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
                     obj.grade = obj.resultItemObj.ItemGrade;
                     obj.isRegistered = false;
                     obj.isCrafted = false;
+                    obj.recipeIcon = cls.Icon;
                     
                     if obj.grade == 'None' or obj.grade == nil then
                         obj.grade = 0;
@@ -289,18 +290,18 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
         	local resultItem = obj.resultItemObj
         	local isRegistered = obj.isRegistered
         	local isCrafted = obj.isCrafted
+        	local recipeIcon = obj.recipeIcon
         	local text = ""
         	
-        	itemName = addIcon(itemName, resultItem.Icon)
-        	
-        	if isRegistered then
-            	text = toIMCTemplate(itemName .. " ", acutil.getItemRarityColor(resultItem))
-    		else
-    			text = toIMCTemplate(itemName .. " ", unregisteredColor)
-        	end
-        	
+        	itemName = addIcon(itemName, recipeIcon)
+			text = toIMCTemplate(itemName, acutil.getItemRarityColor(resultItem))
+			
         	if isCrafted then
-        		text = text .. addIcon(" ", craftedIcon)
+        		text = text .. addIcon(" ", resultItem.Icon)
+        	elseif isRegistered then
+        		text = text
+        	else
+        		text = toIMCTemplate(itemName, unregisteredColor)
         	end
         	
             if not contains(partOfRecipe, text) then
