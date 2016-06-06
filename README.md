@@ -5,7 +5,7 @@
 
 # Tooltip Helper
 
-![image](https://cloud.githubusercontent.com/assets/19189593/15808840/eee97b66-2bb4-11e6-9bf8-da6d570547e0.png)
+![image](https://cloud.githubusercontent.com/assets/19189593/15810713/f73a7dfa-2bd3-11e6-86cd-a8fb88e16c1e.png)
 
 **A simple tooltip helper showing the following information:**
 
@@ -14,18 +14,20 @@
  * ![image](https://cloud.githubusercontent.com/assets/19189593/15796960/74ea12c8-2a3b-11e6-8b42-cb6de7dc12f8.png) - **Total number of the current item obtained**
 
 * ![image](https://cloud.githubusercontent.com/assets/19189593/15796968/9ab70c72-2a3b-11e6-9008-bdf46738f18f.png) **Collection components** 
+ * ![image](https://cloud.githubusercontent.com/assets/19189593/15810810/ed24d472-2bd4-11e6-9e04-2d652a650586.png) **Shows number of items required for the collection** - __*how many you have* | *how many you need*__
  * ![image](https://cloud.githubusercontent.com/assets/19189593/15760053/183b2a6e-2944-11e6-8011-c95745d01955.png) - **Collection completed** 
  *  ![image](https://cloud.githubusercontent.com/assets/19189593/15760013/f7f82248-2943-11e6-925e-889138259f76.png) - **Collection in progress**
  *  ![image](https://cloud.githubusercontent.com/assets/19189593/15759886/5e2b72be-2943-11e6-91e4-2d2740473981.png) - **Collection is not yet registered**
 * ![image](https://cloud.githubusercontent.com/assets/19189593/15808821/6b2e1dc2-2bb4-11e6-8e76-ce4c64943089.png) **Recipe components**
+  * ![image](https://cloud.githubusercontent.com/assets/19189593/15810814/f86d6678-2bd4-11e6-9c9c-40285b5f93bd.png) **Shows number of items required to craft the recipe** __*how many you have* | *how many you need*__
   * **Colored text according to item grade when you OBTAIN the recipe (same coloring as [Colored Item Names](https://github.com/TehSeph/tos-addons#colored-item-names---v100))**
-     * ![image](https://cloud.githubusercontent.com/assets/19189593/15808826/7f4bb38c-2bb4-11e6-8b1d-1b7a43ab2dc0.png) - **Common grade**
-     * ![image](https://cloud.githubusercontent.com/assets/19189593/15808827/856ab150-2bb4-11e6-95d4-b9a26fdd8004.png) - **Uncommon grade**
-     * ![image](https://cloud.githubusercontent.com/assets/19189593/15808828/8ae50ebe-2bb4-11e6-8c03-23998852ddbd.png) - **Rare grade**
-     * ![image](https://cloud.githubusercontent.com/assets/19189593/15808830/916afd66-2bb4-11e6-87c9-24084af72c8d.png) - **Set Item**
-     * ![image](https://cloud.githubusercontent.com/assets/19189593/15808831/96bce3d8-2bb4-11e6-94f4-e0ef5ca2104d.png) - **Legendary grade**
-     * ![image](https://cloud.githubusercontent.com/assets/19189593/15808832/a327631e-2bb4-11e6-9b54-182bca9e0d95.png) - **Recipe not yet obtained**
-  * ![image](https://cloud.githubusercontent.com/assets/19189593/15808834/c5d3ffc6-2bb4-11e6-96b3-4a7910b4aa18.png) - **Item icon visible - you have CRAFTED the recipe at least once**
+     * ![image](https://cloud.githubusercontent.com/assets/19189593/15810844/3369834c-2bd5-11e6-92ce-2b02bc4c35be.png) - **Unobtained recipe**
+     * ![image](https://cloud.githubusercontent.com/assets/19189593/15810861/5e272422-2bd5-11e6-86bd-1a3f04d4650f.png) - **Common grade**
+     * ![image](https://cloud.githubusercontent.com/assets/19189593/15810859/582e1364-2bd5-11e6-83d0-e05de2728001.png) - **Uncommon grade**
+     * ![image](https://cloud.githubusercontent.com/assets/19189593/15810855/4d908086-2bd5-11e6-8ba9-f0c9ca0488f6.png) - **Rare grade**
+     * ![image](https://cloud.githubusercontent.com/assets/19189593/15810941/1b200ef4-2bd6-11e6-9ef2-f50d35de3a1a.png) - **Set Item**
+     * ![image](https://cloud.githubusercontent.com/assets/19189593/15810853/454ec8a6-2bd5-11e6-97ea-4e796f608cf8.png) - **Legendary grade**
+  * ![image](https://cloud.githubusercontent.com/assets/19189593/15810839/29e9c6ba-2bd5-11e6-88cb-f408f758e9c8.png) - **Item icon shows when you have CRAFTED the recipe at least once**
 * **Equipment**
  * ![image](https://cloud.githubusercontent.com/assets/19189593/15760899/01886d50-2948-11e6-8646-4ea471211541.png) - **Shows item level - helpful info for item awakening/feeding equipment to gems**
  *  ![image](https://cloud.githubusercontent.com/assets/19189593/15760906/0af1262a-2948-11e6-9bd3-325af3d2c1c2.png) ![image](https://cloud.githubusercontent.com/assets/19189593/15761025/9e9ebf40-2948-11e6-9b15-f5b5b0634ae8.png) - **Recommends where to get repairs - Squire vs NPC**
@@ -47,11 +49,12 @@ Don't get your hands dirty! Use Excrulon's [Addon Manager](https://github.com/Ex
 * Auto-generated Tooltip Helper configuration - found in `../TreeOfSavior/addons/tooltiphelper/tooltiphelper.json`
 ```javascript
 {
-    "showCollectionCustomTooltips" : true, //Show collection on item tooltips
+	"showCollectionCustomTooltips" : true, //Show collection on item tooltips
     "showCompletedCollections"     : true, //Show completed collections on item tooltips
     "showRecipeCustomTooltips"     : true, //Show recipes on item tooltips
+    "showRecipeHaveNeedCount"	   : true, //Show recipe have/need count
     "showItemLevel"                : true, //Show item level for equipment
-    "showJournalStats"	           : true, //Show journal stats for the item
+    "showJournalStats"             : true, //Show journal stats for the item
     "showRepairRecommendation"     : true, //Show repair recommendation
     "squireRepairPerKit"           : 200   //Set price threshold for repair kits -- 160 is the minimum for the Squire to break even
 }
