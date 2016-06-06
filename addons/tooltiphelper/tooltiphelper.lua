@@ -310,8 +310,8 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
         			color = unregisteredColor
         		else
         			if (invItem.ItemType ~= "Recipe") and (haveCount >= needCount) then
-        		color = completeColor
-        	end
+		        		color = completeColor
+		        	end
         		end
 	        	materialCountText = toIMCTemplate(materialCountText, color)
         	end
