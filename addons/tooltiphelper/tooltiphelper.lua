@@ -60,8 +60,6 @@ local npcColor = "FF4040"
 local squireColor = "40FF40"
 local unregisteredColor = "7B7B7B"
 local collectionIcon = "icon_item_box"
-local recipeIcon = "icon_item_Scroll1"
-local craftedIcon = "icon_item_anvil"
 
 local function toIMCTemplate(text, colorHex)
     return "{ol}{ds}{#" .. colorHex .. "}".. text .. "{/}{/}{/}"    
