@@ -9,6 +9,7 @@ TooltipHelper.config = {
     showCollectionCustomTooltips = true,
     showCompletedCollections	 = true,
     showRecipeCustomTooltips	 = true,
+    showRecipeHaveNeedCount		 = true,
     showItemLevel				 = true,
     showJournalStats			 = true,
     showRepairRecommendation	 = true,
@@ -249,6 +250,12 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
             end
             
             if item.ClassName == invItem.ClassName then
+            	local needCount, haveCount = 1, 0;
+            	if IS_RECIPE_ITEM(invItem) ~= 0 then
+            		needCount, haveCount = 1, 1 
+            	else
+            		needCount, haveCount = GET_RECIPE_MATERIAL_INFO(cls, j);
+            	end
                 foundMatch = true;
                 obj.resultItemObj = GetClass("Item", cls.TargetItem);
                 if obj.resultItemObj.ItemType ~= "UNUSED" and obj.resultItemObj ~= nil then
@@ -256,6 +263,8 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
                     obj.isRegistered = false;
                     obj.isCrafted = false;
                     obj.recipeIcon = cls.Icon;
+                    obj.needCount = needCount;
+                    obj.haveCount = haveCount;
                     
                     if obj.grade == 'None' or obj.grade == nil then
                         obj.grade = 0;
@@ -289,18 +298,36 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
         	local isRegistered = obj.isRegistered
         	local isCrafted = obj.isCrafted
         	local recipeIcon = obj.recipeIcon
+        	local needCount = obj.needCount
+			local haveCount = obj.haveCount
         	local text = ""
+        	local materialCountText = ""
+        	local color = commonColor
+        	
+        	if TooltipHelper.config.showRecipeHaveNeedCount then
+        		materialCountText = haveCount .. "/" .. needCount
+        		if not isRegistered then
+        			color = unregisteredColor
+        		else
+        			if (invItem.ItemType ~= "Recipe") and (haveCount >= needCount) then
+        		color = completeColor
+        	end
+        		end
+	        	materialCountText = toIMCTemplate(materialCountText, color)
+        	end
         	
         	itemName = addIcon(itemName, recipeIcon)
 			text = toIMCTemplate(itemName, acutil.getItemRarityColor(resultItem))
 			
         	if isCrafted then
-        		text = text .. addIcon(" ", resultItem.Icon)
+        		text = text .. addIcon("", resultItem.Icon)
         	elseif isRegistered then
         		text = text
         	else
         		text = toIMCTemplate(itemName, unregisteredColor)
         	end
+        	
+        	text = text .. " " .. materialCountText
         	
             if not contains(partOfRecipe, text) then
                 table.insert(partOfRecipe, text);
