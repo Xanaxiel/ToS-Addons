@@ -3,7 +3,10 @@
  * *Yes, my reddit handle is /u/lkamikazel (an old account, too lazy to make a new one)*
  * *Yes, I play on [SEA]Telsiai - I could always use some Talt D:*
   
-# [IMC's stance on addons](https://treeofsavior.com/news/?n=467)
+# [IMC's stance on addons - *updated*](https://treeofsavior.com/news/?n=503)
+ ![addonstuff](https://cloud.githubusercontent.com/assets/19189593/16336807/b9a7b9bc-3a42-11e6-9fb9-a7446c956068.PNG)
+
+## [Previous link](https://treeofsavior.com/news/?n=467) 
  ![image](https://cloud.githubusercontent.com/assets/19189593/15962832/64004a36-2f40-11e6-82c6-1fd29cc56af5.png)
 
 # Tooltip Helper
