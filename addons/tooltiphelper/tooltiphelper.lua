@@ -382,6 +382,18 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
 	    end
     end
     
+    --Reroll price
+    if invItem.GroupName == "Drug" then
+    	local item = GetObjectByGuid(tooltipFrame:GetTooltipIESID());
+		local itemName = dictionary.ReplaceDicIDInCompStr(item.Name)
+		if string.find(itemName, 'Cube') then
+			local rerollPrice = TryGet(item, "NumberArg1")
+			if rerollPrice > 0 then
+				table.insert(stringBuffer, addIcon("", invItem.Icon) .. toIMCTemplate("Reroll Price: " .. GetCommaedText(rerollPrice), labelColor))
+			end
+		end
+    end
+    
     --Journal stats
     local journalStatsLabel = ""
     if TooltipHelper.config.showJournalStats then
