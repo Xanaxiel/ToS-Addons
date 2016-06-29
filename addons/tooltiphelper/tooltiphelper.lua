@@ -87,7 +87,12 @@ function ITEM_TOOLTIP_EQUIP_HOOKED(tooltipFrame, invItem, strArg, useSubFrame)
         mainFrameName = 'equip_sub'
     end
     
-    return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);
+    if marktioneer ~= nil then
+    	CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame)
+    	return marktioneer.addMarketPrice(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);
+    else
+	    return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);
+    end
 end
 
 function ITEM_TOOLTIP_ETC_HOOKED(tooltipFrame, invItem, strArg, useSubFrame)
@@ -99,7 +104,12 @@ function ITEM_TOOLTIP_ETC_HOOKED(tooltipFrame, invItem, strArg, useSubFrame)
         mainFrameName = "etc_sub"
     end
     
-    return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);  
+    if marktioneer ~= nil then
+    	CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);
+    	return marktioneer.addMarketPrice(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);
+    else
+	    return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);  
+    end
 end
 
 function ITEM_TOOLTIP_GEM_HOOKED(tooltipFrame, invItem, strArg)
