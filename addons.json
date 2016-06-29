@@ -3,8 +3,8 @@
         "name" : "Tooltip Helper",
         "file" : "tooltiphelper",
         "extension" : "ipf",
-        "fileVersion" : "v1.10.0",
-        "releaseTag" : "v1.10.0",
+        "fileVersion" : "v2.0.0",
+        "releaseTag" : "v2.0.0",
         "unicode" : "✉",
         "description" : "Helper that displays additional information on tooltips for inventory items",
         "tags" : [
@@ -18,18 +18,23 @@
         ]
     },
     {
-        "name" : "Show Mounted Pet Stamina",
-        "file" : "showpetstamina",
+        "name" : "Resource Gauge",
+        "file" : "resourcegauge",
         "extension" : "ipf",
-        "fileVersion" : "v1.7.0",
-        "releaseTag" : "v1.9.0",
+        "fileVersion" : "v1.0.0",
+        "releaseTag" : "v2.0.0",
         "unicode" : "✉",
-        "description" : "Show pet stamina when mounted",
+        "description" : "Show certain class-specific resources needed to be monitored. Currently includes: mounted pet stamina, necromancer corpses and wugushi poison pots",
         "tags" : [
             "pet",
             "stamina",
             "mounted",
-            "mount"
+            "necromancer",
+            "wugushi",
+            "mount",
+            "resource",
+            "poison pot",
+            "corpses"
         ]
     }
 ]
