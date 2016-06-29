@@ -244,7 +244,10 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
         
         for j = 1 , 5 do
             local item = GetClass("Item", cls["Item_" .. j .. "_1"]);
+            local recipeItem = GetClass("Item", cls["Item_1_1"]);
             local obj = {}
+            obj.recipeClassID = recipeItem.ClassID
+            
             if item == "None" or item == nil or item.NotExist == 'YES' or item.ItemType == 'Unused' or item.GroupName == 'Unused' then
                 break;
             end
@@ -301,6 +304,8 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
         	local recipeIcon = obj.recipeIcon
         	local needCount = obj.needCount
 			local haveCount = obj.haveCount
+			local recipeClsID = obj.recipeClassID
+			
         	local text = ""
         	local materialCountText = ""
         	local color = commonColor
@@ -329,6 +334,23 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
         	end
         	
         	text = text .. " " .. materialCountText
+        	
+        	if marktioneer ~= nil then
+        		local recipeData = marktioneer.getMinimumData(recipeClsID);
+        		local newLine = "{nl}    ";
+				if (recipeData) then 
+					text = text .. newLine .. addIcon("", recipeIcon) .. " ".. toIMCTemplate(GetCommaedText(recipeData.price), labelColor);
+				end
+				local resultItemData = marktioneer.getMinimumData(resultItem.ClassID);
+				if (resultItemData) then 
+					local resultPrice = " " .. addIcon("", resultItem.Icon) .. " ".. toIMCTemplate(GetCommaedText(resultItemData.price), labelColor);
+					if (recipeData) then
+						text = text .. resultPrice
+					else
+						text = text .. newLine .. resultPrice
+					end
+				end
+        	end
         	
             if not contains(partOfRecipe, text) then
                 table.insert(partOfRecipe, text);
