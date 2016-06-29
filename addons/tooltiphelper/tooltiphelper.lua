@@ -190,7 +190,7 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
             local item = GetClass("Item", cls["ItemName_" .. j]);
             local text = "";
             
-            if item == "None" or item == nil or item.NotExist == 'YES' then
+            if item == "None" or item == nil or item.NotExist == 'YES' or item.ItemType == 'Unused' or item.GroupName == 'Unused' then
                 break;
             end
             
@@ -245,7 +245,7 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
         for j = 1 , 5 do
             local item = GetClass("Item", cls["Item_" .. j .. "_1"]);
             local obj = {}
-            if item == "None" or item == nil or item.NotExist == 'YES' then
+            if item == "None" or item == nil or item.NotExist == 'YES' or item.ItemType == 'Unused' or item.GroupName == 'Unused' then
                 break;
             end
             
@@ -258,8 +258,9 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
             	end
                 foundMatch = true;
                 obj.resultItemObj = GetClass("Item", cls.TargetItem);
-                if obj.resultItemObj.ItemType ~= "UNUSED" and obj.resultItemObj ~= nil then
-                    obj.grade = obj.resultItemObj.ItemGrade;
+                local resultItem = obj.resultItemObj
+                if resultItem ~= nil and resultItem.NotExist ~= 'YES' and resultItem.ItemType ~= 'Unused' and item.GroupName ~= 'Unused' then
+                    obj.grade = resultItem.ItemGrade;
                     obj.isRegistered = false;
                     obj.isCrafted = false;
                     obj.recipeIcon = cls.Icon;
@@ -270,7 +271,7 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
                         obj.grade = 0;
                     end
                     
-                    obj.resultItemName = dictionary.ReplaceDicIDInCompStr(obj.resultItemObj.Name)
+                    obj.resultItemName = dictionary.ReplaceDicIDInCompStr(resultItem.Name)
                     local recipeWiki = GetWiki(cls.ClassID);
                     if recipeWiki ~= nil then
                         local teachPoint = GetWikiIntProp(recipeWiki, "TeachPoint");
