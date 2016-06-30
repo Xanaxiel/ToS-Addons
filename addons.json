@@ -21,8 +21,8 @@
         "name" : "Resource Gauge",
         "file" : "resourcegauge",
         "extension" : "ipf",
-        "fileVersion" : "v1.0.0",
-        "releaseTag" : "v2.0.0",
+        "fileVersion" : "v1.0.1",
+        "releaseTag" : "resourcegauge",
         "unicode" : "✉",
         "description" : "Show certain class-specific resources needed to be monitored. Currently includes: mounted pet stamina, necromancer corpses and wugushi poison pots",
         "tags" : [
