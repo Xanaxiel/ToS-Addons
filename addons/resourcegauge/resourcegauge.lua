@@ -122,9 +122,8 @@ function RESOURCEGAUGE_INIT()
 	acutil.setupEvent(ResourceGauge.addon, "ON_RIDING_VEHICLE", "MOUNTED_PET_STAMINA_GAUGE")
 	acutil.setupEvent(ResourceGauge.addon, "UPDATE_COMPANION_TITLE", "MOUNTED_PET_STAMINA_GAUGE")
 	
-	acutil.setupEvent(ResourceGauge.addon, "NECRONOMICON_MSG", "NECROMANCER_CORPSE_GAUGE")
-	
-	acutil.setupEvent(ResourceGauge.addon, "POISONPOT_MSG", "WUGUSHI_POISON_POT_GAUGE")
+	acutil.setupEvent(ResourceGauge.addon, "FPS_UPDATE", "NECROMANCER_CORPSE_GAUGE")
+	acutil.setupEvent(ResourceGauge.addon, "FPS_UPDATE", "WUGUSHI_POISON_POT_GAUGE")
 	
 	ui.SysMsg("Resource gauge loaded!")
 end
