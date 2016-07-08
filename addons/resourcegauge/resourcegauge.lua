@@ -124,6 +124,4 @@ function RESOURCEGAUGE_INIT()
 	
 	acutil.setupEvent(ResourceGauge.addon, "FPS_UPDATE", "NECROMANCER_CORPSE_GAUGE")
 	acutil.setupEvent(ResourceGauge.addon, "FPS_UPDATE", "WUGUSHI_POISON_POT_GAUGE")
-	
-	ui.SysMsg("Resource gauge loaded!")
 end
