@@ -372,55 +372,40 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     return table.concat(partOfRecipe, "{nl}")
 end
 
-function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame)
-    local gBox = GET_CHILD(tooltipFrame, mainFrameName,'ui::CGroupBox');
-    
-    local yPos = gBox:GetY() + gBox:GetHeight();
-    
-    local ctrl = gBox:CreateOrGetControl("richtext", 'text', 0, yPos, 410, 30);
-    tolua.cast(ctrl, "ui::CRichText");
-    
-    local stringBuffer = {};
-    local text = ""
-    
-    --Show trade count when trade window is visible 
-    if ui.GetFrame('exchange'):IsVisible() == 1 then
-		local tradeCount = GetMyAccountObj().TradeCount
-	    if tradeCount > 0 then
-	    	text = toIMCTemplate(tradeCount .. " trades left!", completeColor)
-	    	table.insert(stringBuffer, text)
-	    end
-    end
-    
-    --Reroll price
-    if invItem.GroupName == "Drug" then
+function RENDER_CUBE_REROLL_PRICE(tooltipFrame, buffer, invItem)
+	if invItem.GroupName == "Drug" then
     	local item = GetObjectByGuid(tooltipFrame:GetTooltipIESID());
 		local itemName = dictionary.ReplaceDicIDInCompStr(item.Name)
 		if string.find(itemName, 'Cube') then
 			local rerollPrice = TryGet(item, "NumberArg1")
 			if rerollPrice > 0 then
-				table.insert(stringBuffer, addIcon("", invItem.Icon) .. toIMCTemplate("Reroll Price: " .. GetCommaedText(rerollPrice), labelColor))
+				table.insert(buffer, addIcon("", invItem.Icon) .. toIMCTemplate("Reroll Price: " .. GetCommaedText(rerollPrice), labelColor))
 			end
 		end
     end
-    
-    --Journal stats
-    local journalStatsLabel = ""
-    if TooltipHelper.config.showJournalStats then
+end
+
+function RENDER_JOURNAL_STATS(tooltipFrame, invItem)
+	local journalStatsLabel = ""
+	if TooltipHelper.config.showJournalStats then
 		journalStatsLabel = JOURNAL_STATS_CUSTOM_TOOLTIP_TEXT(invItem)
     end
-    
-    --iLvl
-    local itemLevelLabel = ""
-    if TooltipHelper.config.showItemLevel then
+    return journalStatsLabel
+end
+
+function RENDER_ITEM_LEVEL(tooltipFrame, invItem)
+	local itemLevelLabel = ""
+	if TooltipHelper.config.showItemLevel then
         if invItem.ItemType == "Equip" then
             itemLevelLabel = toIMCTemplate("Item Level: ", labelColor) .. toIMCTemplate(invItem.ItemLv .. " ", acutil.getItemRarityColor(invItem))
         end
     end
-    
-    --Repair Recommendation
-    local repairRecommendationLabel = ""
-    if TooltipHelper.config.showRepairRecommendation then
+    return itemLevelLabel
+end
+
+function RENDER_REPAIR_RECOMMENDATION(tooltipFrame, invItem)
+	local repairRecommendationLabel = ""
+	if TooltipHelper.config.showRepairRecommendation then
         if invItem.ItemType == "Equip" and invItem.Reinforce_Type == 'Moru' then
             local _, squireResult = ITEMBUFF_NEEDITEM_Squire_Repair(nil, invItem)
             if invItem.Dur < invItem.MaxDur then
@@ -432,39 +417,71 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
             end
         end
     end
-    
-    local headText = journalStatsLabel .. itemLevelLabel .. repairRecommendationLabel
-    table.insert(stringBuffer,headText);
-    
-    --Collection
-    if TooltipHelper.config.showCollectionCustomTooltips then
+    return repairRecommendationLabel
+end
+
+function RENDER_COLLECTION_DETAILS(tooltipFrame, buffer, invItem, text)
+	if TooltipHelper.config.showCollectionCustomTooltips then
         text = COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem);
         if text ~= "" then
-            table.insert(stringBuffer,text)
+            table.insert(buffer,text)
         end
     end
-      
-    --Recipe
-    if TooltipHelper.config.showRecipeCustomTooltips then 
+end
+
+function RENDER_RECIPE_DETAILS(tooltipFrame, buffer, invItem, text)
+	if TooltipHelper.config.showRecipeCustomTooltips then 
         text = RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
         if text ~= "" then
-            table.insert(stringBuffer,text)    
+            table.insert(buffer,text)    
         end
     end
+end
+
+function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame)
+    local gBox = GET_CHILD(tooltipFrame, mainFrameName,'ui::CGroupBox');
     
-    if #stringBuffer == 1 and invItem.ItemType == "Equip" then
+    local yPos = gBox:GetY() + gBox:GetHeight();
+    
+    local ctrl = gBox:CreateOrGetControl("richtext", 'text', 0, yPos, 410, 30);
+    tolua.cast(ctrl, "ui::CRichText");
+    
+    local buffer = {};
+    local text = ""
+    
+    --Reroll Price
+    RENDER_CUBE_REROLL_PRICE(tooltipFrame, buffer, invItem);
+    
+    --Journal stats
+    local journalStatsLabel = RENDER_JOURNAL_STATS(tooltipFrame, invItem);
+    
+    --iLvl
+    local itemLevelLabel = RENDER_ITEM_LEVEL(tooltipFrame, invItem);
+    
+    --Repair Recommendation
+    local repairRecommendationLabel = RENDER_REPAIR_RECOMMENDATION(tooltipFrame, invItem);
+    
+    local headText = journalStatsLabel .. itemLevelLabel .. repairRecommendationLabel;
+    table.insert(buffer,headText);
+    
+    --Collection
+    RENDER_COLLECTION_DETAILS(tooltipFrame, buffer, invItem, text)
+      
+    --Recipe
+    RENDER_RECIPE_DETAILS(tooltipFrame, buffer, invItem, text)
+   
+    if #buffer == 1 and invItem.ItemType == "Equip" then
         text = journalStatsLabel .. itemLevelLabel .. repairRecommendationLabel
     else
-        text = table.concat(stringBuffer,"{nl}")
+        text = table.concat(buffer,"{nl}")
     end
-    
-    
+        
     ctrl:SetText(text);
     ctrl:SetMargin(20,gBox:GetHeight() - 10,0,0)
     
     gBox:Resize(gBox:GetWidth(),gBox:GetHeight() + ctrl:GetHeight())
     
-    stringBuffer = {}
+    buffer = {}
     text = ""
     return ctrl:GetHeight() + ctrl:GetY();
 end
