@@ -29,20 +29,20 @@ TooltipHelper.config = (
 	end
 )()
 
-TooltipHelper.magnumOpus.recipes = {
+TooltipHelper.magnumOpusRecipes = {
 	["Drug_HP3"] = {
-		{ name = "Drug_HP1", row = 0, y = 0 },
-		{ name = "Drug_HP1", row = 1, y = 0 },
-		{ name = "Drug_HP2", row = 0, y = 1 }
+		{ name = "Drug_HP1", row = 0, col = 0 },
+		{ name = "Drug_HP1", row = 1, col = 0 },
+		{ name = "Drug_HP2", row = 0, col = 1 }
 	},
 	["misc_jore14"] = {
-		{ name = "misc_jore12", row = 0, y = 0 }
+		{ name = "misc_jore12", row = 0, col = 0 }
 	},
 	["misc_jore15"] = {
-		{ name = "misc_jore13", row = 0, y = 0 },
-		{ name = "misc_jore13", row = 0, y = 1 },
-		{ name = "misc_jore13", row = 1, y = 0 },
-		{ name = "misc_jore13", row = 1, y = 1 }
+		{ name = "misc_jore13", row = 0, col = 0 },
+		{ name = "misc_jore13", row = 0, col = 1 },
+		{ name = "misc_jore13", row = 1, col = 0 },
+		{ name = "misc_jore13", row = 1, col = 1 }
 	},
 	["Hat_628042"] = {
 		{ name = "wood_01", row = 0, col = 0 },
@@ -1405,14 +1405,15 @@ function MAGNUM_OPUS_TRANSMUTED_FROM(invItem)
 	
 	local invItemClassName = invItem.ClassName
 	
-	for k, v in pairs(TooltipHelper.magnumOpus.recipes) do
-		local targetItemClassName = k;
-		if targetItemClassName == invItemClassName then
-			local items = v
+	for k, v in pairs(TooltipHelper.magnumOpusRecipes) do
+		if k == invItemClassName then
+			local items = v;
+			local itemQty = #v
+			
 			local ingredients = {}
 			
-			for m = 1, #items do
-				local item = items[m]["name"]
+			for m = 1, #v do
+				local item = v[m]["name"]
 				
 				if ingredients[item] == nil then
 					ingredients[item] = 1
@@ -1423,29 +1424,25 @@ function MAGNUM_OPUS_TRANSMUTED_FROM(invItem)
 			end
 			
 			--Handle targetItems with multiple ingredients
-			for k, v in pairs(ingredients) do
-				local className = k
-				local qty = v
+			for className, quantity in pairs(ingredients) do
 				local item = GetClass("Item", className)
 				local itemName = dictionary.ReplaceDicIDInCompStr(item.Name)
-				text = toIMCTemplate(qty .. "x" .. addIcon(itemName, item.Icon), labelColor) .. newLine
+				text = toIMCTemplate(quantity .. "x" .. addIcon(itemName, item.Icon), labelColor) .. newLine
 			end
 			
 			text = text .. "  "
 							
-			local itemQty = #items
 			for x = 0, itemQty - 1 do
 		        for y = 0, itemQty - 1 do
 		        	local icon = "{img nomalitem_tooltip_bg 24 24}{/} ";
 		        	local isItemFound = false
 		        	
-		        	for j = 1, #items do
-		        		local item = items[j]
-						local rowSlot = item["row"]
-						local colSlot = item["rol"]
-			        	local name = item["name"]
+		        	for j = 1, itemQty do
+						local rowSlot = items[j]["row"]
+						local colSlot = items[j]["col"]
+			        	local name = items[j]["name"]
 			        	
-			        	if rowSlot == tostring(x) and colSlot == tostring(y) then
+			        	if rowSlot == x and colSlot == y then
 			        		isItemFound = true
 						end
 						
@@ -1481,7 +1478,7 @@ function MAGNUM_OPUS_TRANSMUTES_INTO(invItem)
 	local targetItems = {}
 	local invItemClassName = invItem.ClassName
 	
-	for k, v in pairs(TooltipHelper.magnumOpus.recipes) do
+	for k, v in pairs(TooltipHelper.magnumOpusRecipes) do
 		local targetItemClassName = k;
 		local items = v
 		
@@ -1591,7 +1588,7 @@ end
 
 function RENDER_MAGNUM_OPUS(tooltipFrame, buffer, invItem, text)
 	if TooltipHelper.config.showMagnumOpus then 
-        text = CREATE_MAGNUM_OPUS_SECTION(invItem)
+        text = RENDER_MAGNUM_OPUS_SECTION(invItem)
         if text ~= "" then
             table.insert(buffer,text)    
         end
