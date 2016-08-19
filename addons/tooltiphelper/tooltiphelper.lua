@@ -10,6 +10,7 @@ TooltipHelper.config = {
     showCompletedCollections	 = true,
     showRecipeCustomTooltips	 = true,
     showRecipeHaveNeedCount		 = true,
+    showMagnumOpus				 = true,
     showItemLevel				 = true,
     showJournalStats			 = true,
     showRepairRecommendation	 = true,
@@ -28,8 +29,1034 @@ TooltipHelper.config = (
 	end
 )()
 
+TooltipHelper.magnumOpus.recipes = {
+	["Drug_HP3"] = {
+		{ name = "Drug_HP1", row = 0, y = 0 },
+		{ name = "Drug_HP1", row = 1, y = 0 },
+		{ name = "Drug_HP2", row = 0, y = 1 }
+	},
+	["misc_jore14"] = {
+		{ name = "misc_jore12", row = 0, y = 0 }
+	},
+	["misc_jore15"] = {
+		{ name = "misc_jore13", row = 0, y = 0 },
+		{ name = "misc_jore13", row = 0, y = 1 },
+		{ name = "misc_jore13", row = 1, y = 0 },
+		{ name = "misc_jore13", row = 1, y = 1 }
+	},
+	["Hat_628042"] = {
+		{ name = "wood_01", row = 0, col = 0 },
+		{ name = "wood_01", row = 0, col = 1 },
+		{ name = "wood_01", row = 0, col = 3 },
+		{ name = "wood_01", row = 0, col = 4 },
+		{ name = "misc_ore09", row = 1, col = 0 },
+		{ name = "misc_Echad3", row = 1, col = 1 },
+		{ name = "wood_01", row = 1, col = 2 },
+		{ name = "misc_shtayim3", row = 1, col = 3 },
+		{ name = "misc_ore09", row = 1, col = 4 },
+		{ name = "wood_01", row = 2, col = 0 },
+		{ name = "wood_01", row = 2, col = 1 },
+		{ name = "wood_01", row = 2, col = 3 },
+		{ name = "wood_01", row = 2, col = 4 }
+	},
+	["Hat_628047"] = {
+		{ name = "misc_goldbar", row = 0, col = 1 },
+		{ name = "misc_goldbar", row = 0, col = 2 },
+		{ name = "misc_goldbar", row = 1, col = 0 },
+		{ name = "misc_goldbar", row = 1, col = 1 },
+		{ name = "misc_goldbar", row = 1, col = 2 },
+		{ name = "misc_goldbar", row = 1, col = 3 }
+	},
+	["misc_0019"] = {
+		{ name = "misc_0001", row = 0, col = 0 },
+		{ name = "misc_0001", row = 0, col = 1 },
+		{ name = "misc_0001", row = 1, col = 0 },
+		{ name = "misc_0001", row = 1, col = 1 },
+		{ name = "misc_0001", row = 2, col = 0 },
+		{ name = "misc_0001", row = 2, col = 1 }
+	},
+	["misc_Grummer"] = {
+		{ name = "misc_0010", row = 0, col = 0 },
+		{ name = "misc_0010", row = 0, col = 1 },
+		{ name = "misc_0010", row = 0, col = 2 },
+		{ name = "misc_0010", row = 1, col = 0 },
+		{ name = "misc_0010", row = 1, col = 1 },
+		{ name = "misc_0010", row = 1, col = 2 }
+	},
+	["TSF02_105"] = {
+		{ name = "misc_ore09", row = 0, col = 0 },
+		{ name = "misc_ore09", row = 1, col = 0 },
+		{ name = "misc_ore09", row = 2, col = 0 },
+		{ name = "misc_ore09", row = 3, col = 0 },
+		{ name = "misc_ore09", row = 4, col = 0 },
+		{ name = "misc_ore09", row = 5, col = 0 }
+	},
+	["STF02_107"] = {
+		{ name = "misc_ore09", row = 0, col = 0 },
+		{ name = "misc_ore09", row = 0, col = 1 },
+		{ name = "misc_ore09", row = 1, col = 1 },
+		{ name = "misc_ore09", row = 2, col = 1 },
+		{ name = "misc_ore09", row = 3, col = 1 }
+	},
+	["food_Popolion"] = {
+		{ name = "misc_0001", row = 0, col = 0 },
+		{ name = "misc_0001", row = 0, col = 1 },
+		{ name = "misc_0001", row = 1, col = 0 },
+		{ name = "misc_0001", row = 1, col = 1 }
+	},
+	["misc_0006"] = {
+		{ name = "misc_0002", row = 0, col = 0 },
+		{ name = "misc_0002", row = 0, col = 1 },
+		{ name = "misc_0002", row = 1, col = 0 },
+		{ name = "misc_0002", row = 1, col = 1 }
+	},
+	["misc_0008"] = {
+		{ name = "misc_0005", row = 0, col = 0 },
+		{ name = "misc_0005", row = 0, col = 1 },
+		{ name = "misc_0005", row = 1, col = 0 },
+		{ name = "misc_0005", row = 1, col = 1 }
+	},
+	["misc_0009"] = {
+		{ name = "misc_0004", row = 0, col = 0 },
+		{ name = "misc_0004", row = 0, col = 1 },
+		{ name = "misc_0004", row = 1, col = 0 },
+		{ name = "misc_0004", row = 1, col = 1 }
+	},
+	["misc_0010"] = {
+		{ name = "misc_0006", row = 0, col = 0 },
+		{ name = "misc_0006", row = 0, col = 1 },
+		{ name = "misc_0006", row = 1, col = 0 },
+		{ name = "misc_0006", row = 1, col = 1 }
+	},
+	["misc_0013"] = {
+		{ name = "misc_0008", row = 0, col = 0 },
+		{ name = "misc_0008", row = 0, col = 1 },
+		{ name = "misc_0008", row = 1, col = 0 },
+		{ name = "misc_0008", row = 1, col = 1 }
+	},
+	["misc_0119"] = {
+		{ name = "misc_0010", row = 0, col = 0 },
+		{ name = "misc_0010", row = 0, col = 1 },
+		{ name = "misc_0010", row = 1, col = 0 },
+		{ name = "misc_0010", row = 1, col = 1 }
+	},
+	["misc_0014"] = {
+		{ name = "misc_0119", row = 0, col = 0 },
+		{ name = "misc_0119", row = 0, col = 1 },
+		{ name = "misc_0119", row = 1, col = 0 },
+		{ name = "misc_0119", row = 1, col = 1 }
+	},
+	["misc_0016"] = {
+		{ name = "misc_0008", row = 0, col = 0 },
+		{ name = "misc_0008", row = 0, col = 1 },
+		{ name = "misc_0008", row = 1, col = 0 },
+		{ name = "misc_0008", row = 1, col = 1 },
+		{ name = "misc_0008", row = 2, col = 0 },
+		{ name = "misc_0008", row = 2, col = 1 }
+	},
+	["misc_0106"] = {
+		{ name = "misc_0005", row = 0, col = 0 },
+		{ name = "misc_0005", row = 1, col = 0 },
+		{ name = "misc_0005", row = 2, col = 0 },
+		{ name = "misc_0005", row = 3, col = 0 }
+	},
+	["misc_0015"] = {
+		{ name = "misc_0016", row = 0, col = 0 },
+		{ name = "misc_0016", row = 0, col = 1 },
+		{ name = "misc_0016", row = 1, col = 0 },
+		{ name = "misc_0016", row = 1, col = 1 }
+	},
+	["misc_0019"] = {
+		{ name = "misc_0015", row = 0, col = 0 },
+		{ name = "misc_0015", row = 0, col = 1 },
+		{ name = "misc_0015", row = 1, col = 0 },
+		{ name = "misc_0015", row = 1, col = 1 }
+	},
+	["misc_0018"] = {
+		{ name = "misc_0014", row = 0, col = 0 },
+		{ name = "misc_0014", row = 0, col = 1 },
+		{ name = "misc_0014", row = 1, col = 0 },
+		{ name = "misc_0014", row = 1, col = 1 },
+		{ name = "misc_0014", row = 2, col = 0 },
+		{ name = "misc_0014", row = 2, col = 1 }
+	},
+	["misc_Grummer"] = {
+		{ name = "misc_0010", row = 0, col = 0 },
+		{ name = "misc_0010", row = 0, col = 1 },
+		{ name = "misc_0019", row = 1, col = 0 },
+		{ name = "misc_0019", row = 1, col = 1 }
+	},
+	["misc_leafly"] = {
+		{ name = "misc_0119", row = 0, col = 0 },
+		{ name = "misc_0119", row = 0, col = 1 },
+		{ name = "misc_0119", row = 0, col = 2 },
+		{ name = "misc_0119", row = 1, col = 0 }
+	},
+	["misc_puragi"] = {
+		{ name = "misc_0018", row = 0, col = 0 },
+		{ name = "misc_0018", row = 1, col = 0 },
+		{ name = "misc_0018", row = 2, col = 0 }
+	},
+	["misc_0022"] = {
+		{ name = "misc_leafly", row = 0, col = 0 },
+		{ name = "misc_leafly", row = 0, col = 1 },
+		{ name = "misc_leafly", row = 0, col = 2 },
+		{ name = "misc_leafly", row = 1, col = 0 },
+		{ name = "misc_leafly", row = 1, col = 1 },
+		{ name = "misc_leafly", row = 1, col = 2 },
+		{ name = "misc_leafly", row = 2, col = 0 },
+		{ name = "misc_leafly", row = 2, col = 1 },
+		{ name = "misc_leafly", row = 2, col = 2 }
+	},
+	["misc_banshee"] = {
+		{ name = "misc_0018", row = 0, col = 0 },
+		{ name = "misc_0018", row = 0, col = 1 },
+		{ name = "misc_0018", row = 1, col = 0 },
+		{ name = "misc_0018", row = 1, col = 1 }
+	},
+	["misc_zigri"] = {
+		{ name = "misc_puragi", row = 0, col = 0 },
+		{ name = "misc_puragi", row = 0, col = 1 },
+		{ name = "misc_puragi", row = 1, col = 0 },
+		{ name = "misc_puragi", row = 1, col = 1 }
+	},
+	["misc_humming_bud"] = {
+		{ name = "misc_leafly", row = 0, col = 0 },
+		{ name = "misc_leafly", row = 0, col = 1 },
+		{ name = "misc_leafly", row = 0, col = 3 },
+		{ name = "misc_leafly", row = 1, col = 0 },
+		{ name = "misc_leafly", row = 1, col = 1 },
+		{ name = "misc_leafly", row = 1, col = 3 }
+	},
+	["misc_seedmia"] = {
+		{ name = "misc_0022", row = 0, col = 0 },
+		{ name = "misc_0022", row = 0, col = 1 },
+		{ name = "misc_0022", row = 1, col = 0 },
+		{ name = "misc_0022", row = 1, col = 1 }
+	},
+	["misc_mallardu"] = {
+		{ name = "food_Popolion", row = 0, col = 0 },
+		{ name = "food_Popolion", row = 0, col = 1 },
+		{ name = "food_Popolion", row = 0, col = 3 },
+		{ name = "food_Popolion", row = 1, col = 0 },
+		{ name = "food_Popolion", row = 1, col = 1 },
+		{ name = "food_Popolion", row = 1, col = 3 }
+	},
+	["misc_0112"] = {
+		{ name = "misc_seedmia", row = 0, col = 0 },
+		{ name = "misc_seedmia", row = 1, col = 0 },
+		{ name = "misc_seedmia", row = 2, col = 0 }
+	},
+	["misc_0113"] = {
+		{ name = "misc_banshee", row = 0, col = 0 },
+		{ name = "misc_banshee", row = 0, col = 1 },
+		{ name = "misc_banshee", row = 1, col = 0 },
+		{ name = "misc_banshee", row = 1, col = 1 }
+	},
+	["misc_0035"] = {
+		{ name = "misc_0112", row = 0, col = 0 },
+		{ name = "misc_0112", row = 1, col = 0 },
+		{ name = "misc_0112", row = 2, col = 0 }
+	},
+	["misc_maize"] = {
+		{ name = "misc_0113", row = 0, col = 0 },
+		{ name = "misc_0113", row = 0, col = 1 },
+		{ name = "misc_0113", row = 1, col = 0 },
+		{ name = "misc_0113", row = 1, col = 1 }
+	},
+	["misc_0037"] = {
+		{ name = "misc_humming_bud", row = 0, col = 0 },
+		{ name = "misc_humming_bud", row = 0, col = 1 },
+		{ name = "misc_humming_bud", row = 1, col = 0 },
+		{ name = "misc_humming_bud", row = 1, col = 1 }
+	},
+	["misc_Rudas_loxodon"] = {
+		{ name = "misc_mallardu", row = 0, col = 0 },
+		{ name = "misc_mallardu", row = 0, col = 1 },
+		{ name = "misc_mallardu", row = 1, col = 0 },
+		{ name = "misc_mallardu", row = 1, col = 1 }
+	},
+	["misc_0040"] = {
+		{ name = "misc_0035", row = 0, col = 0 },
+		{ name = "misc_0035", row = 0, col = 1 },
+		{ name = "misc_0035", row = 1, col = 0 },
+		{ name = "misc_0035", row = 1, col = 1 }
+	},
+	["misc_Caro"] = {
+		{ name = "misc_maize", row = 0, col = 0 },
+		{ name = "misc_maize", row = 0, col = 1 },
+		{ name = "misc_maize", row = 1, col = 0 },
+		{ name = "misc_maize", row = 1, col = 1 }
+	},
+	["misc_Mentiwood"] = {
+		{ name = "misc_0040", row = 0, col = 0 },
+		{ name = "misc_0040", row = 0, col = 1 },
+		{ name = "misc_0040", row = 1, col = 0 },
+		{ name = "misc_0040", row = 1, col = 1 }
+	},
+	["misc_0026"] = {
+		{ name = "misc_zigri", row = 0, col = 0 },
+		{ name = "misc_zigri", row = 0, col = 1 },
+		{ name = "misc_zigri", row = 1, col = 0 },
+		{ name = "misc_zigri", row = 1, col = 1 }
+	},
+	["misc_glizardon"] = {
+		{ name = "misc_0018", row = 0, col = 0 },
+		{ name = "misc_0018", row = 0, col = 1 },
+		{ name = "misc_0018", row = 1, col = 0 },
+		{ name = "misc_0018", row = 1, col = 1 },
+		{ name = "misc_0018", row = 2, col = 0 },
+		{ name = "misc_0018", row = 2, col = 1 }
+	},
+	["misc_Corylus"] = {
+		{ name = "misc_Caro", row = 0, col = 0 },
+		{ name = "misc_Caro", row = 1, col = 0 },
+		{ name = "misc_Caro", row = 2, col = 0 },
+		{ name = "misc_Caro", row = 3, col = 0 }
+	},
+	["misc_galok"] = {
+		{ name = "misc_Mentiwood", row = 0, col = 0 },
+		{ name = "misc_Mentiwood", row = 0, col = 1 },
+		{ name = "misc_Mentiwood", row = 1, col = 0 },
+		{ name = "misc_Mentiwood", row = 1, col = 1 }
+	},
+	["misc_0025"] = {
+		{ name = "misc_0026", row = 0, col = 0 },
+		{ name = "misc_0026", row = 0, col = 1 },
+		{ name = "misc_0026", row = 1, col = 0 },
+		{ name = "misc_0026", row = 1, col = 1 }
+	},
+	["misc_Spector_Gh"] = {
+		{ name = "misc_Corylus", row = 0, col = 0 },
+		{ name = "misc_Corylus", row = 0, col = 1 },
+		{ name = "misc_Corylus", row = 1, col = 0 },
+		{ name = "misc_Corylus", row = 1, col = 1 }
+	},
+	["misc_0043"] = {
+		{ name = "misc_Corylus", row = 0, col = 0 },
+		{ name = "misc_Corylus", row = 1, col = 0 },
+		{ name = "misc_Corylus", row = 2, col = 0 }
+	},
+	["misc_0122"] = {
+		{ name = "misc_galok", row = 0, col = 0 },
+		{ name = "misc_galok", row = 1, col = 0 },
+		{ name = "misc_galok", row = 2, col = 0 }
+	},
+	["misc_Velwriggler"] = {
+		{ name = "misc_Spector_Gh", row = 0, col = 0 },
+		{ name = "misc_Spector_Gh", row = 1, col = 0 },
+		{ name = "misc_Spector_Gh", row = 2, col = 0 },
+		{ name = "misc_Spector_Gh", row = 3, col = 0 }
+	},
+	["misc_0046"] = {
+		{ name = "misc_0025", row = 0, col = 0 },
+		{ name = "misc_0025", row = 0, col = 1 },
+		{ name = "misc_0025", row = 0, col = 2 },
+		{ name = "misc_0025", row = 1, col = 0 },
+		{ name = "misc_0025", row = 1, col = 1 },
+		{ name = "misc_0025", row = 1, col = 2 }
+	},
+	["misc_0044"] = {
+		{ name = "misc_0043", row = 0, col = 0 },
+		{ name = "misc_0043", row = 0, col = 1 },
+		{ name = "misc_0043", row = 1, col = 0 },
+		{ name = "misc_0043", row = 1, col = 1 }
+	},
+	["misc_0045"] = {
+		{ name = "misc_0122", row = 0, col = 0 },
+		{ name = "misc_0122", row = 0, col = 1 },
+		{ name = "misc_0122", row = 1, col = 0 },
+		{ name = "misc_0122", row = 1, col = 1 }
+	},
+	["misc_0102"] = {
+		{ name = "misc_Velwriggler", row = 0, col = 0 },
+		{ name = "misc_Velwriggler", row = 0, col = 1 },
+		{ name = "misc_Velwriggler", row = 1, col = 0 },
+		{ name = "misc_Velwriggler", row = 1, col = 1 }
+	},
+	["misc_0049"] = {
+		{ name = "misc_0044", row = 0, col = 0 },
+		{ name = "misc_0044", row = 0, col = 1 },
+		{ name = "misc_0044", row = 1, col = 0 },
+		{ name = "misc_0044", row = 1, col = 1 },
+		{ name = "misc_0044", row = 2, col = 0 },
+		{ name = "misc_0044", row = 2, col = 1 }
+	},
+	["misc_0047"] = {
+		{ name = "misc_0045", row = 0, col = 0 },
+		{ name = "misc_0045", row = 0, col = 1 },
+		{ name = "misc_0045", row = 1, col = 0 },
+		{ name = "misc_0045", row = 1, col = 1 }
+	},
+	["misc_Ammon"] = {
+		{ name = "misc_0102", row = 0, col = 0 },
+		{ name = "misc_0102", row = 0, col = 1 },
+		{ name = "misc_0102", row = 1, col = 0 },
+		{ name = "misc_0102", row = 1, col = 1 }
+	},
+	["misc_0135"] = {
+		{ name = "misc_Ammon", row = 0, col = 0 },
+		{ name = "misc_Ammon", row = 0, col = 1 },
+		{ name = "misc_Ammon", row = 1, col = 0 },
+		{ name = "misc_Ammon", row = 1, col = 1 },
+		{ name = "misc_Ammon", row = 2, col = 0 },
+		{ name = "misc_Ammon", row = 2, col = 1 }
+	},
+	["misc_0109"] = {
+		{ name = "misc_0049", row = 0, col = 0 },
+		{ name = "misc_0049", row = 0, col = 1 },
+		{ name = "misc_0049", row = 1, col = 0 },
+		{ name = "misc_0049", row = 1, col = 1 },
+		{ name = "misc_0049", row = 2, col = 0 },
+		{ name = "misc_0049", row = 2, col = 1 }
+	},
+	["misc_0055"] = {
+		{ name = "misc_0047", row = 0, col = 0 },
+		{ name = "misc_0047", row = 0, col = 1 },
+		{ name = "misc_0047", row = 1, col = 0 },
+		{ name = "misc_0047", row = 1, col = 1 }
+	},
+	["misc_0056"] = {
+		{ name = "misc_Ammon", row = 0, col = 0 },
+		{ name = "misc_Ammon", row = 0, col = 1 },
+		{ name = "misc_Ammon", row = 1, col = 0 },
+		{ name = "misc_Ammon", row = 1, col = 1 }
+	},
+	["misc_Dumaro"] = {
+		{ name = "misc_0046", row = 0, col = 0 },
+		{ name = "misc_0046", row = 0, col = 1 },
+		{ name = "misc_0046", row = 0, col = 2 },
+		{ name = "misc_0046", row = 1, col = 0 },
+		{ name = "misc_0046", row = 1, col = 1 },
+		{ name = "misc_0046", row = 1, col = 2 }
+	},
+	["misc_0058"] = {
+		{ name = "misc_0135", row = 0, col = 0 },
+		{ name = "misc_0135", row = 0, col = 1 },
+		{ name = "misc_0135", row = 1, col = 0 },
+		{ name = "misc_0135", row = 1, col = 1 },
+		{ name = "misc_0135", row = 2, col = 0 }
+	},
+	["misc_0059"] = {
+		{ name = "misc_0025", row = 0, col = 0 },
+		{ name = "misc_0025", row = 0, col = 1 },
+		{ name = "misc_0025", row = 1, col = 0 },
+		{ name = "misc_0025", row = 1, col = 1 }
+	},
+	["misc_Ticen"] = {
+		{ name = "misc_0058", row = 0, col = 0 },
+		{ name = "misc_0058", row = 0, col = 1 },
+		{ name = "misc_0058", row = 1, col = 0 },
+		{ name = "misc_0058", row = 1, col = 1 }
+	},
+	["misc_Tucen"] = {
+		{ name = "misc_0056", row = 0, col = 0 },
+		{ name = "misc_0056", row = 0, col = 1 },
+		{ name = "misc_0056", row = 1, col = 0 },
+		{ name = "misc_0056", row = 1, col = 1 }
+	},
+	["misc_0060"] = {
+		{ name = "misc_Dumaro", row = 0, col = 0 },
+		{ name = "misc_Dumaro", row = 0, col = 1 },
+		{ name = "misc_Dumaro", row = 1, col = 0 },
+		{ name = "misc_Dumaro", row = 1, col = 1 }
+	},
+	["misc_0061"] = {
+		{ name = "misc_Ticen", row = 0, col = 0 },
+		{ name = "misc_Ticen", row = 0, col = 1 },
+		{ name = "misc_Ticen", row = 1, col = 0 },
+		{ name = "misc_Ticen", row = 1, col = 1 },
+		{ name = "misc_Ticen", row = 2, col = 0 },
+		{ name = "misc_Ticen", row = 2, col = 1 }
+	},
+	["misc_0153"] = {
+		{ name = "misc_0055", row = 0, col = 0 },
+		{ name = "misc_0055", row = 0, col = 1 },
+		{ name = "misc_0055", row = 1, col = 0 },
+		{ name = "misc_0055", row = 1, col = 1 }
+	},
+	["misc_Sakmoli"] = {
+		{ name = "misc_0047", row = 0, col = 0 },
+		{ name = "misc_0047", row = 0, col = 1 },
+		{ name = "misc_0047", row = 1, col = 0 },
+		{ name = "misc_0047", row = 1, col = 1 },
+		{ name = "misc_0047", row = 2, col = 0 },
+		{ name = "misc_0047", row = 2, col = 1 }
+	},
+	["misc_0128"] = {
+		{ name = "misc_0060", row = 0, col = 0 },
+		{ name = "misc_0060", row = 0, col = 1 },
+		{ name = "misc_0060", row = 1, col = 0 },
+		{ name = "misc_0060", row = 1, col = 1 }
+	},
+	["misc_Repusbunny"] = {
+		{ name = "misc_0153", row = 0, col = 0 },
+		{ name = "misc_0153", row = 0, col = 1 },
+		{ name = "misc_0153", row = 1, col = 0 },
+		{ name = "misc_0153", row = 1, col = 1 }
+	},
+	["misc_Hallowventor"] = {
+		{ name = "misc_0061", row = 0, col = 0 },
+		{ name = "misc_0061", row = 0, col = 1 },
+		{ name = "misc_0061", row = 1, col = 0 },
+		{ name = "misc_0061", row = 1, col = 1 }
+	},
+	["misc_Tontulia"] = {
+		{ name = "misc_Tucen", row = 0, col = 0 },
+		{ name = "misc_Tucen", row = 0, col = 1 },
+		{ name = "misc_Tucen", row = 1, col = 0 },
+		{ name = "misc_Tucen", row = 1, col = 1 }
+	},
+	["misc_0062"] = {
+		{ name = "misc_0128", row = 0, col = 0 },
+		{ name = "misc_0128", row = 0, col = 1 },
+		{ name = "misc_0128", row = 1, col = 0 },
+		{ name = "misc_0128", row = 1, col = 1 }
+	},
+	["misc_0105"] = {
+		{ name = "misc_Hallowventor", row = 0, col = 0 },
+		{ name = "misc_Hallowventor", row = 0, col = 1 },
+		{ name = "misc_Hallowventor", row = 1, col = 0 },
+		{ name = "misc_Hallowventor", row = 1, col = 1 }
+	},
+	["misc_0063"] = {
+		{ name = "misc_Tontulia", row = 0, col = 0 },
+		{ name = "misc_Tontulia", row = 0, col = 1 },
+		{ name = "misc_Tontulia", row = 1, col = 0 },
+		{ name = "misc_Tontulia", row = 1, col = 1 }
+	},
+	["misc_Karas"] = {
+		{ name = "misc_Dumaro", row = 0, col = 0 },
+		{ name = "misc_Dumaro", row = 0, col = 1 },
+		{ name = "misc_Dumaro", row = 1, col = 0 },
+		{ name = "misc_Dumaro", row = 1, col = 1 },
+		{ name = "misc_Dumaro", row = 2, col = 0 },
+		{ name = "misc_Dumaro", row = 2, col = 1 }
+	},
+	["misc_0064"] = {
+		{ name = "misc_0105", row = 0, col = 0 },
+		{ name = "misc_0105", row = 0, col = 1 },
+		{ name = "misc_0105", row = 1, col = 0 },
+		{ name = "misc_0105", row = 1, col = 1 }
+	},
+	["misc_0104"] = {
+		{ name = "misc_0062", row = 0, col = 0 },
+		{ name = "misc_0062", row = 0, col = 1 },
+		{ name = "misc_0062", row = 1, col = 0 },
+		{ name = "misc_0062", row = 1, col = 1 }
+	},
+	["misc_0065"] = {
+		{ name = "misc_Karas", row = 0, col = 0 },
+		{ name = "misc_Karas", row = 0, col = 1 },
+		{ name = "misc_Karas", row = 1, col = 0 },
+		{ name = "misc_Karas", row = 1, col = 1 }
+	},
+	["misc_shtayim"] = {
+		{ name = "misc_0064", row = 0, col = 0 },
+		{ name = "misc_0064", row = 0, col = 1 },
+		{ name = "misc_0064", row = 1, col = 0 },
+		{ name = "misc_0064", row = 1, col = 1 }
+	},
+	["misc_0094"] = {
+		{ name = "misc_0065", row = 0, col = 0 },
+		{ name = "misc_0065", row = 0, col = 1 },
+		{ name = "misc_0065", row = 1, col = 0 },
+		{ name = "misc_0065", row = 1, col = 1 }
+	},
+	["misc_0093"] = {
+		{ name = "misc_shtayim", row = 0, col = 0 },
+		{ name = "misc_shtayim", row = 0, col = 1 },
+		{ name = "misc_shtayim", row = 1, col = 0 },
+		{ name = "misc_shtayim", row = 1, col = 1 }
+	},
+	["misc_schlesien_darkmage"] = {
+		{ name = "misc_0104", row = 0, col = 0 },
+		{ name = "misc_0104", row = 0, col = 1 },
+		{ name = "misc_0104", row = 1, col = 0 },
+		{ name = "misc_0104", row = 1, col = 1 }
+	},
+	["misc_0070"] = {
+		{ name = "misc_0093", row = 0, col = 0 },
+		{ name = "misc_0093", row = 0, col = 1 },
+		{ name = "misc_0093", row = 1, col = 0 },
+		{ name = "misc_0093", row = 1, col = 1 }
+	},
+	["misc_Haming2"] = {
+		{ name = "misc_Tontulia", row = 0, col = 0 },
+		{ name = "misc_Tontulia", row = 0, col = 1 },
+		{ name = "misc_Tontulia", row = 1, col = 0 }
+	},
+	["misc_0140"] = {
+		{ name = "misc_Repusbunny", row = 0, col = 0 },
+		{ name = "misc_Repusbunny", row = 0, col = 1 },
+		{ name = "misc_Repusbunny", row = 1, col = 0 },
+		{ name = "misc_Repusbunny", row = 1, col = 1 }
+	},
+	["misc_0139"] = {
+		{ name = "misc_schlesien_darkmage", row = 0, col = 0 },
+		{ name = "misc_schlesien_darkmage", row = 0, col = 1 },
+		{ name = "misc_schlesien_darkmage", row = 1, col = 0 },
+		{ name = "misc_schlesien_darkmage", row = 1, col = 1 }
+	},
+	["misc_0155"] = {
+		{ name = "misc_Haming2", row = 0, col = 0 },
+		{ name = "misc_Haming2", row = 0, col = 1 },
+		{ name = "misc_Haming2", row = 1, col = 0 },
+		{ name = "misc_Haming2", row = 1, col = 1 }
+	},
+	["misc_Lizardman"] = {
+		{ name = "misc_0070", row = 0, col = 0 },
+		{ name = "misc_0070", row = 1, col = 0 },
+		{ name = "misc_0070", row = 2, col = 0 }
+	},
+	["misc_0074"] = {
+		{ name = "misc_0139", row = 0, col = 0 },
+		{ name = "misc_0139", row = 0, col = 1 },
+		{ name = "misc_0139", row = 1, col = 0 },
+		{ name = "misc_0139", row = 1, col = 1 }
+	},
+	["misc_0075"] = {
+		{ name = "misc_0070", row = 0, col = 0 },
+		{ name = "misc_0070", row = 0, col = 1 },
+		{ name = "misc_0070", row = 1, col = 0 },
+		{ name = "misc_0070", row = 1, col = 1 }
+	},
+	["misc_0097"] = {
+		{ name = "misc_0093", row = 0, col = 0 },
+		{ name = "misc_0093", row = 1, col = 0 },
+		{ name = "misc_0093", row = 2, col = 0 },
+		{ name = "misc_0093", row = 2, col = 1 }
+	},
+	["misc_0076"] = {
+		{ name = "misc_0075", row = 0, col = 0 },
+		{ name = "misc_0075", row = 0, col = 1 },
+		{ name = "misc_0075", row = 1, col = 0 },
+		{ name = "misc_0075", row = 1, col = 1 }
+	},
+	["misc_Cockatries"] = {
+		{ name = "misc_0140", row = 0, col = 0 },
+		{ name = "misc_0140", row = 0, col = 1 },
+		{ name = "misc_0140", row = 1, col = 0 },
+		{ name = "misc_0140", row = 1, col = 1 }
+	},
+	["misc_Minos1"] = {
+		{ name = "misc_Lizardman", row = 0, col = 0 },
+		{ name = "misc_Lizardman", row = 0, col = 1 },
+		{ name = "misc_Lizardman", row = 1, col = 0 },
+		{ name = "misc_Lizardman", row = 1, col = 1 }
+	},
+	["misc_Stoulet"] = {
+		{ name = "misc_0155", row = 0, col = 0 },
+		{ name = "misc_0155", row = 0, col = 1 },
+		{ name = "misc_0155", row = 1, col = 0 },
+		{ name = "misc_0155", row = 1, col = 1 }
+	},
+	["misc_0127"] = {
+		{ name = "misc_0074", row = 0, col = 0 },
+		{ name = "misc_0074", row = 0, col = 1 },
+		{ name = "misc_0074", row = 1, col = 0 },
+		{ name = "misc_0074", row = 1, col = 1 }
+	},
+	["misc_Bushspider_purple"] = {
+		{ name = "misc_Cockatries", row = 0, col = 0 },
+		{ name = "misc_Cockatries", row = 0, col = 1 },
+		{ name = "misc_Cockatries", row = 1, col = 0 },
+		{ name = "misc_Cockatries", row = 1, col = 1 }
+	},
+	["misc_Fisherman"] = {
+		{ name = "misc_Minos1", row = 0, col = 0 },
+		{ name = "misc_Minos1", row = 1, col = 0 },
+		{ name = "misc_Minos1", row = 2, col = 0 },
+		{ name = "misc_Minos1", row = 3, col = 0 }
+	},
+	["misc_ellomago"] = {
+		{ name = "misc_Bushspider_purple", row = 0, col = 0 },
+		{ name = "misc_Bushspider_purple", row = 0, col = 1 },
+		{ name = "misc_Bushspider_purple", row = 1, col = 0 },
+		{ name = "misc_Bushspider_purple", row = 1, col = 1 }
+	},
+	["misc_0129"] = {
+		{ name = "misc_0127", row = 0, col = 0 },
+		{ name = "misc_0127", row = 1, col = 0 },
+		{ name = "misc_0127", row = 2, col = 0 },
+		{ name = "misc_0127", row = 3, col = 0 }
+	},
+	["misc_Bume_Goblin"] = {
+		{ name = "misc_0013", row = 0, col = 0 },
+		{ name = "misc_0013", row = 0, col = 1 },
+		{ name = "misc_0013", row = 1, col = 0 },
+		{ name = "misc_0013", row = 1, col = 1 },
+		{ name = "misc_0013", row = 2, col = 0 },
+		{ name = "misc_0013", row = 2, col = 1 }
+	},
+	["misc_arburn_pokubu_blue2"] = {
+		{ name = "misc_Stoulet", row = 0, col = 0 },
+		{ name = "misc_Stoulet", row = 0, col = 1 },
+		{ name = "misc_Stoulet", row = 1, col = 0 },
+		{ name = "misc_Stoulet", row = 1, col = 1 }
+	},
+	["misc_0100"] = {
+		{ name = "misc_Fisherman", row = 0, col = 0 },
+		{ name = "misc_Fisherman", row = 0, col = 1 },
+		{ name = "misc_Fisherman", row = 1, col = 0 },
+		{ name = "misc_Fisherman", row = 1, col = 1 }
+	},
+	["misc_0079"] = {
+		{ name = "misc_arburn_pokubu_blue2", row = 0, col = 0 },
+		{ name = "misc_arburn_pokubu_blue2", row = 0, col = 1 },
+		{ name = "misc_arburn_pokubu_blue2", row = 1, col = 0 },
+		{ name = "misc_arburn_pokubu_blue2", row = 1, col = 1 }
+	},
+	["misc_rublem"] = {
+		{ name = "misc_Bume_Goblin", row = 0, col = 0 },
+		{ name = "misc_Bume_Goblin", row = 0, col = 1 },
+		{ name = "misc_Bume_Goblin", row = 1, col = 0 },
+		{ name = "misc_Bume_Goblin", row = 1, col = 1 }
+	},
+	["misc_0080"] = {
+		{ name = "misc_ellomago", row = 0, col = 0 },
+		{ name = "misc_ellomago", row = 0, col = 1 },
+		{ name = "misc_ellomago", row = 1, col = 0 },
+		{ name = "misc_ellomago", row = 1, col = 1 }
+	},
+	["misc_Armory"] = {
+		{ name = "misc_rublem", row = 0, col = 0 },
+		{ name = "misc_rublem", row = 0, col = 1 },
+		{ name = "misc_rublem", row = 1, col = 0 },
+		{ name = "misc_rublem", row = 1, col = 1 }
+	},
+	["misc_0081"] = {
+		{ name = "misc_0100", row = 0, col = 0 },
+		{ name = "misc_0100", row = 0, col = 1 },
+		{ name = "misc_0100", row = 1, col = 0 },
+		{ name = "misc_0100", row = 1, col = 1 }
+	},
+	["misc_chromadog"] = {
+		{ name = "misc_0129", row = 0, col = 0 },
+		{ name = "misc_0129", row = 0, col = 1 },
+		{ name = "misc_0129", row = 1, col = 0 },
+		{ name = "misc_0129", row = 1, col = 1 }
+	},
+	["misc_0083"] = {
+		{ name = "misc_0079", row = 0, col = 0 },
+		{ name = "misc_0079", row = 0, col = 1 },
+		{ name = "misc_0079", row = 1, col = 0 },
+		{ name = "misc_0079", row = 1, col = 1 }
+	},
+	["misc_0086"] = {
+		{ name = "misc_chromadog", row = 0, col = 0 },
+		{ name = "misc_chromadog", row = 0, col = 1 },
+		{ name = "misc_chromadog", row = 1, col = 0 },
+		{ name = "misc_chromadog", row = 1, col = 1 }
+	},
+	["misc_minivern"] = {
+		{ name = "misc_0080", row = 0, col = 0 },
+		{ name = "misc_0080", row = 0, col = 1 },
+		{ name = "misc_0080", row = 1, col = 0 },
+		{ name = "misc_0080", row = 1, col = 1 }
+	},
+	["misc_0088"] = {
+		{ name = "misc_0081", row = 0, col = 0 },
+		{ name = "misc_0081", row = 0, col = 1 },
+		{ name = "misc_0081", row = 1, col = 0 },
+		{ name = "misc_0081", row = 1, col = 1 }
+	},
+	["misc_0132"] = {
+		{ name = "misc_0083", row = 0, col = 0 },
+		{ name = "misc_0083", row = 0, col = 1 },
+		{ name = "misc_0083", row = 1, col = 0 },
+		{ name = "misc_0083", row = 1, col = 1 }
+	},
+	["misc_0133"] = {
+		{ name = "misc_minivern", row = 0, col = 0 },
+		{ name = "misc_minivern", row = 0, col = 1 },
+		{ name = "misc_minivern", row = 1, col = 0 },
+		{ name = "misc_minivern", row = 1, col = 1 }
+	},
+	["misc_0134"] = {
+		{ name = "misc_0080", row = 0, col = 0 },
+		{ name = "misc_0080", row = 1, col = 0 },
+		{ name = "misc_0080", row = 2, col = 0 }
+	},
+	["misc_0136"] = {
+		{ name = "misc_0086", row = 0, col = 0 },
+		{ name = "misc_0086", row = 1, col = 0 },
+		{ name = "misc_0086", row = 1, col = 1 },
+		{ name = "misc_0086", row = 2, col = 0 }
+	},
+	["misc_0137"] = {
+		{ name = "misc_minivern", row = 0, col = 0 },
+		{ name = "misc_minivern", row = 0, col = 1 },
+		{ name = "misc_minivern", row = 1, col = 0 },
+		{ name = "misc_minivern", row = 1, col = 1 },
+		{ name = "misc_minivern", row = 2, col = 0 },
+		{ name = "misc_minivern", row = 2, col = 1 }
+	},
+	["misc_0138"] = {
+		{ name = "misc_0129", row = 0, col = 0 },
+		{ name = "misc_0129", row = 0, col = 1 },
+		{ name = "misc_0129", row = 0, col = 2 },
+		{ name = "misc_0129", row = 1, col = 0 }
+	},
+	["misc_Infroholder"] = {
+		{ name = "misc_chromadog", row = 0, col = 0 },
+		{ name = "misc_chromadog", row = 1, col = 0 },
+		{ name = "misc_chromadog", row = 2, col = 0 },
+		{ name = "misc_chromadog", row = 3, col = 0 }
+	},
+	["misc_0141"] = {
+		{ name = "misc_0136", row = 0, col = 0 },
+		{ name = "misc_0136", row = 0, col = 1 },
+		{ name = "misc_0136", row = 1, col = 0 },
+		{ name = "misc_0136", row = 1, col = 1 }
+	},
+	["misc_Rubabos"] = {
+		{ name = "misc_0137", row = 0, col = 0 },
+		{ name = "misc_0137", row = 0, col = 1 },
+		{ name = "misc_0137", row = 1, col = 0 },
+		{ name = "misc_0137", row = 1, col = 1 }
+	},
+	["misc_0184"] = {
+		{ name = "misc_Infroholder", row = 0, col = 0 },
+		{ name = "misc_Infroholder", row = 0, col = 1 },
+		{ name = "misc_Infroholder", row = 1, col = 0 },
+		{ name = "misc_Infroholder", row = 1, col = 1 }
+	},
+	["misc_0143"] = {
+		{ name = "misc_0134", row = 0, col = 0 },
+		{ name = "misc_0134", row = 0, col = 1 },
+		{ name = "misc_0134", row = 1, col = 0 },
+		{ name = "misc_0134", row = 1, col = 1 }
+	},
+	["misc_0144"] = {
+		{ name = "misc_0138", row = 0, col = 0 },
+		{ name = "misc_0138", row = 0, col = 1 },
+		{ name = "misc_0138", row = 1, col = 0 },
+		{ name = "misc_0138", row = 1, col = 1 }
+	},
+	["misc_0149"] = {
+		{ name = "misc_0141", row = 0, col = 0 },
+		{ name = "misc_0141", row = 0, col = 1 },
+		{ name = "misc_0141", row = 1, col = 0 },
+		{ name = "misc_0141", row = 1, col = 1 }
+	},
+	["misc_0152"] = {
+		{ name = "misc_0184", row = 0, col = 0 },
+		{ name = "misc_0184", row = 0, col = 1 },
+		{ name = "misc_0184", row = 1, col = 0 },
+		{ name = "misc_0184", row = 1, col = 1 }
+	},
+	["misc_0165"] = {
+		{ name = "misc_0143", row = 0, col = 0 },
+		{ name = "misc_0143", row = 0, col = 1 },
+		{ name = "misc_0143", row = 1, col = 0 },
+		{ name = "misc_0143", row = 1, col = 1 }
+	},
+	["misc_0166"] = {
+		{ name = "misc_0144", row = 0, col = 0 },
+		{ name = "misc_0144", row = 0, col = 1 },
+		{ name = "misc_0144", row = 1, col = 0 },
+		{ name = "misc_0144", row = 1, col = 1 }
+	},
+	["misc_0168"] = {
+		{ name = "misc_0149", row = 0, col = 0 },
+		{ name = "misc_0149", row = 0, col = 1 },
+		{ name = "misc_0149", row = 1, col = 0 },
+		{ name = "misc_0149", row = 1, col = 1 }
+	},
+	["tree_root_mole1"] = {
+		{ name = "misc_0165", row = 0, col = 0 },
+		{ name = "misc_0165", row = 0, col = 1 },
+		{ name = "misc_0165", row = 1, col = 0 },
+		{ name = "misc_0165", row = 1, col = 1 }
+	},
+	["misc_0170"] = {
+		{ name = "misc_0152", row = 0, col = 0 },
+		{ name = "misc_0152", row = 0, col = 2 },
+		{ name = "misc_0152", row = 1, col = 0 },
+		{ name = "misc_0152", row = 1, col = 1 },
+		{ name = "misc_0152", row = 1, col = 2 },
+		{ name = "misc_0152", row = 2, col = 0 },
+		{ name = "misc_0152", row = 2, col = 2 }
+	},
+	["misc_0156"] = {
+		{ name = "misc_0166", row = 0, col = 0 },
+		{ name = "misc_0166", row = 0, col = 1 },
+		{ name = "misc_0166", row = 1, col = 0 },
+		{ name = "misc_0166", row = 1, col = 1 }
+	},
+	["misc_0157"] = {
+		{ name = "misc_0088", row = 0, col = 0 },
+		{ name = "misc_0088", row = 0, col = 1 },
+		{ name = "misc_0088", row = 1, col = 0 },
+		{ name = "misc_0088", row = 1, col = 1 }
+	},
+	["misc_0158"] = {
+		{ name = "misc_0157", row = 0, col = 0 },
+		{ name = "misc_0157", row = 0, col = 1 },
+		{ name = "misc_0157", row = 0, col = 2 },
+		{ name = "misc_0157", row = 1, col = 0 },
+		{ name = "misc_0157", row = 1, col = 1 },
+		{ name = "misc_0157", row = 1, col = 2 },
+		{ name = "misc_0157", row = 2, col = 0 },
+		{ name = "misc_0157", row = 2, col = 1 },
+		{ name = "misc_0157", row = 2, col = 2 }
+	},
+	["misc_0147"] = {
+		{ name = "tree_root_mole1", row = 0, col = 0 },
+		{ name = "tree_root_mole1", row = 0, col = 1 },
+		{ name = "tree_root_mole1", row = 1, col = 0 },
+		{ name = "tree_root_mole1", row = 1, col = 1 }
+	},
+	["misc_0161"] = {
+		{ name = "misc_0158", row = 0, col = 0 },
+		{ name = "misc_0158", row = 0, col = 1 },
+		{ name = "misc_0158", row = 1, col = 0 },
+		{ name = "misc_0158", row = 1, col = 1 }
+	},
+	["misc_0162"] = {
+		{ name = "misc_0170", row = 0, col = 0 },
+		{ name = "misc_0170", row = 0, col = 1 },
+		{ name = "misc_0170", row = 1, col = 0 },
+		{ name = "misc_0170", row = 1, col = 1 }
+	},
+	["misc_0131"] = {
+		{ name = "misc_0147", row = 0, col = 0 },
+		{ name = "misc_0147", row = 0, col = 1 },
+		{ name = "misc_0147", row = 1, col = 0 },
+		{ name = "misc_0147", row = 1, col = 1 }
+	},
+	["misc_0163"] = {
+		{ name = "misc_0168", row = 0, col = 0 },
+		{ name = "misc_0168", row = 0, col = 1 },
+		{ name = "misc_0168", row = 1, col = 0 },
+		{ name = "misc_0168", row = 1, col = 1 }
+	},
+	["misc_0164"] = {
+		{ name = "misc_0162", row = 0, col = 0 },
+		{ name = "misc_0162", row = 0, col = 1 },
+		{ name = "misc_0162", row = 1, col = 0 },
+		{ name = "misc_0162", row = 1, col = 1 }
+	},
+	["misc_Mushroom_boy"] = {
+		{ name = "misc_0131", row = 0, col = 0 },
+		{ name = "misc_0131", row = 0, col = 1 },
+		{ name = "misc_0131", row = 0, col = 2 },
+		{ name = "misc_0131", row = 1, col = 0 },
+		{ name = "misc_0131", row = 1, col = 1 },
+		{ name = "misc_0131", row = 1, col = 2 }
+	},
+	["misc_0171"] = {
+		{ name = "misc_Mushroom_boy", row = 0, col = 0 },
+		{ name = "misc_Mushroom_boy", row = 0, col = 1 },
+		{ name = "misc_Mushroom_boy", row = 1, col = 0 },
+		{ name = "misc_Mushroom_boy", row = 1, col = 1 }
+	},
+	["misc_0172"] = {
+		{ name = "misc_0163", row = 0, col = 0 },
+		{ name = "misc_0163", row = 0, col = 1 },
+		{ name = "misc_0163", row = 1, col = 0 },
+		{ name = "misc_0163", row = 1, col = 1 }
+	},
+	["misc_0173"] = {
+		{ name = "misc_0148", row = 0, col = 0 },
+		{ name = "misc_0148", row = 0, col = 1 },
+		{ name = "misc_0148", row = 0, col = 2 },
+		{ name = "misc_0148", row = 1, col = 0 },
+		{ name = "misc_0148", row = 1, col = 1 },
+		{ name = "misc_0148", row = 1, col = 2 }
+	},
+	["misc_0174"] = {
+		{ name = "misc_0172", row = 0, col = 0 },
+		{ name = "misc_0172", row = 0, col = 1 },
+		{ name = "misc_0172", row = 1, col = 0 },
+		{ name = "misc_0172", row = 1, col = 1 }
+	},
+	["misc_0175"] = {
+		{ name = "misc_Mushroom_boy", row = 0, col = 0 },
+		{ name = "misc_Mushroom_boy", row = 1, col = 0 },
+		{ name = "misc_Mushroom_boy", row = 2, col = 0 }
+	},
+	["misc_0176"] = {
+		{ name = "misc_0171", row = 0, col = 0 },
+		{ name = "misc_0171", row = 0, col = 1 },
+		{ name = "misc_0171", row = 1, col = 0 },
+		{ name = "misc_0171", row = 1, col = 1 }
+	},
+	["misc_0178"] = {
+		{ name = "misc_kowak", row = 0, col = 0 },
+		{ name = "misc_kowak", row = 0, col = 1 },
+		{ name = "misc_kowak", row = 1, col = 0 },
+		{ name = "misc_kowak", row = 1, col = 1 }
+	},
+	["misc_mushroom_ent"] = {
+		{ name = "misc_Mushroom_boy", row = 0, col = 0 },
+		{ name = "misc_Mushroom_boy", row = 0, col = 1 },
+		{ name = "misc_Mushroom_boy", row = 1, col = 0 },
+		{ name = "misc_Mushroom_boy", row = 1, col = 1 },
+		{ name = "misc_Mushroom_boy", row = 2, col = 0 },
+		{ name = "misc_Mushroom_boy", row = 2, col = 1 }
+	},
+	["misc_0179"] = {
+		{ name = "misc_0176", row = 0, col = 0 },
+		{ name = "misc_0176", row = 1, col = 0 },
+		{ name = "misc_0176", row = 2, col = 0 },
+		{ name = "misc_0176", row = 3, col = 0 }
+	},
+	["misc_0181"] = {
+		{ name = "misc_0175", row = 0, col = 0 },
+		{ name = "misc_0175", row = 0, col = 1 },
+		{ name = "misc_0175", row = 1, col = 0 },
+		{ name = "misc_0175", row = 1, col = 1 }
+	},
+	["misc_0092"] = {
+		{ name = "misc_0178", row = 0, col = 0 },
+		{ name = "misc_0178", row = 0, col = 1 },
+		{ name = "misc_0178", row = 1, col = 0 },
+		{ name = "misc_0178", row = 1, col = 1 }
+	},
+	["misc_anchor"] = {
+		{ name = "misc_0173", row = 0, col = 0 },
+		{ name = "misc_0173", row = 0, col = 1 },
+		{ name = "misc_0173", row = 1, col = 0 },
+		{ name = "misc_0173", row = 1, col = 1 }
+	},
+	["misc_velffigy"] = {
+		{ name = "misc_0181", row = 0, col = 0 },
+		{ name = "misc_0181", row = 0, col = 1 },
+		{ name = "misc_0181", row = 1, col = 0 },
+		{ name = "misc_0181", row = 1, col = 1 }
+	},
+	["misc_glyquare"] = {
+		{ name = "misc_anchor", row = 0, col = 0 },
+		{ name = "misc_anchor", row = 0, col = 1 },
+		{ name = "misc_anchor", row = 1, col = 0 },
+		{ name = "misc_anchor", row = 1, col = 1 }
+	},
+	["misc_Rambear"] = {
+		{ name = "misc_0179", row = 0, col = 0 },
+		{ name = "misc_0179", row = 0, col = 1 },
+		{ name = "misc_0179", row = 1, col = 0 },
+		{ name = "misc_0179", row = 1, col = 1 }
+	},
+	["misc_goblin"] = {
+		{ name = "misc_Bume_Goblin", row = 0, col = 0 },
+		{ name = "misc_Bume_Goblin", row = 0, col = 1 },
+		{ name = "misc_Bume_Goblin", row = 1, col = 0 },
+		{ name = "misc_Bume_Goblin", row = 1, col = 1 },
+		{ name = "misc_Bume_Goblin", row = 2, col = 0 },
+		{ name = "misc_Bume_Goblin", row = 2, col = 1 }
+	},
+	["misc_Lemuria"] = {
+		{ name = "misc_0092", row = 0, col = 0 },
+		{ name = "misc_0092", row = 0, col = 1 },
+		{ name = "misc_0092", row = 1, col = 0 },
+		{ name = "misc_0092", row = 1, col = 1 }
+	}
+}
+
 function TOOLTIPHELPER_ON_INIT(addon, frame)
-    TooltipHelper.addon = addon;
+	TooltipHelper.addon = addon;
 	TooltipHelper.frame = frame;
 	
 	TOOLTIPHELPER_INIT();
@@ -372,6 +1399,130 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
     return table.concat(partOfRecipe, "{nl}")
 end
 
+function MAGNUM_OPUS_TRANSMUTED_FROM(invItem)
+	local newLine = "{nl}"
+	local text = ""
+	
+	local invItemClassName = invItem.ClassName
+	
+	for k, v in pairs(TooltipHelper.magnumOpus.recipes) do
+		local targetItemClassName = k;
+		if targetItemClassName == invItemClassName then
+			local items = v
+			local ingredients = {}
+			
+			for m = 1, #items do
+				local item = items[m]["name"]
+				
+				if ingredients[item] == nil then
+					ingredients[item] = 1
+				else
+					local oldVal = ingredients[item]
+					ingredients[item] = oldVal + 1
+				end
+			end
+			
+			--Handle targetItems with multiple ingredients
+			for k, v in pairs(ingredients) do
+				local className = k
+				local qty = v
+				local item = GetClass("Item", className)
+				local itemName = dictionary.ReplaceDicIDInCompStr(item.Name)
+				text = toIMCTemplate(qty .. "x" .. addIcon(itemName, item.Icon), labelColor) .. newLine
+			end
+			
+			text = text .. "  "
+							
+			local itemQty = #items
+			for x = 0, itemQty - 1 do
+		        for y = 0, itemQty - 1 do
+		        	local icon = "{img nomalitem_tooltip_bg 24 24}{/} ";
+		        	local isItemFound = false
+		        	
+		        	for j = 1, #items do
+		        		local item = items[j]
+						local rowSlot = item["row"]
+						local colSlot = item["rol"]
+			        	local name = item["name"]
+			        	
+			        	if rowSlot == tostring(x) and colSlot == tostring(y) then
+			        		isItemFound = true
+						end
+						
+						if isItemFound == true then
+							local prereqItem = GetClass("Item", name)
+							local itemIcon = prereqItem.Icon
+							icon = "{img " .. prereqItem.Icon .. " 24 24}{/} "
+							text = text .. icon
+							break;
+						end
+		        	end
+		        	
+		        	if not isItemFound then
+		        		text = text .. icon
+		        	end
+			    end
+	        	text = text .. newLine .. "  "
+			end
+			break;
+		end
+	end
+	
+	if text ~= "" then
+		text = toIMCTemplate("Transmuted From:{nl} ", labelColor) .. text
+	end
+	
+	return text;
+end
+
+function MAGNUM_OPUS_TRANSMUTES_INTO(invItem)
+	local text = ""
+	
+	local targetItems = {}
+	local invItemClassName = invItem.ClassName
+	
+	for k, v in pairs(TooltipHelper.magnumOpus.recipes) do
+		local targetItemClassName = k;
+		local items = v
+		
+		for i = 1, #items do
+			local itemClass = items[i]["name"]
+			
+			if itemClass == invItemClassName then
+				if targetItems[targetItemClassName] == nil then
+					targetItems[targetItemClassName] = 1
+				else
+					local oldVal = targetItems[targetItemClassName]
+					targetItems[targetItemClassName] = oldVal + 1
+				end
+			end
+		end
+	end
+	
+	
+	for k, v in pairs(targetItems) do
+		local className = k
+		local qty = v
+		local result = GetClass("Item", className)
+		local itemName = dictionary.ReplaceDicIDInCompStr(result.Name)
+		text = text .. toIMCTemplate("  " .. qty .. "x", labelColor) 
+					.. toIMCTemplate(addIcon("= 1 ", invItem.Icon), labelColor) 
+					.. toIMCTemplate(addIcon(itemName, result.Icon) .. "{nl}", labelColor)
+	end
+	
+	if text ~= "" then
+		text = toIMCTemplate("Magnum Opus{nl} Transmutes Into:{nl}", labelColor) .. text .. "{nl}";
+	end
+	
+	return text;
+end
+
+function RENDER_MAGNUM_OPUS_SECTION(invItem)
+	local transmuteInto = MAGNUM_OPUS_TRANSMUTES_INTO(invItem);
+	local transmuteFrom = MAGNUM_OPUS_TRANSMUTED_FROM(invItem);
+	return transmuteInto .. transmuteFrom; 
+end
+
 function RENDER_CUBE_REROLL_PRICE(tooltipFrame, buffer, invItem)
 	if invItem.GroupName == "Drug" then
     	local item = GetObjectByGuid(tooltipFrame:GetTooltipIESID());
@@ -438,13 +1589,22 @@ function RENDER_RECIPE_DETAILS(tooltipFrame, buffer, invItem, text)
     end
 end
 
+function RENDER_MAGNUM_OPUS(tooltipFrame, buffer, invItem, text)
+	if TooltipHelper.config.showMagnumOpus then 
+        text = CREATE_MAGNUM_OPUS_SECTION(invItem)
+        if text ~= "" then
+            table.insert(buffer,text)    
+        end
+    end
+end
+
 function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame)
     local gBox = GET_CHILD(tooltipFrame, mainFrameName,'ui::CGroupBox');
     
     local yPos = gBox:GetY() + gBox:GetHeight();
     
-    local ctrl = gBox:CreateOrGetControl("richtext", 'text', 0, yPos, 410, 30);
-    tolua.cast(ctrl, "ui::CRichText");
+    local leftTextCtrl = gBox:CreateOrGetControl("richtext", 'text', 0, yPos, 410, 30);
+    tolua.cast(leftTextCtrl, "ui::CRichText");
     
     local buffer = {};
     local text = ""
@@ -470,20 +1630,52 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     --Recipe
     RENDER_RECIPE_DETAILS(tooltipFrame, buffer, invItem, text)
    
+    local rightText = ""
+    local rightBuffer = {}
+    --Magnum Opus
+    RENDER_MAGNUM_OPUS(tooltipFrame, rightBuffer, invItem, rightText)
+    
     if #buffer == 1 and invItem.ItemType == "Equip" then
         text = journalStatsLabel .. itemLevelLabel .. repairRecommendationLabel
     else
         text = table.concat(buffer,"{nl}")
+        rightText = table.concat(rightBuffer,"{nl}")
     end
         
-    ctrl:SetText(text);
-    ctrl:SetMargin(20,gBox:GetHeight() - 10,0,0)
+    leftTextCtrl:SetText(text);
+    leftTextCtrl:SetMargin(20,gBox:GetHeight() - 10,0,0)
+    leftTextCtrl:SetGravity(ui.LEFT, ui.TOP)
     
-    gBox:Resize(gBox:GetWidth(),gBox:GetHeight() + ctrl:GetHeight())
+    if rightText ~= "" then
+    	local rightTextCtrl = gBox:CreateOrGetControl("richtext", 'text2', leftTextCtrl:GetX() + 50, yPos, 410, 30);
+	    tolua.cast(rightTextCtrl, "ui::CRichText");
+	    rightTextCtrl:SetText(rightText)
+	    rightTextCtrl:SetMargin(0, gBox:GetHeight() - 10,20,0)
+	    rightTextCtrl:SetGravity(ui.RIGHT, ui.TOP)
+	    
+    	local width = leftTextCtrl:GetWidth() + rightTextCtrl:GetWidth() + 50;
+	    if leftTextCtrl:GetHeight() > rightTextCtrl:GetHeight() then
+			gBox:Resize(width, gBox:GetHeight() + leftTextCtrl:GetHeight())	    
+	    else 
+	    	gBox:Resize(width, gBox:GetHeight() + rightTextCtrl:GetHeight())
+	    end
+	    
+	    local etcCommonTooltip = GET_CHILD(gBox, 'tooltip_etc_common');
+	    if etcCommonTooltip ~= nil then
+		    etcCommonTooltip:Resize(width, etcCommonTooltip:GetHeight())
+	    end
+	    
+    	local etcDescTooltip = GET_CHILD(gBox, 'tooltip_etc_desc');
+		if etcDescTooltip ~= nil then
+		    etcDescTooltip:Resize(width, etcDescTooltip:GetHeight())
+	    end	
+    else
+	    gBox:Resize(gBox:GetWidth(), gBox:GetHeight() + leftTextCtrl:GetHeight())
+    end
     
     buffer = {}
     text = ""
-    return ctrl:GetHeight() + ctrl:GetY();
+    return leftTextCtrl:GetHeight() + leftTextCtrl:GetY();
 end
 
 
