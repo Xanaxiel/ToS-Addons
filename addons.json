@@ -37,5 +37,18 @@
             "poison pot",
             "corpses"
         ]
+    },
+    {
+        "name" : "Market Filter",
+        "file" : "marketfilter",
+        "extension" : "ipf",
+        "fileVersion" : "v1.0.0",
+        "releaseTag" : "marketfilter",
+        "unicode" : "✉",
+        "description" : "Enables gems and card filters (seriously though IMC should have enabled since the patch)",
+        "tags" : [
+            "market",
+            "filter"
+        ]
     }
 ]
