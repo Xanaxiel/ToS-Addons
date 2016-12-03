@@ -1,7 +1,4 @@
-*For those asking:* 
-
- * *Yes, my reddit handle is /u/lkamikazel (an old account, too lazy to make a new one)*
- * *Yes, I play on [SEA]Telsiai - I could always use some Talt D:*
+ * * Not quite playing anymore
   
 # [IMC's stance on addons - *updated*](https://treeofsavior.com/news/?n=503)
  ![addonstuff](https://cloud.githubusercontent.com/assets/19189593/16336807/b9a7b9bc-3a42-11e6-9fb9-a7446c956068.PNG)
@@ -60,5 +57,3 @@ __\*Don't use the source files unless you know how to use them\*__
 
 ##Don't get your hands dirty! Use Excrulon's [Addon Manager](https://github.com/Excrulon/Tree-of-Savior-Addon-Manager/releases/latest).
 ##Make sure to read the [instructions](https://github.com/Excrulon/Tree-of-Savior-Addon-Manager#download--install) and [FAQs](https://github.com/Excrulon/Tree-of-Savior-Addon-Manager#faq)
-
-If you still have questions or concerns, join our [ToS Addon Discord server](https://discord.gg/0yyOKTr8o3OdJTxa). 
