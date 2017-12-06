@@ -1,6 +1,8 @@
 *.prefs
 .project
 *.rar
+*.ps1
 .buildpath
 ipfbuilder
 build
+dev-files/**
