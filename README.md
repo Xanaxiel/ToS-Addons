@@ -1,14 +1,6 @@
- * * Not quite playing anymore
-  
-# [IMC's stance on addons - *updated*](https://treeofsavior.com/news/?n=503)
- ![addonstuff](https://cloud.githubusercontent.com/assets/19189593/16336807/b9a7b9bc-3a42-11e6-9fb9-a7446c956068.PNG)
-
-## [Previous link](https://treeofsavior.com/news/?n=467) 
- ![image](https://cloud.githubusercontent.com/assets/19189593/15962832/64004a36-2f40-11e6-82c6-1fd29cc56af5.png)
-
 # Tooltip Helper
 
-![image](https://cloud.githubusercontent.com/assets/19189593/17829583/c5a4c988-66e5-11e6-8eb5-fe7383279f8d.png)
+![image](https://cloud.githubusercontent.com/assets/19189593/15810713/f73a7dfa-2bd3-11e6-86cd-a8fb88e16c1e.png)
 
 ##A simple tooltip helper showing the following information:##
 
@@ -37,11 +29,8 @@
  * ![image](https://cloud.githubusercontent.com/assets/19189593/15760899/01886d50-2948-11e6-8646-4ea471211541.png) - **Shows item level - helpful info for item awakening/feeding equipment to gems**
  *  ![image](https://cloud.githubusercontent.com/assets/19189593/15760906/0af1262a-2948-11e6-9bd3-325af3d2c1c2.png) ![image](https://cloud.githubusercontent.com/assets/19189593/15761025/9e9ebf40-2948-11e6-9b15-f5b5b0634ae8.png) - **Recommends where to get repairs - Squire vs NPC**
 * **[Marktioneer](https://github.com/fiote/ToS-Addons/releases/tag/marketd) integration** - __You **MUST** have [Marktioneer](https://github.com/fiote/ToS-Addons/releases/tag/marketd) installed via the [Addon Manager](https://github.com/Excrulon/Tree-of-Savior-Addon-Manager/releases/latest)__
- * ![image](https://cloud.githubusercontent.com/assets/19189593/16438720/b1683538-3de4-11e6-98cb-03979ff5e6e5.png) 
-* **Magnum Opus** - Shows items that are materials for transmuting in Magnum Opus
- * ![image](https://cloud.githubusercontent.com/assets/19189593/17829584/d3097e0c-66e5-11e6-84fe-68af87696333.png)
 
- 
+ * ![image](https://cloud.githubusercontent.com/assets/19189593/16438720/b1683538-3de4-11e6-98cb-03979ff5e6e5.png)
 
 # Resource Gauge
 
@@ -53,7 +42,4 @@
 * **Also includes Necromancer's Corpses, as well as Wugushi's Poison Pots** - __*These still need more in-depth testing, please post an issue when you encounter one*__
 
 # Installation
-__\*Don't use the source files unless you know how to use them\*__
-
-##Don't get your hands dirty! Use Excrulon's [Addon Manager](https://github.com/Excrulon/Tree-of-Savior-Addon-Manager/releases/latest).
-##Make sure to read the [instructions](https://github.com/Excrulon/Tree-of-Savior-Addon-Manager#download--install) and [FAQs](https://github.com/Excrulon/Tree-of-Savior-Addon-Manager#faq)
+* via the new and working [Addon Manager](https://github.com/MizukiBelhi/Tree-of-Savior-Addon-Manager/releases/latest) forked from JToS, thanks to [MizukiBelhi](https://github.com/MizukiBelhi)!
