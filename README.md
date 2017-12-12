@@ -2,14 +2,13 @@
 
 ![image](https://user-images.githubusercontent.com/19189593/33910589-39f83f82-dfca-11e7-87e5-93fd3962a79b.png)
 
-##A simple tooltip helper showing the following information:
+## A simple tooltip helper showing the following information:
 
 * **Cube Reroll Price**
  * ![image](https://cloud.githubusercontent.com/assets/19189593/16438726/bd7679de-3de4-11e6-92f1-c5e004eecd69.png)
 * **Journal Status**
- * ![image](https://cloud.githubusercontent.com/assets/19189593/15796957/6ec2c458-2a3b-11e6-98cd-39dd15944c4f.png) ![image](https://cloud.githubusercontent.com/assets/19189593/15796961/7e78d662-2a3b-11e6-8407-d3f33a135976.png) - **Number of adventure journal points gained from the item (points for equipment scale on their upgrade level)**  
- * ![image](https://cloud.githubusercontent.com/assets/19189593/15796960/74ea12c8-2a3b-11e6-8b42-cb6de7dc12f8.png) - **Total number of the current item obtained**
-
+ * ![image](https://cloud.githubusercontent.com/assets/19189593/15796961/7e78d662-2a3b-11e6-8407-d3f33a135976.png) - **Number of adventure journal points gained from the item (only records newly acquired items each month as per journal changes), as well as point progression**  
+ 
 * ![image](https://cloud.githubusercontent.com/assets/19189593/15796968/9ab70c72-2a3b-11e6-9008-bdf46738f18f.png) **Collection Components** 
  * ![image](https://cloud.githubusercontent.com/assets/19189593/15810810/ed24d472-2bd4-11e6-9e04-2d652a650586.png) **Shows number of items required for the collection** - __*how many you have* | *how many you need*__
  * ![image](https://cloud.githubusercontent.com/assets/19189593/15760053/183b2a6e-2944-11e6-8011-c95745d01955.png) - **Collection completed** 
