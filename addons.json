@@ -3,8 +3,8 @@
         "name" : "Tooltip Helper",
         "file" : "tooltiphelper",
         "extension" : "ipf",
-        "fileVersion" : "v2.1.4",
-        "releaseTag" : "v2.1.4",
+        "fileVersion" : "v2.2.0",
+        "releaseTag" : "magnum-opus",
         "unicode" : "✉",
         "description" : "Helper that displays additional information on tooltips for inventory items",
         "tags" : [
