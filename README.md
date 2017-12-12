@@ -1,8 +1,8 @@
 # Tooltip Helper
 
-![image](https://cloud.githubusercontent.com/assets/19189593/15810713/f73a7dfa-2bd3-11e6-86cd-a8fb88e16c1e.png)
+![image](https://user-images.githubusercontent.com/19189593/33910589-39f83f82-dfca-11e7-87e5-93fd3962a79b.png)
 
-##A simple tooltip helper showing the following information:##
+##A simple tooltip helper showing the following information:
 
 * **Cube Reroll Price**
  * ![image](https://cloud.githubusercontent.com/assets/19189593/16438726/bd7679de-3de4-11e6-92f1-c5e004eecd69.png)
@@ -28,7 +28,8 @@
 * **Equipment**
  * ![image](https://cloud.githubusercontent.com/assets/19189593/15760899/01886d50-2948-11e6-8646-4ea471211541.png) - **Shows item level - helpful info for item awakening/feeding equipment to gems**
  *  ![image](https://cloud.githubusercontent.com/assets/19189593/15760906/0af1262a-2948-11e6-9bd3-325af3d2c1c2.png) ![image](https://cloud.githubusercontent.com/assets/19189593/15761025/9e9ebf40-2948-11e6-9b15-f5b5b0634ae8.png) - **Recommends where to get repairs - Squire vs NPC**
-* **[Marktioneer](https://github.com/fiote/ToS-Addons/releases/tag/marketd) integration** - __You **MUST** have [Marktioneer](https://github.com/fiote/ToS-Addons/releases/tag/marketd) installed via the [Addon Manager](https://github.com/Excrulon/Tree-of-Savior-Addon-Manager/releases/latest)__
+ 
+* **[MarktioneerEX](https://github.com/Kalafiorek/ToS-Addons/tree/master/marktioneerex) integration** - __You **MUST** have [Marktioneer](https://github.com/fiote/ToS-Addons/releases/tag/marketd) installed via the [Addon Manager](https://github.com/MizukiBelhi/Tree-of-Savior-Addon-Manager/releases/latest)__
 
  * ![image](https://cloud.githubusercontent.com/assets/19189593/16438720/b1683538-3de4-11e6-98cb-03979ff5e6e5.png)
 
@@ -37,9 +38,7 @@
 **Shows certain resources that is useful to be monitored on your character specially for specific classes. (Could still be further expanded)**
 
 * **Pet stamina while mounted**
- * ![image](https://cloud.githubusercontent.com/assets/19189593/15264239/cac6b1c2-19a3-11e6-925b-cbf3643842ae.png)
- * ![image](https://cloud.githubusercontent.com/assets/19189593/15264233/c41c43aa-19a3-11e6-8a83-a9e619339f31.png)
 * **Also includes Necromancer's Corpses, as well as Wugushi's Poison Pots** - __*These still need more in-depth testing, please post an issue when you encounter one*__
 
 # Installation
-* via the new and working [Addon Manager](https://github.com/MizukiBelhi/Tree-of-Savior-Addon-Manager/releases/latest) forked from JToS, thanks to [MizukiBelhi](https://github.com/MizukiBelhi)!
+* Latest working [Addon Manager](https://github.com/MizukiBelhi/Tree-of-Savior-Addon-Manager/releases/latest) forked from JToS, thanks to [Extended UI's](https://github.com/MizukiBelhi/ExtendedUI) [MizukiBelhi](https://github.com/MizukiBelhi)!
