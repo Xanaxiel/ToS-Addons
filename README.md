@@ -41,3 +41,5 @@
 
 # Installation
 * Latest working [Addon Manager](https://github.com/MizukiBelhi/Tree-of-Savior-Addon-Manager/releases/latest) forked from JToS, thanks to [Extended UI's](https://github.com/MizukiBelhi/ExtendedUI) [MizukiBelhi](https://github.com/MizukiBelhi)!
+
+* Please add recipe_puzzle.xml to your `<ToS path>/addons/tooltiphelper` directory for updated Magnum Opus combinations
