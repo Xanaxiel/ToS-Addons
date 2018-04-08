@@ -42,7 +42,7 @@
         "name" : "Warmode-Ex",
         "file" : "warmodeex",
         "extension" : "ipf",
-        "fileVersion" : "v1.0.0",
+        "fileVersion" : "v1.0.1",
         "releaseTag" : "warmodeex",
         "unicode" : "✉",
         "description" : "An extension from the original Warmode, added toggling of 3D models and other miscellaneous rendering which is helpful in Challenge Mode",
