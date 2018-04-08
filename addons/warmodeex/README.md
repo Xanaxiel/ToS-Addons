@@ -14,6 +14,9 @@ Controls:
  
 ## Added customizations
  * LALT + NUMPAD4: Toggle 3D models
- * LALT + NUMPAD5: Toggle other miscellaneous rendering
- * LALT + NUMPAD6: Restore default settings before any changes were made
+ * LALT + NUMPAD5: Toggle other miscellaneous rendering (or by using `/war3d`)
+ * LALT + NUMPAD6: Restore default settings before any changes were made (or by using `/warmisc`)
 
+
+# Installation
+* Latest working [Addon Manager](https://github.com/MizukiBelhi/Tree-of-Savior-Addon-Manager/releases/latest) forked from JToS, thanks to [Extended UI's](https://github.com/MizukiBelhi/ExtendedUI) [MizukiBelhi](https://github.com/MizukiBelhi)!
