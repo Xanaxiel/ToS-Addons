@@ -7,15 +7,15 @@ Best used in Low Settings Mode
 Controls:
 
 ## From the original Warmode
- * LALT + NUMPAD0: Disable game's graphics
- * LALT + NUMPAD1: Enable game's graphics
- * LALT + NUMPAD2: Disable game's UI
- * LALT + NUMPAD3: Enable game's UI
+ * LALT+NUMPAD0 or LALT+DELETE: Disable game's graphics
+ * LALT+NUMPAD1 or LALT+END: Enable game's graphics
+ * LALT+NUMPAD2 or LALT+PGDN: Disable game's UI
+ * LALT+NUMPAD3 or LALT+PGUP: Enable game's UI
  
 ## Added customizations
- * LALT + NUMPAD4: Toggle 3D models
- * LALT + NUMPAD5: Toggle other miscellaneous rendering (or by using `/war3d`)
- * LALT + NUMPAD6: Restore default settings before any changes were made (or by using `/warmisc`)
+ * LALT+NUMPAD4 or LALT+INSERT: Toggle 3D models (or by using `/war3d`)
+ * LALT+NUMPAD5 or LALT+HOME: Toggle other miscellaneous rendering (or by using `/warmisc`)
+ * LALT+NUMPAD6 or LALT+BACKSPACE: Restore default settings before any changes were made
 
 
 # Installation

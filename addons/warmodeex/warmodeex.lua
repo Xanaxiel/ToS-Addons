@@ -23,24 +23,30 @@ function WARMODEEX_ON_INIT(addon, frame)
     frame:RunUpdateScript("WARMODEEX_UPDATE", 0, 0, 0, 1);
 end
 
+function IS_PRESSED(key1, key2)
+	if keyboard.IsKeyDown(key1) == 1 and keyboard.IsKeyPressed(key2) == 1 then 
+		return true 
+	else 
+	return false end;
+end
+
 function WARMODEEX_UPDATE(frame)
 
-    if keyboard.IsKeyDown("NUMPAD0") == 1 and keyboard.IsKeyPressed("LALT") == 1 then
+    if IS_PRESSED("NUMPAD0", "LALT") or IS_PRESSED("DELETE", "LALT") then
         WARMODE(0)
-    elseif keyboard.IsKeyDown("NUMPAD1") == 1 and keyboard.IsKeyPressed("LALT") == 1 then
+    elseif IS_PRESSED("NUMPAD1", "LALT") or IS_PRESSED("END", "LALT") then
         WARMODE(1)
-    elseif keyboard.IsKeyDown("NUMPAD2") == 1 and keyboard.IsKeyPressed("LALT") == 1 then
+    elseif IS_PRESSED("NUMPAD2", "LALT") or IS_PRESSED("PGUP", "LALT") then
         WARMODE_UI(0)
-    elseif keyboard.IsKeyDown("NUMPAD3") == 1 and keyboard.IsKeyPressed("LALT") == 1 then
+    elseif IS_PRESSED("NUMPAD3", "LALT") or IS_PRESSED("PGDN", "LALT") then
         WARMODE_UI(1)
-    elseif keyboard.IsKeyDown("NUMPAD4") == 1 and keyboard.IsKeyPressed("LALT") == 1 then
+    elseif IS_PRESSED("NUMPAD4", "LALT") or IS_PRESSED("INSERT", "LALT") then
         TOGGLE_3D()
-	elseif keyboard.IsKeyDown("NUMPAD5") == 1 and keyboard.IsKeyPressed("LALT") == 1 then
+	elseif IS_PRESSED("NUMPAD5", "LALT") or IS_PRESSED("HOME", "LALT") then
         TOGGLE_MINIMAL_EFFECTS()
-    elseif keyboard.IsKeyDown("NUMPAD6") == 1 and keyboard.IsKeyPressed("LALT") == 1 then
+    elseif IS_PRESSED("NUMPAD6", "LALT") or IS_PRESSED("BACKSPACE", "LALT") then
     	RESTORE_DEFAULTS()
     end
-
 
     return 1
 end
@@ -74,6 +80,9 @@ function WARMODE(effectSwitch)
     graphic.EnableStencil(effectSwitch);
     graphic.EnableWater(effectSwitch);
     graphic.EnableHighTexture(effectSwitch);
+    
+    local flagValue = (effectSwitch == 1 and "enabled" or "disabled")
+	acutil.log("Warmode "..flagValue)
 end
 
 function SAVE_DEFAULTS()
