@@ -1,12 +1,12 @@
 local acutil = require('acutil');
 
 _G['ADDONS'] = _G['ADDONS'] or {};
-TooltipHelper = _G["ADDONS"]["TOOLTIPHELPER"] or {};
+TTH = _G["ADDONS"]["TOOLTIPHELPER"] or {};
 
-TooltipHelper.configFile = '../addons/tooltiphelper/tooltiphelper.json'
-TooltipHelper.recipeFile = "../addons/tooltiphelper/recipe_puzzle.xml";
+TTH.configFile = '../addons/tooltiphelper/tooltiphelper.json'
+TTH.recipeFile = "../addon_d/tooltiphelper/recipe_puzzle.xml";
 
-TooltipHelper.config = {
+TTH.config = {
     showCollectionCustomTooltips = true,
     showCompletedCollections	 = true,
     showRecipeCustomTooltips	 = true,
@@ -20,22 +20,30 @@ TooltipHelper.config = {
 	version						 = '3.0.0'
 }
 
-TooltipHelper.config = (
+TTH.config = (
 	function ()
-		local file, err = acutil.loadJSON(TooltipHelper.configFile, TooltipHelper.config);
+		local file, err = acutil.loadJSON(TTH.configFile, TTH.config);
 		if err 
 		or file.version == nil 
-		or file.version ~= TooltipHelper.config.version then 
-		    acutil.saveJSON(TooltipHelper.configFile, TooltipHelper.config);
+		or file.version ~= TTH.config.version then 
+		    acutil.saveJSON(TTH.configFile, TTH.config);
 		else 
-		    TooltipHelper.config = file; 
+		    TTH.config = file; 
 		end
 		
-		return TooltipHelper.config
+		return TTH.config
 	end
 )()
 
-TooltipHelper.indexTbl = {};
+TTH.indexTbl = {
+	Recipe = { types = {"Recipe", "Recipe_ItemCraft", "ItemTradeShop"} },
+	Drops = {},
+	Premium = {},
+	Collection = {},
+	
+};
+
+local TooltipHelper = TTH
 
 local function MAGNUM_OPUS_RECIPE_LOADER()
 	local status, xml = pcall(require, "xmlSimple");
@@ -187,7 +195,7 @@ function _CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, use
 end
 
 local function TOOLTIPHELPER_BUILD_COLLECTION_LIST()
-	TooltipHelper.indexTbl["Collection"] = {};
+--	TooltipHelper.indexTbl["Collection"] = {};
 	local typeTbl = TooltipHelper.indexTbl["Collection"];
 	local clsList, cnt = GetClassList("Collection");
 	for i = 0 , cnt - 1 do
@@ -215,7 +223,7 @@ local function TOOLTIPHELPER_BUILD_COLLECTION_LIST()
 end
 
 local function TOOLTIPHELPER_BUILD_RECIPE_LIST()
-	TooltipHelper.indexTbl["Recipe"] = {types = {"Recipe", "Recipe_ItemCraft", "ItemTradeShop"}};
+--	TooltipHelper.indexTbl["Recipe"] = {types = {"Recipe", "Recipe_ItemCraft", "ItemTradeShop"}};
 	local typeTbl = TooltipHelper.indexTbl["Recipe"];
 	for _, classType in ipairs(typeTbl["types"]) do
 		local clsList, cnt = GetClassList(classType);
@@ -270,7 +278,7 @@ local function TOOLTIPHELPER_BUILD_DROP_LIST()
 		end
 	end
 
-	TooltipHelper.indexTbl["Drops"] = {};
+--	TooltipHelper.indexTbl["Drops"] = {};
 	local typeTbl = TooltipHelper.indexTbl["Drops"];
 	local clsList, cnt = GetClassList("Monster");
 	for i = 0 , cnt - 1 do repeat
@@ -321,7 +329,7 @@ local function TOOLTIPHELPER_BUILD_DROP_LIST()
 end
 
 local function TOOLTIPHELPER_BUILD_MEDAL_EXCHANGE_LIST()
-	TooltipHelper.indexTbl["Premium"] = {};
+--	TooltipHelper.indexTbl["Premium"] = {};
 	local typeTbl = TooltipHelper.indexTbl["Premium"];
 	local clsList, cnt = GetClassList("recycle_shop");
 	for i = 0 , cnt - 1 do repeat
