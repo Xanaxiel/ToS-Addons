@@ -4,7 +4,7 @@ _G['ADDONS'] = _G['ADDONS'] or {};
 TTH = _G["ADDONS"]["TOOLTIPHELPER"] or {};
 
 TTH.configFile = '../addons/tooltiphelper/tooltiphelper.json'
-TTH.recipeFile = "\tooltiphelper\recipe_puzzle.xml";
+TTH.recipeFile = "../addons/tooltiphelper/recipe_puzzle.xml";
 
 TTH.config = {
     showCollectionCustomTooltips = true,
