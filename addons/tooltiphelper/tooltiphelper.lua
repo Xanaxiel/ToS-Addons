@@ -15,7 +15,7 @@ TooltipHelper.config = {
 	showAwakening				 = true,
     showIdentification			 = true,
     showMagnumOpus				 = true,
-    showJournalStats			 = false,
+    showJournalStats			 = true,
 	showItemDrop				 = true,
 	version						 = '3.0.0'
 }
@@ -23,14 +23,14 @@ TooltipHelper.config = {
 TooltipHelper.config = (
 	function ()
 		local file, err = acutil.loadJSON(TooltipHelper.configFile, TooltipHelper.config);
-		if err
-		or file.version == nil
-		or file.version ~= TooltipHelper.config.version then
+		if err 
+		or file.version == nil 
+		or file.version ~= TooltipHelper.config.version then 
 		    acutil.saveJSON(TooltipHelper.configFile, TooltipHelper.config);
-		else
-		    TooltipHelper.config = file;
+		else 
+		    TooltipHelper.config = file; 
 		end
-
+		
 		return TooltipHelper.config
 	end
 )()
@@ -50,7 +50,7 @@ local function MAGNUM_OPUS_RECIPE_LOADER()
 		acutil.log("Magnum Opus recipe file not found");
 		return
 	end
-
+	
 	TooltipHelper.magnumOpusRecipes = {};
 	local recipes = recipeXml["Recipe_Puzzle"]:children();
 
@@ -112,7 +112,7 @@ local starIcon = "star_mark"
 
 local function toIMCTemplate(text, colorHex)
 	if not colorHex or colorHex == nil then colorHex = commonColor end
-    return "{ol}{ds}{#" .. colorHex .. "}".. text .. "{/}{/}{/}"
+    return "{ol}{ds}{#" .. colorHex .. "}".. text .. "{/}{/}{/}"    
 end
 
 local function addIcon(text, iconName)
@@ -123,11 +123,11 @@ local function manuallyCount(cls, invItem)
     local count = 0;
     for i = 1 , 9 do
         local item = GetClass("Item", cls["ItemName_" .. i]);
-
+            
         if item == "None" or item == nil then
             break;
         end
-
+                
         if item.ClassName == invItem.ClassName then
             count = count + 1;
         end
@@ -137,52 +137,52 @@ end
 
 function ITEM_TOOLTIP_BOSSCARD_HOOKED(tooltipFrame, invItem, strArg)
     _G["ITEM_TOOLTIP_BOSSCARD_OLD"](tooltipFrame, invItem, strArg);
-
+    
     local mainFrameName = 'bosscard'
-
+    
     return _CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg);
 end
 
 function ITEM_TOOLTIP_EQUIP_HOOKED(tooltipFrame, invItem, strArg, useSubFrame)
     _G["ITEM_TOOLTIP_EQUIP_OLD"](tooltipFrame, invItem, strArg, useSubFrame);
-
+    
     local mainFrameName = 'equip_main'
-
-    if useSubFrame == "usesubframe" or useSubFrame == "usesubframe_recipe" then
+    
+    if useSubFrame == "usesubframe" or useSubFrame == "usesubframe_recipe" then 
         mainFrameName = 'equip_sub'
     end
-
+    
     return _CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);
 end
 
 function ITEM_TOOLTIP_ETC_HOOKED(tooltipFrame, invItem, strArg, useSubFrame)
     _G["ITEM_TOOLTIP_ETC_OLD"](tooltipFrame, invItem, strArg, useSubFrame);
-
+    
     local mainFrameName = 'etc'
-
+    
     if useSubFrame == "usesubframe" or useSubFrame == "usesubframe_recipe" then
         mainFrameName = "etc_sub"
     end
-
-    return _CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);
+    
+    return _CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);  
 end
 
 function ITEM_TOOLTIP_GEM_HOOKED(tooltipFrame, invItem, strArg)
     _G["ITEM_TOOLTIP_GEM_OLD"](tooltipFrame, invItem, strArg);
-
+    
     local mainFrameName = 'gem'
-
+    
     return _CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg);
 end
 
 function _CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame)
 	if useSubFrame == nil then useSubFrame = "" end
-
+		
 	if marktioneerex ~= nil then
 		CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);
 		return marktioneerex.addMarketPrice(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);
     else
- 	    return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);
+ 	    return CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame);  
     end
 end
 
@@ -223,7 +223,7 @@ local function TOOLTIPHELPER_BUILD_RECIPE_LIST()
 			local cls = GetClassByIndexFromList(clsList, i);
 			local resultItem = GetClass("Item", cls.TargetItem);
 			if resultItem == nil or resultItem.NotExist == 'YES' or resultItem.ItemType == 'Unused' then break end
-
+			
 			local countingTbl = {};
 			for j = 1, 5 do
 				local item = GetClass("Item", cls["Item_" .. j .. "_1"]);
@@ -277,10 +277,10 @@ local function TOOLTIPHELPER_BUILD_DROP_LIST()
 		local cls = GetClassByIndexFromList(clsList, i);
 		local monClassID = cls.ClassID
 		if cls.GroupName == "Item" then break end
-
+		
 		local dropID = cls.DropItemList;
 		if dropID == nil or dropID == "None" then break end
-
+		
 		dropID = "MonsterDropItemList_" .. dropID;
 		local monName = dictionary.ReplaceDicIDInCompStr(cls.Name);
 		for j = 0, GetClassCount(dropID) - 1 do
@@ -329,12 +329,12 @@ local function TOOLTIPHELPER_BUILD_MEDAL_EXCHANGE_LIST()
 		local sellPrice = cls.SellPrice
 		if sellPrice == nil or sellPrice == 0 then break end;
 		local countingTbl = {};
-
+		
 		local itemName = cls.ClassName;
 		if typeTbl[itemName] == nil then
 			typeTbl[itemName] = {};
 		end
-
+		
 		if contains(countingTbl, itemName) then break end
 		table.insert(countingTbl, itemName);
 		table.insert(typeTbl[itemName], {idx = i, name = itemName, sellPrice = sellPrice} );
@@ -349,9 +349,9 @@ function JOURNAL_STATS_CUSTOM_TOOLTIP_TEXT(invItem)
 		local itemObtainCount = GetItemObtainCount(GetMyPCObject(), invItem.ClassID);
 		curScore, maxScore = _GET_ADVENTURE_BOOK_POINT_ITEM(invItem.ItemType == 'Equip', itemObtainCount);
 		curLv, curPoint, maxPoint = GET_ADVENTURE_BOOK_ITEM_OBTAIN_COUNT_INFO(invItem.ItemType == 'Equip', itemObtainCount);
-
+		
 		if curScore == 0 then
-			text = "Not registered!{nl}"
+			text = "Not registered!{nl}"			
 			color = labelColor;
 		elseif curScore == maxScore then
 			text = "Max Points Acquired!{nl}";
@@ -360,7 +360,7 @@ function JOURNAL_STATS_CUSTOM_TOOLTIP_TEXT(invItem)
 			text = "Journal Points Acquired: (" .. curScore .. "/" .. maxScore .. "){nl}";
 			text = text .. "Progress for Max Points: (" .. curPoint .. "/" .. maxPoint .. "){nl}";
 			color = commonColor;
-		end
+		end 
 	end
     return toIMCTemplate(text, color)
 end
@@ -411,7 +411,7 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
 		if isCompleted then
 			if TooltipHelper.config.showCompletedCollections then
 				text = toIMCTemplate(text, completeColor)
-			else
+			else 
 				text = ""
 			end
 		elseif hasRegisteredCollection then
@@ -493,11 +493,11 @@ function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
 		if marktioneerex ~= nil then
 			local recipeData = marktioneerex.getMinimumData(recipeClassID);
 			local newLine = "{nl}    ";
-			if (recipeData) then
+			if (recipeData) then 
 				text = text .. newLine .. addIcon("", recipeIcon) .. " ".. toIMCTemplate(GetCommaedText(recipeData.price), labelColor);
 			end
 			local resultItemData = marktioneerex.getMinimumData(resultItem.ClassID);
-			if (resultItemData) then
+			if (resultItemData) then 
 				local resultPrice = " " .. addIcon("", resultItem.Icon) .. " ".. toIMCTemplate(GetCommaedText(resultItemData.price), labelColor);
 				if (recipeData) then
 					text = text .. resultPrice
@@ -514,53 +514,53 @@ end
 function MAGNUM_OPUS_TRANSMUTED_FROM(invItem)
 	local newLine = "{nl}"
 	local text = ""
-
+	
 	local invItemClassName = invItem.ClassName
-
+	
 	for k, v in pairs(TooltipHelper.magnumOpusRecipes) do repeat
 		if k ~= invItemClassName then break end
-
+		
 		local items = v;
 		local itemQty = #v
-
+		
 		local ingredients = {}
-
+		
 		for m = 1, #v do
 			local item = v[m]["name"]
-
+			
 			local oldVal = ingredients[item]
 			ingredients[item] = (oldVal == nil) and 1 or oldVal + 1
 		end
-
+		
 		--Handle targetItems with multiple ingredients
 		for className, quantity in pairs(ingredients) do
 			local item = GetClass("Item", className)
 			local itemName = dictionary.ReplaceDicIDInCompStr(item.Name)
 			text = toIMCTemplate(quantity .. "x" .. addIcon(itemName, item.Icon), labelColor) .. newLine
 		end
-
+		
 		text = text .. "  "
-
+						
 		local maxRow, maxCol = 0, 0;
 		for i = 1, itemQty do
 			maxRow = math.max(maxRow, items[i]["row"]);
 			maxCol = math.max(maxCol, items[i]["col"]);
 		end
-
+		
 		for x = 0, maxRow + 1 do
 	        for y = 0, maxCol + 1 do
 	        	local icon = "{img nomalitem_tooltip_bg 24 24}{/} ";
 	        	local isItemFound = false
-
+	        	
 				if x <= maxRow then
 					for j = 1, itemQty do
 						local rowSlot = items[j]["row"]
 						local colSlot = items[j]["col"]
 						local name = items[j]["name"]
-
+						
 						if rowSlot == x and colSlot == y then
 							isItemFound = true
-
+							
 							local prereqItem = GetClass("Item", name)
 							local itemIcon = prereqItem.Icon
 							icon = "{img " .. prereqItem.Icon .. " 24 24}{/} "
@@ -569,7 +569,7 @@ function MAGNUM_OPUS_TRANSMUTED_FROM(invItem)
 						end
 					end
 				end
-
+	        	
 	        	if not isItemFound then
 	        		text = text .. icon
 	        	end
@@ -578,55 +578,55 @@ function MAGNUM_OPUS_TRANSMUTED_FROM(invItem)
 		end
 		break;
 	until true end
-
+	
 	if text ~= "" then
 		text = toIMCTemplate("Transmuted From:{nl} ", labelColor) .. text
 	end
-
+	
 	return text;
 end
 
 function MAGNUM_OPUS_TRANSMUTES_INTO(invItem)
 	local text = ""
-
+	
 	local targetItems = {}
 	local invItemClassName = invItem.ClassName
-
+	
 	for k, v in pairs(TooltipHelper.magnumOpusRecipes) do
 		local targetItemClassName = k;
 		local items = v
-
-		for i = 1, #items do repeat
+		
+		for i = 1, #items do repeat 
 			local itemClass = items[i]["name"]
-
+			
 			if itemClass ~= invItemClassName then break end
 			local oldVal = targetItems[targetItemClassName]
 			targetItems[targetItemClassName] = (oldVal == nil) and 1 or oldVal + 1
 		until true end
 	end
-
-
+	
+	
 	for k, v in pairs(targetItems) do
 		local className = k
 		local qty = v
 		local result = GetClass("Item", className)
 		local itemName = dictionary.ReplaceDicIDInCompStr(result.Name)
-		text = text .. toIMCTemplate("  " .. qty .. "x", labelColor)
-					.. toIMCTemplate(addIcon("= 1 ", invItem.Icon), labelColor)
+		text = text .. toIMCTemplate("  " .. qty .. "x", labelColor) 
+					.. toIMCTemplate(addIcon("= 1 ", invItem.Icon), labelColor) 
 					.. toIMCTemplate(addIcon(itemName, result.Icon) .. "{nl}", labelColor)
 	end
-
+	
 	if text ~= "" then
 		text = toIMCTemplate("Magnum Opus{nl} Transmutes Into:{nl}", labelColor) .. text .. "{nl}";
 	end
-
+	
 	return text;
 end
 
 function RENDER_MAGNUM_OPUS_SECTION(invItem)
 	local transmuteInto = MAGNUM_OPUS_TRANSMUTES_INTO(invItem);
 	local transmuteFrom = MAGNUM_OPUS_TRANSMUTED_FROM(invItem);
-	return transmuteInto .. transmuteFrom;
+	return transmuteInto .. transmuteFrom; 
 end
 
 function RENDER_ITEM_DROP_SECTION(invItem)
@@ -647,85 +647,77 @@ function RENDER_ITEM_DROP_SECTION(invItem)
 		if i == 6 then break end; --Display top 5 results
 		mapName = subTbl[i]["map"];
 		if mapName ~= nil and mapName ~= mapHeader then
-			table.insert(dropListDisplay, string.format("%s", mapName))
+			table.insert(dropListDisplay, string.format("%s", mapName))		
 		end
-
+		
 		local dropRate = subTbl[i]["chnc"]/100;
 		if dropRate ~= 0 then
-			table.insert(dropListDisplay, string.format("    %s: %.2f%%", subTbl[i]["name"], dropRate))
+			table.insert(dropListDisplay, string.format("    %s: %.2f%%", subTbl[i]["name"], dropRate))	
 		end
 	end
-
+	
 	text = #dropListDisplay == 0 and "" or text .. table.concat(dropListDisplay, "{nl}")
 
 	return toIMCTemplate(text, labelColor)
 end
 
+
 function RENDER_JOURNAL_STATS(buffer, invItem)
-    _RENDER_LABEL(TooltipHelper.config.showJournalStats, JOURNAL_STATS_CUSTOM_TOOLTIP_TEXT, buffer, invItem)
+    _RENDER_DATA(TooltipHelper.config.showJournalStats, JOURNAL_STATS_CUSTOM_TOOLTIP_TEXT, buffer, invItem)
 end
 
 function RENDER_REIDENTIFICATION(buffer, invItem)
-    _RENDER_LABEL(TooltipHelper.config.showIdentification, REIDENTIFICATION, buffer, invItem)
+    _RENDER_DATA(TooltipHelper.config.showIdentification, REIDENTIFICATION, buffer, invItem)
 end
 
 function RENDER_TP_MEDAL_EXCHANGE(buffer, invItem)
-    _RENDER_LABEL(true, TP_MEDAL_EXCHANGE, buffer, invItem)
+    _RENDER_DATA(true, TP_MEDAL_EXCHANGE, buffer, invItem)
 end
 function RENDER_TRANSCENDENCE(buffer, invItem)
-    _RENDER_LABEL(TooltipHelper.config.showTranscendence, TRANSCENDENCE, buffer, invItem)
+    _RENDER_DATA(TooltipHelper.config.showTranscendence, TRANSCENDENCE, buffer, invItem)
 end
 
 function RENDER_AWAKENING(buffer, invItem)
-    _RENDER_LABEL(TooltipHelper.config.showAwakening, AWAKENING, buffer, invItem)
+    _RENDER_DATA(TooltipHelper.config.showAwakening, AWAKENING, buffer, invItem)
 end
 
 function RENDER_CUBE_REROLL_PRICE(buffer, invItem)
-	_RENDER_LABEL(true, CUBE_REROLL, buffer, invItem)
+	_RENDER_DATA(true, CUBE_REROLL, buffer, invItem)
 end
 
-function RENDER_COLLECTION_DETAILS(buffer, invItem, text)
-    _RENDER_DATA(TooltipHelper.config.showCollectionCustomTooltips, COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT, buffer, invItem, text)
+function RENDER_COLLECTION_DETAILS(buffer, invItem)
+    _RENDER_DATA(TooltipHelper.config.showCollectionCustomTooltips, COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT, buffer, invItem)
 end
 
-function RENDER_RECIPE_DETAILS(buffer, invItem, text)
-    _RENDER_DATA(TooltipHelper.config.showRecipeCustomTooltips, RECIPE_ADD_CUSTOM_TOOLTIP_TEXT, buffer, invItem, text)
+function RENDER_RECIPE_DETAILS(buffer, invItem)
+    _RENDER_DATA(TooltipHelper.config.showRecipeCustomTooltips, RECIPE_ADD_CUSTOM_TOOLTIP_TEXT, buffer, invItem)
 end
 
-function RENDER_MAGNUM_OPUS(buffer, invItem, text)
-    _RENDER_DATA(TooltipHelper.config.showMagnumOpus, RENDER_MAGNUM_OPUS_SECTION, buffer, invItem, text)
+function RENDER_MAGNUM_OPUS(buffer, invItem)
+    _RENDER_DATA(TooltipHelper.config.showMagnumOpus, RENDER_MAGNUM_OPUS_SECTION, buffer, invItem)
 end
 
-function RENDER_ITEM_DROP(buffer, invItem, text)
-	_RENDER_DATA(TooltipHelper.config.showItemDrop, RENDER_ITEM_DROP_SECTION, buffer, invItem, text)
+function RENDER_ITEM_DROP(buffer, invItem)
+	_RENDER_DATA(TooltipHelper.config.showItemDrop, RENDER_ITEM_DROP_SECTION, buffer, invItem)
 end
 
-local function _RENDER_LABEL(config, fn, buffer, invItem)
+function _RENDER_DATA(config, fn, buffer, invItem)
 	if config and fn ~= nil then
-		local label = fn(invItem) or "";
-		table.insert(buffer, label)
-	end
-end
-
-local function _RENDER_DATA(config, fn, buffer, invItem, text)
-	if config then
-		text = fn(invItem);
-		if text ~= "" then
-			table.insert(buffer,text);
-		end
+		local text = fn(invItem) or ""; 
+		table.insert(buffer, text)
 	end
 end
 
 function CUBE_REROLL(invItem)
 	if invItem.GroupName ~= "Cube" then return end
-
+	
 	local rerollPrice = TryGet(invItem, "NumberArg1")
 	if rerollPrice > 0 then
 		return addIcon("", invItem.Icon) .. toIMCTemplate("Reroll Price: " .. GetCommaedText(rerollPrice), labelColor)
 	end
 end
 
-function REIDENTIFICATION(invItem)
+function REIDENTIFICATION(invItem)	
 	local itemCls = GetClassByType('Item', invItem.ClassID)
 
 	if itemCls == nil
@@ -735,12 +727,12 @@ function REIDENTIFICATION(invItem)
 	or IS_NEED_RANDOM_OPTION_ITEM(invItem) == true then
 		return "";
 	end
-
+	
 	local itemRandomResetMaterial = nil;
 	local list, cnt = GetClassList("item_random_reset_material")
-
+	
 	if list == nil then return end
-
+					
 	for i = 0, cnt - 1 do
 		local cls = GetClassByIndexFromList(list, i);
 		if cls == nil then return end
@@ -751,9 +743,9 @@ function REIDENTIFICATION(invItem)
 	end
 
 	if itemRandomResetMaterial == nil then return end
-
+	
     local reIdentification = toIMCTemplate("Re-identify: ", commonColor)
-
+	
 	local materialItemSlot = itemRandomResetMaterial.MaterialItemSlot;
 	for i = 1, materialItemSlot do
 		local materialItemIndex = "MaterialItem_" ..i
@@ -761,14 +753,14 @@ function REIDENTIFICATION(invItem)
 		local materialItemCls = itemRandomResetMaterial[materialItemIndex]
 		local materialItem = GetClass("Item", materialItemCls)
 		local materialCountScp = itemRandomResetMaterial[materialItemIndex .."_SCP"]
-
+		
 		if materialCountScp == "None" then return end
-
+		
 		materialCountScp = _G[materialCountScp];
 		materialItemCount = materialCountScp(invItem);
 		reIdentification = reIdentification .. " " .. toIMCTemplate(addIcon(materialItemCount, materialItem.Icon), commonColor)
 	end
-
+	
     return reIdentification
 end
 
@@ -779,25 +771,25 @@ function TRANSCENDENCE(invItem)
 	or IS_NEED_RANDOM_OPTION_ITEM(invItem) == true then
 		return ""
 	end
-
+	
 	local text = toIMCTemplate(addIcon(tostring(GET_TRANSCEND_MAXCOUNT(invItem)), "icon_item_transcendence_Stone") .. " to upgrade", commonColor)
-
+	
 	if IS_TRANSCEND_ITEM(invItem) == 1 then
-		text = text .. toIMCTemplate(" / " .. addIcon(tostring(GET_TRANSCEND_BREAK_ITEM_COUNT(invItem) * 10) .. " extracted", "icon_item_gem_elemental1"), commonColor);
+		text = text .. toIMCTemplate(" / " .. addIcon(tostring(GET_TRANSCEND_BREAK_ITEM_COUNT(invItem) * 10) .. " extracted", "icon_item_gem_elemental1"), commonColor); 
 	end
-
+	
 	return toIMCTemplate("Transcendence: ") .. text
 end
 
 function AWAKENING(invItem)
 	if invItem.ItemType ~= "Equip" or invItem.EqpType == "WING" or invItem.EqpType == "SPECIALCOSTUME" then return "" end
-
+	
 	local needItem, needCount = GET_ITEM_AWAKENING_PRICE(invItem)
 	local itemCls = GetClass('Item', needItem);
-
-	if needCount == 0 then return "" end
-
-	local awakening = toIMCTemplate("Awakening Costs: ") .. toIMCTemplate(addIcon(needCount,itemCls.Icon),commonColor)
+	
+	if needCount == 0 then return "" end 
+	
+	local awakening = toIMCTemplate("Awakening Costs: ") .. toIMCTemplate(addIcon(needCount,itemCls.Icon),commonColor) 
 	return awakening
 end
 
@@ -805,10 +797,10 @@ function TP_MEDAL_EXCHANGE(invItem)
 	if TooltipHelper.indexTbl["Premium"] == nil then
 		TOOLTIPHELPER_BUILD_MEDAL_EXCHANGE_LIST();
 	end
-
+	
 	local subTbl = TooltipHelper.indexTbl["Premium"][invItem.ClassName];
 	if subTbl == nil then return ""	end
-
+	
 	local clsList, cnt = GetClassList("recycle_shop");
 	for i = 1, #subTbl do
 		if invItem.ClassName == subTbl[i]["name"] then
@@ -818,100 +810,100 @@ function TP_MEDAL_EXCHANGE(invItem)
 end
 
 function TTH_INV_ITEM_DATA(invItem)
-	local sections = {};
+	local leftSection = {};
     local labels = {}
-    local text = ""
+    local leftText = ""
 
-	--Journal Stats
+	--Journal Stats    
     RENDER_JOURNAL_STATS(labels, invItem)
-
+    
 	--Transcendence
     RENDER_TRANSCENDENCE(labels, invItem)
-
+    
     --Re-identification
     RENDER_REIDENTIFICATION(labels, invItem)
-
+	
 	--Awakening
     RENDER_AWAKENING(labels, invItem)
 
 	--TP Medal Exchange
 	RENDER_TP_MEDAL_EXCHANGE(labels, invItem)
-
+	
     --Reroll Price
-    RENDER_CUBE_REROLL_PRICE(sections, invItem);
-
+    RENDER_CUBE_REROLL_PRICE(leftSection, invItem);
+        
     local headText = table.concat(labels, "{nl}").."{nl}";
-    table.insert(sections,headText);
-
+    table.insert(leftSection,headText);
+    
     --Collection
-    RENDER_COLLECTION_DETAILS(sections, invItem, text)
-
+    RENDER_COLLECTION_DETAILS(leftSection, invItem)
+      
     --Recipe
-    RENDER_RECIPE_DETAILS(sections, invItem, text)
-
+    RENDER_RECIPE_DETAILS(leftSection, invItem)
+   
     local rightText = ""
-    local rightBuffer = {}
-
+    local rightSection = {}
+    
     --Magnum Opus
-    RENDER_MAGNUM_OPUS(rightBuffer, invItem, rightText)
-
+    RENDER_MAGNUM_OPUS(rightSection, invItem)
+    
 	--Item Drop
-	RENDER_ITEM_DROP(rightBuffer, invItem, rightText);
+	RENDER_ITEM_DROP(rightSection, invItem);
 
-    if #sections == 1 and invItem.ItemType == "Equip" then
-        text = headText
+    if #leftSection == 1 and invItem.ItemType == "Equip" then
+        leftText = headText
     else
-        text = table.concat(sections,"{nl}")
-        rightText = table.concat(rightBuffer,"{nl}")
+        leftText = table.concat(leftSection,"{nl}")
+        rightText = table.concat(rightSection,"{nl}")
     end
-
+    
     labels = {}
-    sections = {}
-    rightBuffer = {}
-    return text, rightText;
+    leftSection = {}
+    rightSection = {}
+    return leftText, rightText;
 end
 
 function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useSubFrame)
     local gBox = GET_CHILD(tooltipFrame, mainFrameName,'ui::CGroupBox');
-
+    
     local yPos = gBox:GetY() + gBox:GetHeight();
-
+    
     local leftTextCtrl = gBox:CreateOrGetControl("richtext", 'text', 0, yPos, 410, 30);
     tolua.cast(leftTextCtrl, "ui::CRichText");
-
+    
 	local main_addinfo = tooltipFrame:GetChild("equip_main_addinfo");
 	main_addinfo:SetOffset(main_addinfo:GetX(),tooltipFrame:GetHeight()/2);
 	local sub_addinfo = tooltipFrame:GetChild("equip_sub_addinfo");
 	sub_addinfo:SetOffset(sub_addinfo:GetX(),tooltipFrame:GetHeight()/2);
 
     local text, rightText = TTH_INV_ITEM_DATA(invItem)
-
+        
     leftTextCtrl:SetText(text);
 	leftTextCtrl:SetMargin(20,gBox:GetHeight(),0,0);
     leftTextCtrl:SetGravity(ui.LEFT, ui.TOP)
-
+    
     if rightText ~= "" then
     	local rightTextCtrl = gBox:CreateOrGetControl("richtext", 'text2', math.max(leftTextCtrl:GetWidth()+30,200), yPos, 410, 30);
 	    tolua.cast(rightTextCtrl, "ui::CRichText");
 	    rightTextCtrl:SetText(rightText)
-
+	    
     	local width = leftTextCtrl:GetWidth() + rightTextCtrl:GetWidth() + 50;
 		width = math.max(width, gBox:GetWidth());
 	    if leftTextCtrl:GetHeight() > rightTextCtrl:GetHeight() then
 			gBox:Resize(width, gBox:GetHeight() + leftTextCtrl:GetHeight() + 10)
-	    else
+	    else 
 			gBox:Resize(width, gBox:GetHeight() + rightTextCtrl:GetHeight() + 10)
 	    end
-
+	    
 	    local etcCommonTooltip = GET_CHILD(gBox, 'tooltip_etc_common');
 	    if etcCommonTooltip ~= nil then
 		    etcCommonTooltip:Resize(width, etcCommonTooltip:GetHeight())
 	    end
-
+	    
     	local etcDescTooltip = GET_CHILD(gBox, 'tooltip_etc_desc');
 		if etcDescTooltip ~= nil then
 		    etcDescTooltip:Resize(width, etcDescTooltip:GetHeight())
-	    end
+	    end	
 		if string.sub(mainFrameName, #mainFrameName - 3) == "_sub" then
 			local widthdif = gBox:GetWidth() - gBox:GetOriginalWidth();
 			gBox:SetOffset(gBox:GetX() - widthdif, gBox:GetY());
@@ -919,7 +911,7 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
     else
 	    gBox:Resize(gBox:GetWidth(), gBox:GetHeight() + leftTextCtrl:GetHeight() + 10)
     end
-
+	
     text, rightText = "", ""
     return leftTextCtrl:GetHeight() + leftTextCtrl:GetY();
 end
