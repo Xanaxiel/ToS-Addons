@@ -35,13 +35,7 @@ TTH.config = (
 	end
 )()
 
-TTH.indexTbl = {
-	Recipe = { types = {"Recipe", "Recipe_ItemCraft", "ItemTradeShop"} },
-	Drops = {},
-	Premium = {},
-	Collection = {},
-	
-};
+TTH.indexTbl = {};
 
 local TooltipHelper = TTH
 
@@ -52,34 +46,35 @@ local function MAGNUM_OPUS_RECIPE_LOADER()
 		return
 	end
 
-	local recipeXml = xml.newParser():loadFile(TooltipHelper.recipeFile);
+	local recipeXml = xml.newParser():loadFile(TTH.recipeFile);
 
 	if recipeXml == nil then
 		acutil.log("Magnum Opus recipe file not found");
 		return
 	end
 	
-	TooltipHelper.magnumOpusRecipes = {};
+	TTH.magnumOpusRecipes = {};
 	local recipes = recipeXml["Recipe_Puzzle"]:children();
 
 	for i=1,#recipes do
 		local recipe = recipes[i];
 		local targetItemClassName = recipe["@TargetItem"];
 		local ingredients = recipe:children();
-		TooltipHelper.magnumOpusRecipes[targetItemClassName] = {};
+		TTH.magnumOpusRecipes[targetItemClassName] = {};
 		for j=1,#ingredients do
 			local ingredient = ingredients[j];
 			local ingredientItemClassName = ingredient["@Name"];
 			local row = ingredient["@Row"];
 			local column = ingredient["@Col"];
-			table.insert(TooltipHelper.magnumOpusRecipes[targetItemClassName], {name = ingredientItemClassName,
+			table.insert(TTH.magnumOpusRecipes[targetItemClassName], {name = ingredientItemClassName,
 			                                                                    row = tonumber(row),
 			                                                                    col = tonumber(column)});
 		end
 	end
+	TooltipHelper.magnumOpusRecipes = TTH.magnumOpusRecipes
 end
 
-if not TooltipHelper.magnumOpusRecipes then
+if not TTH.magnumOpusRecipes then
 	MAGNUM_OPUS_RECIPE_LOADER();
 end
 
@@ -195,8 +190,8 @@ function _CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, use
 end
 
 local function TOOLTIPHELPER_BUILD_COLLECTION_LIST()
---	TooltipHelper.indexTbl["Collection"] = {};
-	local typeTbl = TooltipHelper.indexTbl["Collection"];
+	TTH.indexTbl["Collection"] = {};
+	local typeTbl = TTH.indexTbl["Collection"];
 	local clsList, cnt = GetClassList("Collection");
 	for i = 0 , cnt - 1 do
 		local cls = GetClassByIndexFromList(clsList, i);
@@ -220,11 +215,13 @@ local function TOOLTIPHELPER_BUILD_COLLECTION_LIST()
 			end
 		end
 	end
+	TooltipHelper.indexTbl["Collection"] = typeTbl
 end
 
 local function TOOLTIPHELPER_BUILD_RECIPE_LIST()
---	TooltipHelper.indexTbl["Recipe"] = {types = {"Recipe", "Recipe_ItemCraft", "ItemTradeShop"}};
-	local typeTbl = TooltipHelper.indexTbl["Recipe"];
+	TTH.indexTbl["Recipe"] = {types = {"Recipe", "Recipe_ItemCraft", "ItemTradeShop"}};
+	
+	local typeTbl = TTH.indexTbl["Recipe"];
 	for _, classType in ipairs(typeTbl["types"]) do
 		local clsList, cnt = GetClassList(classType);
 		for i = 0 , cnt - 1 do repeat
@@ -267,6 +264,7 @@ local function TOOLTIPHELPER_BUILD_RECIPE_LIST()
 			table.sort(t, compare);
 		end
 	end
+	TooltipHelper.indexTbl["Recipe"] = typeTbl
 end
 
 local function TOOLTIPHELPER_BUILD_DROP_LIST()
@@ -278,7 +276,8 @@ local function TOOLTIPHELPER_BUILD_DROP_LIST()
 		end
 	end
 
---	TooltipHelper.indexTbl["Drops"] = {};
+	TTH.indexTbl["Drops"] = {};
+	
 	local typeTbl = TooltipHelper.indexTbl["Drops"];
 	local clsList, cnt = GetClassList("Monster");
 	for i = 0 , cnt - 1 do repeat
@@ -326,11 +325,12 @@ local function TOOLTIPHELPER_BUILD_DROP_LIST()
 	for _, t in pairs(typeTbl) do
 		table.sort(t, chanceCompare);
 	end
+	TooltipHelper.indexTbl["Drops"] = typeTbl
 end
 
 local function TOOLTIPHELPER_BUILD_MEDAL_EXCHANGE_LIST()
---	TooltipHelper.indexTbl["Premium"] = {};
-	local typeTbl = TooltipHelper.indexTbl["Premium"];
+	TTH.indexTbl["Premium"] = {};
+	local typeTbl = TTH.indexTbl["Premium"];
 	local clsList, cnt = GetClassList("recycle_shop");
 	for i = 0 , cnt - 1 do repeat
 		local cls = GetClassByIndexFromList(clsList, i);
@@ -347,6 +347,7 @@ local function TOOLTIPHELPER_BUILD_MEDAL_EXCHANGE_LIST()
 		table.insert(countingTbl, itemName);
 		table.insert(typeTbl[itemName], {idx = i, name = itemName, sellPrice = sellPrice} );
 	until true end
+	TooltipHelper.indexTbl["Premium"] = typeTbl
 end
 
 function JOURNAL_STATS_CUSTOM_TOOLTIP_TEXT(invItem)
@@ -374,7 +375,7 @@ function JOURNAL_STATS_CUSTOM_TOOLTIP_TEXT(invItem)
 end
 
 function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
-	if TooltipHelper.indexTbl["Collection"] == nil then
+	if TTH.indexTbl["Collection"] == nil then
 		TOOLTIPHELPER_BUILD_COLLECTION_LIST();
 	end
 
@@ -437,7 +438,7 @@ function COLLECTION_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
 end
 
 function RECIPE_ADD_CUSTOM_TOOLTIP_TEXT(invItem)
-	if TooltipHelper.indexTbl["Recipe"] == nil then
+	if TTH.indexTbl["Recipe"] == nil then
 		TOOLTIPHELPER_BUILD_RECIPE_LIST()
 	end
 
@@ -638,7 +639,7 @@ function RENDER_MAGNUM_OPUS_SECTION(invItem)
 end
 
 function RENDER_ITEM_DROP_SECTION(invItem)
-	if TooltipHelper.indexTbl["Drops"] == nil then
+	if TTH.indexTbl["Drops"] == nil then
 		TOOLTIPHELPER_BUILD_DROP_LIST();
 	end
 
@@ -790,7 +791,11 @@ function TRANSCENDENCE(invItem)
 end
 
 function AWAKENING(invItem)
-	if invItem.ItemType ~= "Equip" or invItem.EqpType == "WING" or invItem.EqpType == "SPECIALCOSTUME" then return "" end
+	if invItem.ItemType ~= "Equip" 
+	or invItem.EqpType == "WING" 
+	or invItem.EqpType == "SPECIALCOSTUME" 
+		then return "" 
+	end
 	
 	local needItem, needCount = GET_ITEM_AWAKENING_PRICE(invItem)
 	local itemCls = GetClass('Item', needItem);
@@ -925,7 +930,7 @@ function CUSTOM_TOOLTIP_PROPS(tooltipFrame, mainFrameName, invItem, strArg, useS
 end
 
 function TOOLTIPHELPER_INIT()
-	if not TooltipHelper.isLoaded then
+	if not TTH.isLoaded then
 		TOOLTIPHELPER_BUILD_COLLECTION_LIST();
 		TOOLTIPHELPER_BUILD_RECIPE_LIST();
 		TOOLTIPHELPER_BUILD_DROP_LIST();
@@ -935,7 +940,7 @@ function TOOLTIPHELPER_INIT()
 		acutil.setupHook(ITEM_TOOLTIP_BOSSCARD_HOOKED, "ITEM_TOOLTIP_BOSSCARD");
 		acutil.setupHook(ITEM_TOOLTIP_GEM_HOOKED, "ITEM_TOOLTIP_GEM");
 
-		TooltipHelper.isLoaded = true
+		TTH.isLoaded = true
 
 		acutil.log("Tooltip helper loaded!")
 	end
