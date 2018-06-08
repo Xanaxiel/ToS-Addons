@@ -3,8 +3,8 @@
         "name" : "Tooltip Helper",
         "file" : "tooltiphelper",
         "extension" : "ipf",
-        "fileVersion" : "v2.2.0",
-        "releaseTag" : "v2.2.0",
+        "fileVersion" : "v3.0.0",
+        "releaseTag" : "v3.0.0",
         "unicode" : "✉",
         "description" : "Helper that displays additional information on tooltips for inventory items",
         "tags" : [
